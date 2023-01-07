@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>2023使用picgo + github搭建图床（typora）,解决jsdelivr问题 | ggw和xpl的博客</title><meta name="author" content="ggw"><meta name="copyright" content="ggw"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、图床是什么 图床一般是指储存图片的服务器 有国内和国外之分。国外的图床由于有空间距离等因素决定访问速度很慢影响图片显示速度。国内也分为单线空间、多线空间和cdn加速三种。   说人话： 就是把你博客，或者笔记中的图片存到云端上去，这样文本里面只留存图片链接  举个例子：写markdown笔记时，图片存储在本地，用相对路径或者绝对路径加载图片，如果要同步笔记或者迁移笔记的话， 那么是不是要把图片">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>2023使用picgo + github搭建图床（typora）,解决jsdelivr问题 | ggw和xpl的博客</title><meta name="author" content="ggw"><meta name="copyright" content="ggw"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、图床是什么  图床一般是指储存图片的服务器 有国内和国外之分。国外的图床由于有空间距离等因素决定访问速度很慢影响图片显示速度。国内也分为单线空间、多线空间和cdn加速三种。    说人话： 就是把你博客，或者笔记中的图片存到云端上去，这样文本里面只留存图片链接   举个例子：写markdown笔记时，图片存储在本地，用相对路径或者绝对路径加载图片，如果要同步笔记或者迁移笔记的话， 那么是不是要">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2023使用picgo + github搭建图床（typora）,解决jsdelivr问题">
 <meta property="og:url" content="https://ggw2021.github.io/2023/01/05/2022GitHub%E5%9B%BE%E5%BA%8A/index.html">
 <meta property="og:site_name" content="ggw和xpl的博客">
-<meta property="og:description" content="一、图床是什么 图床一般是指储存图片的服务器 有国内和国外之分。国外的图床由于有空间距离等因素决定访问速度很慢影响图片显示速度。国内也分为单线空间、多线空间和cdn加速三种。   说人话： 就是把你博客，或者笔记中的图片存到云端上去，这样文本里面只留存图片链接  举个例子：写markdown笔记时，图片存储在本地，用相对路径或者绝对路径加载图片，如果要同步笔记或者迁移笔记的话， 那么是不是要把图片">
+<meta property="og:description" content="一、图床是什么  图床一般是指储存图片的服务器 有国内和国外之分。国外的图床由于有空间距离等因素决定访问速度很慢影响图片显示速度。国内也分为单线空间、多线空间和cdn加速三种。    说人话： 就是把你博客，或者笔记中的图片存到云端上去，这样文本里面只留存图片链接   举个例子：写markdown笔记时，图片存储在本地，用相对路径或者绝对路径加载图片，如果要同步笔记或者迁移笔记的话， 那么是不是要">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-11-01.png">
 <meta property="article:published_time" content="2023-01-05T07:32:32.410Z">
@@ -142,46 +142,54 @@
       }
     }
     detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-11-01.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">2023使用picgo + github搭建图床（typora）,解决jsdelivr问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-05T07:32:32.410Z" title="发表于 2023-01-05 15:32:32">2023-01-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-06T09:09:03.548Z" title="更新于 2023-01-06 17:09:03">2023-01-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9B%BE%E5%BA%8A/">图床</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">731</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="2023使用picgo + github搭建图床（typora）,解决jsdelivr问题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/01/05/2022GitHub%E5%9B%BE%E5%BA%8A/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/01/05/2022GitHub%E5%9B%BE%E5%BA%8A/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="一、图床是什么"><a href="#一、图床是什么" class="headerlink" title="一、图床是什么"></a>一、图床是什么</h3><blockquote>
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-11-01.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">2023使用picgo + github搭建图床（typora）,解决jsdelivr问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-05T07:32:32.410Z" title="发表于 2023-01-05 15:32:32">2023-01-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-06T09:09:03.548Z" title="更新于 2023-01-06 17:09:03">2023-01-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9B%BE%E5%BA%8A/">图床</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">731</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="2023使用picgo + github搭建图床（typora）,解决jsdelivr问题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/01/05/2022GitHub%E5%9B%BE%E5%BA%8A/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/01/05/2022GitHub%E5%9B%BE%E5%BA%8A/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="一、图床是什么">一、图床是什么</h3>
+<blockquote>
 <p><strong>图床一般是指储存图片的服务器</strong></p>
 <p>有国内和国外之分。国外的图床由于有空间距离等因素决定访问速度很慢影响图片显示速度。国内也分为单线空间、多线空间和cdn加速三种。</p>
 </blockquote>
 <ul>
-<li><p><strong>说人话</strong>： 就是把你博客，或者笔记中的图片存到云端上去，这样文本里面只留存图片链接</p>
+<li>
+<p><strong>说人话</strong>： 就是把你博客，或者笔记中的图片存到云端上去，这样文本里面只留存图片链接</p>
 </li>
-<li><p><strong>举个例子</strong>：写<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/markdown/3245829?fr=aladdin">markdown</a>笔记时，图片存储在本地，用相对路径或者绝对路径加载图片，如果要同步笔记或者迁移笔记的话，</p>
+<li>
+<p><strong>举个例子</strong>：写<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/markdown/3245829?fr=aladdin">markdown</a>笔记时，图片存储在本地，用相对路径或者绝对路径加载图片，如果要同步笔记或者迁移笔记的话，</p>
 <p>那么是不是要把图片也进行迁移，很麻烦。<br>有人会说可以直接复制整个目录结构，也麻烦不了太多。但是这样是不是将来在两个设备写markdown时，就需要总是同步图片，特别是如果本地写好博客，去发布时，图片链接又该如何让去解决，一张一张处理，效率显然太慢了。</p>
 </li>
-<li><p><strong>图床有什么效果</strong>：例子中那些问题，图床就可以很好的解决</p>
+<li>
+<p><strong>图床有什么效果</strong>：例子中那些问题，图床就可以很好的解决</p>
 <ul>
 <li>同步笔记时，利用iCloud，或者其他云盘，就可以直接同步markdown纯文本文件，不需要再考虑图片问题，笔记的体积还小，只需要存储markdown文本文件，去处理图片的体积。</li>
 <li>博客也只需要，将markdown全选 + 复制 + 粘贴 + 发布就好了</li>
 </ul>
 </li>
 </ul>
-<h3 id="二、怎么搭建"><a href="#二、怎么搭建" class="headerlink" title="二、怎么搭建"></a>二、怎么搭建</h3><p>方法有很多，但是说到底还是选择用什么样的云存储，可以是自己用服务器写API来搭建，也可以使用大厂商提供的对象存储，还有就是本文的白嫖，白嫖<strong>GitHub</strong>。</p>
+<h3 id="二、怎么搭建">二、怎么搭建</h3>
+<p>方法有很多，但是说到底还是选择用什么样的云存储，可以是自己用服务器写API来搭建，也可以使用大厂商提供的对象存储，还有就是本文的白嫖，白嫖<strong>GitHub</strong>。</p>
 <p>而<strong>picgo</strong>只是一个图床管理工具，帮助我们上传图片到图床。同样的应用还有upic，以及其他，都是同样的功能，但图床的方便一定少不了图床管理工具。picgo则是可以配合<a target="_blank" rel="noopener" href="http://www.cankaowang.com/question/245966.html">typora</a>使用。</p>
-<h4 id="1、配置GitHub"><a href="#1、配置GitHub" class="headerlink" title="1、配置GitHub"></a>1、配置GitHub</h4><ul>
-<li><p><strong>（1）创建仓库</strong></p>
-<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-02-25.png"> </p>
+<h4 id="1、配置GitHub">1、配置GitHub</h4>
+<ul>
+<li>
+<p><strong>（1）创建仓库</strong></p>
+<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-02-25.png" alt=""></p>
 </li>
-<li><p><strong>（2）生成token私钥</strong></p>
-<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-11-35.png"> </p>
+<li>
+<p><strong>（2）生成token私钥</strong></p>
+<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-11-35.png" alt=""></p>
 <hr>
-<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-13-36.png"> </p>
+<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-13-36.png" alt=""></p>
 <hr>
-<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-18-48.png"></p>
+<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-18-48.png" alt=""></p>
 <hr>
 <img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-23-50.png" style="zoom:80%;" /> 
-
 <hr>
-<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-19-16.png"> </p>
+<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-19-16.png" alt=""></p>
 <p><strong>ps: 得到的私钥要保存下来，后面github上无法查看</strong></p>
 </li>
 </ul>
-<h4 id="2、配置picgo"><a href="#2、配置picgo" class="headerlink" title="2、配置picgo"></a>2、配置picgo</h4><p><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo/releases">picgo下载</a></p>
-<p>还需要配置node.js环境才可以使用。<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44893902/article/details/121788104?ops_request_misc=%7B%22request_id%22:%22167245108816782425141530%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=167245108816782425141530&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-121788104-null-null.142%5Ev68%5Econtrol,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v1&utm_term=nodejs%E5%AE%89%E8%A3%85%E5%8F%8A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE&spm=1018.2226.3001.4187">node.js安装及环境配置</a> </p>
-<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-33-00.png"> </p>
+<h4 id="2、配置picgo">2、配置picgo</h4>
+<p><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo/releases">picgo下载</a></p>
+<p>还需要配置node.js环境才可以使用。<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44893902/article/details/121788104?ops_request_misc=%7B%22request%5Fid%22%3A%22167245108816782425141530%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=167245108816782425141530&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-121788104-null-null.142%5Ev68%5Econtrol,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v1&amp;utm_term=nodejs%E5%AE%89%E8%A3%85%E5%8F%8A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE&amp;spm=1018.2226.3001.4187">node.js安装及环境配置</a></p>
+<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-33-00.png" alt=""></p>
 <table>
 <thead>
 <tr>
@@ -189,9 +197,10 @@
 <th>填写</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>设定仓库名</td>
-<td>用户名&#x2F;仓库名</td>
+<td>用户名/仓库名</td>
 </tr>
 <tr>
 <td>设定分支名</td>
@@ -209,26 +218,26 @@
 <td><strong>设定自定义域名</strong></td>
 <td><strong>重要！！！解决jsdelivr CDN加速问题</strong> <strong>如下填写.</strong></td>
 </tr>
-</tbody></table>
-<h6 id="解决jsdelivr-CDN加速问题"><a href="#解决jsdelivr-CDN加速问题" class="headerlink" title="解决jsdelivr CDN加速问题"></a>解决jsdelivr CDN加速问题</h6><p><strong>这个现在失效了</strong>：<code>https://cdn.jsdelivr.net/gh/[github用户名]/[仓库名]@main</code></p>
+</tbody>
+</table>
+<h6 id="解决jsdelivr-CDN加速问题">解决jsdelivr CDN加速问题</h6>
+<p><strong>这个现在失效了</strong>：<code>https://cdn.jsdelivr.net/gh/[github用户名]/[仓库名]@main</code></p>
 <p><strong>改成：</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://cdn.staticaly.com/gh/[github用户名]/[仓库名]@main</span><br></pre></td></tr></table></figure>
-
 <p>@后面跟的是填写的分支名，一定要一致</p>
-<h4 id="3、配置typora"><a href="#3、配置typora" class="headerlink" title="3、配置typora"></a>3、配置typora</h4><ul>
+<h4 id="3、配置typora">3、配置typora</h4>
+<ul>
 <li>打开：<strong>文件 -&gt; 偏好设置 -&gt; 图像</strong></li>
 </ul>
-<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-49-53.png"> </p>
+<p><img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-49-53.png" alt=""></p>
 <ul>
 <li><strong>使用：</strong></li>
 </ul>
 <img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-57-31.png" style="zoom: 67%;" /> 
-
 <ul>
 <li><strong>效果：</strong></li>
 </ul>
 <img src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-59-42.png" style="zoom:67%;" /> 
-
 </article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ggw2021.github.io">ggw</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ggw2021.github.io/2023/01/05/2022GitHub%E5%9B%BE%E5%BA%8A/">https://ggw2021.github.io/2023/01/05/2022GitHub%E5%9B%BE%E5%BA%8A/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ggw2021.github.io" target="_blank">ggw和xpl的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/github/">github</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-11-01.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/05/Java%20SE/"><img class="prev-cover" src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_17-01-20.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Java SE</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/05/markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"><img class="next-cover" src="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-33-27.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">markdown语法学习记录</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9B%BE%E5%BA%8A%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">一、图床是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%8E%E4%B9%88%E6%90%AD%E5%BB%BA"><span class="toc-text">二、怎么搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E9%85%8D%E7%BD%AEGitHub"><span class="toc-text">1、配置GitHub</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AEpicgo"><span class="toc-text">2、配置picgo</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3jsdelivr-CDN%E5%8A%A0%E9%80%9F%E9%97%AE%E9%A2%98"><span class="toc-text">解决jsdelivr CDN加速问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E9%85%8D%E7%BD%AEtypora"><span class="toc-text">3、配置typora</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 By ggw</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
   function initValine () {
     const valine = new Valine(Object.assign({
