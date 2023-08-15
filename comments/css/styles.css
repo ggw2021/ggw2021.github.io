@@ -13,7 +13,7 @@ body{
 .envato-animate{
 	position:absolute;
 	left:50%;
-	top: 50%;
+	/* top: 50%; */
 	width:396px;
 	height: 200px;
 	text-align:center;
