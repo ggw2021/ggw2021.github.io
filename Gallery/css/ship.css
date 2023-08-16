@@ -12,8 +12,8 @@ body{
 
 .boat{
 	font:300 18px/18px Roboto, sans-serif;
-	top:50%;
-	left:400px;
+	top:400px;
+	left:50%;
 	margin-top:-75px;
 	position:absolute;
 	margin-left:-105px;
