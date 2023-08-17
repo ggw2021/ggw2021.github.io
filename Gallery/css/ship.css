@@ -2,8 +2,8 @@ body{
 	/* margin:0;
 	color:#444;
 	background:#8ab7a0; */
-	overflow-x: hidden;
-	overflow-y: visible;
+	/* overflow-x: hidden;
+	overflow-y: visible; */
 }
 *,:after,:before{box-sizing:border-box}
 .pull-left{float:left}
