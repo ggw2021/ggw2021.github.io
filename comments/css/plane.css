@@ -48,7 +48,7 @@ body{
 	position: absolute;
 	margin:50px auto 0;
 	margin-left: -136px;
-	top: 70px;
+	top: 15px;
 	left: 50%;
 	-webkit-animation:plane-move 10s infinite;
 	        animation:plane-move 10s infinite;
