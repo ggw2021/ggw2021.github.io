@@ -39,78 +39,17 @@ body{
 	position:absolute;
 }
 
-.cloud{
-	width:120px;
-	height:50px;
-	overflow:hidden;
-	position:fixed;
-}
-.cloud-a{
-	top:15%;
-	right:15%;
-	-webkit-animation:cloud 3s infinite;
-	        animation:cloud 3s infinite;
-}
-.cloud-b{
-	left:15%;
-	bottom:15%;
-	-webkit-animation:cloud 5s infinite;
-	        animation:cloud 5s infinite;
-}
-.cloud .line-a,
-.cloud .line-b,
-.cloud .line-c,
-.cloud .line-d,
-.cloud .line-e{
-	height:10px;
-	width:100%;
-	position:relative;
-	border-radius:5px;
-	background:#79dbff;
-}
-.cloud .line-b:before,
-.cloud .line-b:after,
-.cloud .line-d:before,
-.cloud .line-d:after{
-	height:inherit;
-	width:inherit;
-	background:#58d0fe;
-	border-radius:inherit;
-}
-.cloud .line-a,
-.cloud .line-e{
-	width:60px;
-}
-.cloud .line-a{
-	left:20px;
-}
-.cloud .line-e{
-	left:45px;
-}
-.cloud .line-b:before{
-	top:0;
-	left:-80px;
-}
-.cloud .line-b:after{
-	top:0;
-	right:-55px;
-}
-.cloud .line-d:before{
-	top:0;
-	left:-55px;
-}
-.cloud .line-d:after{
-	top:0;
-	right:-80px;
-}
 
 .plane{
 	font:300 18px/18px Roboto, sans-serif;
 	z-index:5;
 	width:275px;
 	height:130px;
-	position:relative;
+	position: absolute;
 	margin:50px auto 0;
+	margin-left: -136px;
+	top: 70px;
+	left: 50%;
 	-webkit-animation:plane-move 10s infinite;
 	        animation:plane-move 10s infinite;
 	-webkit-animation-fill-mode:backwards;
