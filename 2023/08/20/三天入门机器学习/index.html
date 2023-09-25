@@ -1333,7 +1333,7 @@ print(“AUC指标：”, roc_auc_score(y_test, lr.predict(x_test)))</p>
   if ($mermaidWrap.length) {
     window.runMermaid = () => {
       window.loadMermaid = true
-      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'default' : 'default'
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
 
       Array.from($mermaidWrap).forEach((item, index) => {
         const mermaidSrc = item.firstElementChild
