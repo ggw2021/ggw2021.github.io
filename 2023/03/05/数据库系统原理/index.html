@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>数据库系统原理 | ggw和xpl的博客</title><meta name="author" content="ggw"><meta name="copyright" content="ggw"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="思维导图 部分内容，气死了，后面的由于被旧文件覆盖丢失了  &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdnjs.cloudflare.com&#x2F;ajax&#x2F;libs&#x2F;pdf.js&#x2F;3.11.174&#x2F;pdf.min.js&quot;&gt;&lt;&#x2F;script&gt; &lt;script&gt;     &#x2F;&#x2F; 设置 PDF.js 配置     const pdfjsLib &#x3D; wi">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>数据库系统原理 | ggw和xpl的博客</title><meta name="author" content="ggw"><meta name="copyright" content="ggw"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="思维导图 部分内容，气死了，后面的由于被旧文件覆盖丢失了        &#x2F;&#x2F; 设置 PDF.js 配置     const pdfjsLib &#x3D; window[&#39;pdfjs-dist&#x2F;build&#x2F;pdf&#39;];      &#x2F;&#x2F; 设置其他依赖项（例如 worker 地址）     pdfjsLib.GlobalWorkerOptions.workerSrc &#x3D; &#39;https:&#x2F;&#x2F;cdnjs.cloud">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库系统原理">
 <meta property="og:url" content="https://ggw2021.github.io/2023/03/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="ggw和xpl的博客">
-<meta property="og:description" content="思维导图 部分内容，气死了，后面的由于被旧文件覆盖丢失了  &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdnjs.cloudflare.com&#x2F;ajax&#x2F;libs&#x2F;pdf.js&#x2F;3.11.174&#x2F;pdf.min.js&quot;&gt;&lt;&#x2F;script&gt; &lt;script&gt;     &#x2F;&#x2F; 设置 PDF.js 配置     const pdfjsLib &#x3D; wi">
+<meta property="og:description" content="思维导图 部分内容，气死了，后面的由于被旧文件覆盖丢失了        &#x2F;&#x2F; 设置 PDF.js 配置     const pdfjsLib &#x3D; window[&#39;pdfjs-dist&#x2F;build&#x2F;pdf&#39;];      &#x2F;&#x2F; 设置其他依赖项（例如 worker 地址）     pdfjsLib.GlobalWorkerOptions.workerSrc &#x3D; &#39;https:&#x2F;&#x2F;cdnjs.cloud">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-38-36.png">
 <meta property="article:published_time" content="2023-03-04T16:15:57.262Z">
-<meta property="article:modified_time" content="2023-09-25T11:12:46.130Z">
+<meta property="article:modified_time" content="2023-09-25T11:20:01.752Z">
 <meta property="article:author" content="ggw">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2023-09-25 19:12:46'
+  postUpdate: '2023-09-25 19:20:01'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,61 +142,64 @@
       }
     }
     detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-38-36.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据库系统原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-04T16:15:57.262Z" title="发表于 2023-03-05 00:15:57">2023-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-25T11:12:46.130Z" title="更新于 2023-09-25 19:12:46">2023-09-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/03/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/03/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="思维导图">思维导图</h2>
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-38-36.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据库系统原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-04T16:15:57.262Z" title="发表于 2023-03-05 00:15:57">2023-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-25T11:20:01.752Z" title="更新于 2023-09-25 19:20:01">2023-09-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/03/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/03/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="思维导图">思维导图</h2>
 <p>部分内容，气死了，后面的由于被旧文件覆盖丢失了</p>
 <!-- 引入 PDF.js 核心脚本文件 -->
-<pre><code>&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
     // 设置 PDF.js 配置
     const pdfjsLib = window['pdfjs-dist/build/pdf'];
-</code></pre>
-<p>​        // 设置其他依赖项（例如 worker 地址）<br>
-​        pdfjsLib.GlobalWorkerOptions.workerSrc = ‘<a target="_blank" rel="noopener" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js">https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js</a>’;</p>
-<p>​    </script><br>
-<style><br>
-/* 设置容器的样式，可根据需要进行自定义 */<br>
-#pdf-container {<br>
-width: 100%;<br>
-max-width: 800px;<br>
-margin: 0 auto;<br>
-}<br>
-</style></p>
-<p>​    <!-- 容器元素用于显示 PDF 文件 --><br>
-<div id="pdf-container"></div></p>
-<pre><code>&lt;script&gt;
+
+    // 设置其他依赖项（例如 worker 地址）
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+</script>
+<style>
+    /* 设置容器的样式，可根据需要进行自定义 */
+    #pdf-container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+</style>
+<!-- 容器元素用于显示 PDF 文件 -->
+<div id="pdf-container"></div>
+<script>
     // 获取容器元素
     const container = document.getElementById('pdf-container');
-</code></pre>
-<p>​        // PDF 文件的 URL<br>
-​        const pdfUrl = ‘<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/ggw2021/ggwpdf@master/%E8%AF%BE%E7%A8%8B/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86.pdf">https://cdn.jsdelivr.net/gh/ggw2021/ggwpdf@master/课程/数据库系统原理/数据库系统原理.pdf</a>’;</p>
-<p>​        // 异步加载 PDF 文件<br>
-​        pdfjsLib.getDocument(pdfUrl).promise<br>
-​            .then(pdfDoc =&gt; {<br>
-​                // PDF 加载成功后的处理<br>
-​                // 获取第一页<br>
-​                return pdfDoc.getPage(1);<br>
-​            })<br>
-​            .then(page =&gt; {<br>
-​                // 设置显示缩放比例<br>
-​                const scale = 1;<br>
-​                const viewport = page.getViewport({ scale });</p>
-<p>​                // 创建一个 canvas 元素用于渲染 PDF 页面<br>
-​                const canvas = document.createElement(‘canvas’);<br>
-​                container.appendChild(canvas);<br>
-​                const context = canvas.getContext(‘2d’);<br>
-​                canvas.height = viewport.height;<br>
-​                canvas.width = viewport.width;</p>
-<p>​                // 渲染 PDF 页面到 canvas<br>
-​                page.render({<br>
-​                    canvasContext: context,<br>
-​                    viewport: viewport<br>
-​                });<br>
-​            })<br>
-​            .catch(error =&gt; {<br>
-​                // 处理加载错误<br>
-​                console.error(error);<br>
-​            });<br>
-​    </script></p>
+
+    // PDF 文件的 URL
+    const pdfUrl = 'https://cdn.jsdelivr.net/gh/ggw2021/ggwpdf@master/课程/数据库系统原理/数据库系统原理.pdf';
+    
+    // 异步加载 PDF 文件
+    pdfjsLib.getDocument(pdfUrl).promise
+        .then(pdfDoc => {
+           // PDF 加载成功后的处理
+           // 获取第一页
+          return pdfDoc.getPage(1);
+        })
+        .then(page => {
+            // 设置显示缩放比例
+            const scale = 1;
+            const viewport = page.getViewport({ scale });
+    
+            // 创建一个 canvas 元素用于渲染 PDF 页面
+            const canvas = document.createElement('canvas');
+            container.appendChild(canvas);
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            // 渲染 PDF 页面到 canvas
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+            });
+        })
+        .catch(error => {
+            // 处理加载错误
+            console.error(error);
+        });
+</script>
 <h2 id="题型">题型</h2>
 <h3 id="ER图">ER图</h3>
 <p><strong>画图</strong></p>
