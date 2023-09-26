@@ -1,3 +1,4 @@
+/* Markdown列表 */
 #article-container.post-content ul > li {
     list-style-type: unset;
 }
@@ -5,4 +6,12 @@
 #article-container.post-content li::marker {
     color: #58c1b6;
     font-size: 1.15em;
+}
+
+/* 文章目录美化 */
+#aside-content #card-toc .toc-content .toc-link.active {
+    border-left-color: var(--ahzoo-deep-blue);
+    background: var(--btn-bg);
+    border-radius: 7px;
+    box-shadow: 0 8px 12px -3px rgba(73,177,245,0.2);
 }
