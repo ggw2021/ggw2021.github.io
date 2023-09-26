@@ -1,3 +1,8 @@
 #article-container.post-content ul > li {
     list-style-type: unset;
 }
+
+#article-container.post-content li::marker {
+    color: #58c1b6;
+    font-size: 1.15em;
+}
