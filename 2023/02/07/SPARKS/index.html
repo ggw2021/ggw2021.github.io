@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>SPARKS | ggw和xpl的博客</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SPARKS 语言是一种算法描述语言，这种语言具有精简易懂的特点，适用于模块化程序设计过程中对于各模块的算法进行描述交流，通过使用SPARKS 语言，在模块细化的过程中，可以忽略模块的细节而将关键的算法思想表达出来。  1、基本数据类型 整型、实型、布尔型、字符型 integer x,y;  double z,w;  boolean a,b;  char c,d;  2、赋值语句 将y的值赋给x">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>SPARKS | ggw和xpl的博客</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SPARKS 语言是一种算法描述语言，这种语言具有精简易懂的特点，适用于模块化程序设计过程中对于各模块的算法进行描述交流，通过使用SPARKS 语言，在模块细化的过程中，可以忽略模块的细节而将关键的算法思想表达出来。  1、基本数据类型 整型、实型、布尔型、字符型 integer x,y;  double z,w;  boolean a,b;  char c,d; 2、赋值语句 将y的值赋给x">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SPARKS">
 <meta property="og:url" content="https://gxblogs.netlify.app/2023/02/07/SPARKS/index.html">
 <meta property="og:site_name" content="ggw和xpl的博客">
-<meta property="og:description" content="SPARKS 语言是一种算法描述语言，这种语言具有精简易懂的特点，适用于模块化程序设计过程中对于各模块的算法进行描述交流，通过使用SPARKS 语言，在模块细化的过程中，可以忽略模块的细节而将关键的算法思想表达出来。  1、基本数据类型 整型、实型、布尔型、字符型 integer x,y;  double z,w;  boolean a,b;  char c,d;  2、赋值语句 将y的值赋给x">
+<meta property="og:description" content="SPARKS 语言是一种算法描述语言，这种语言具有精简易懂的特点，适用于模块化程序设计过程中对于各模块的算法进行描述交流，通过使用SPARKS 语言，在模块细化的过程中，可以忽略模块的细节而将关键的算法思想表达出来。  1、基本数据类型 整型、实型、布尔型、字符型 integer x,y;  double z,w;  boolean a,b;  char c,d; 2、赋值语句 将y的值赋给x">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-02-07_12-05-13.png">
 <meta property="article:published_time" content="2023-02-07T04:22:38.040Z">
-<meta property="article:modified_time" content="2023-09-26T08:15:05.288Z">
+<meta property="article:modified_time" content="2023-09-26T08:30:27.301Z">
 <meta property="article:author" content="ggw &amp; xpl">
 <meta property="article:tag" content="伪代码">
 <meta name="twitter:card" content="summary">
@@ -17,7 +17,7 @@
   localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2023-09-26 16:15:05'
+  postUpdate: '2023-09-26 16:30:27'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,23 +142,21 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-02-07_12-05-13.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SPARKS</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-07T04:22:38.040Z" title="发表于 2023-02-07 12:22:38">2023-02-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-26T08:15:05.288Z" title="更新于 2023-09-26 16:15:05">2023-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">628</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/02/07/SPARKS/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/02/07/SPARKS/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-02-07_12-05-13.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SPARKS</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-07T04:22:38.040Z" title="发表于 2023-02-07 12:22:38">2023-02-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-26T08:30:27.301Z" title="更新于 2023-09-26 16:30:27">2023-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">628</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/02/07/SPARKS/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/02/07/SPARKS/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
 <p>SPARKS 语言是一种<strong>算法描述语言</strong>，这种语言具有精简易懂的特点，适用于模块化程序设计过程中对于各模块的算法进行描述交流，通过使用SPARKS 语言，在模块细化的过程中，可以忽略模块的细节而将关键的算法思想表达出来。</p>
 </blockquote>
 <h2 id="1、基本数据类型">1、基本数据类型</h2>
 <p>整型、实型、布尔型、字符型</p>
-<pre><code class="language-SPARKS">integer x,y;
+<pre class="line-numbers language-SPARKS" data-language="SPARKS"><code class="language-SPARKS">integer x,y;
 
 double z,w;
 
 boolean a,b;
 
-char c,d;
-</code></pre>
+char c,d;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="2、赋值语句">2、赋值语句</h2>
 <p>将y的值赋给x</p>
-<pre><code class="language-SPARKS">x&lt;-y
-</code></pre>
+<pre class="line-numbers language-SPARKS" data-language="SPARKS"><code class="language-SPARKS">x&lt;-y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h2 id="3、两个布尔值">3、两个布尔值</h2>
 <p><code>true   false</code></p>
 <p>为了产生这两个布尔值，设置了<strong>逻辑运算符</strong></p>
@@ -172,55 +170,48 @@ char c,d;
 <p>例如：<br>
 <code>integer A(5,7:20)</code></p>
 <h2 id="5、-条件语句">5、 条件语句</h2>
-<pre><code class="language-SPARKS">if cond then
+<pre class="line-numbers language-SPARKS" data-language="SPARKS"><code class="language-SPARKS">if cond then
      S1
 else
      S2
-endif
-</code></pre>
+endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其中cond是一个布尔表达式。假设布尔表达式按照“短路”方式求值。</p>
 <p>另一种语句是<strong>case语句</strong>，此语句可以很容易地把数个选择对象区别开来，而无需使用多重if-then-else语句。</p>
-<pre><code class="language-SPARKS">case
+<pre class="line-numbers language-SPARKS" data-language="SPARKS"><code class="language-SPARKS">case
      :cond1: S1
      :cond2: S2
      ......
      :condn: Sn
      :else   : Sn+1
-endcase
-</code></pre>
+endcase<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其中else子句并不是必需的。</p>
 <h2 id="6、循环语句">6、循环语句</h2>
 <p><strong>while循环语句</strong></p>
-<pre><code class="language-SPARKS">while cond do
+<pre class="line-numbers language-SPARKS" data-language="SPARKS"><code class="language-SPARKS">while cond do
      S
-repeat
-</code></pre>
+repeat<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>当cond为true的时候，循环，S有可能不会被执行</p>
 <p><strong>loop-until-repeat循环语句</strong></p>
-<pre><code class="language-SPARKS">loop
+<pre class="line-numbers language-SPARKS" data-language="SPARKS"><code class="language-SPARKS">loop
      S
-until cond repeat
-</code></pre>
+until cond repeat<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>当cond为false的时候循环，S至少执行一次</p>
 <p><strong>for循环语句</strong></p>
-<pre><code class="language-SPARKS">for vble&lt;-start to finish by increment do
+<pre class="line-numbers language-SPARKS" data-language="SPARKS"><code class="language-SPARKS">for vble&lt;-start to finish by increment do
      S
-repeat
-</code></pre>
+repeat<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>其中by incerment不是必须的，<strong>默认为+1</strong>。vble是变量，start、finish、increment可以是整型、实型变量，或算术表达式。</p>
 <p><strong>loop循环语句</strong></p>
-<pre><code class="language-SPARKS">loop
+<pre class="line-numbers language-SPARKS" data-language="SPARKS"><code class="language-SPARKS">loop
      S
-repeat
-</code></pre>
+repeat<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>可以使用go to label退出，或使用exit退出，exit相当于C语言值的break。</p>
 <h2 id="7、过程">7、过程</h2>
 <p>一个完整的sparts程序是一个或多个过程的集合，第一个过程作为主程序。单个过程形式如下：</p>
-<pre><code class="language-SPARKS">procedure NAME(&lt;形参表&gt;)
+<pre class="line-numbers language-SPARKS" data-language="SPARKS"><code class="language-SPARKS">procedure NAME(&lt;形参表&gt;)
    &lt;说明部分&gt;
    S
-end NAME
-</code></pre>
+end NAME<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>过程可以是纯子例行程序，也可以是一个函数。函数中，返回值由放在紧接return的一对括号中的值来表示。例如<br>
 return (&lt;表达式&gt;)</p>
 <h2 id="8、输入输出">8、输入输出</h2>

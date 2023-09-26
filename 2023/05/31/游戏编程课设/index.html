@@ -17,7 +17,7 @@
   localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -193,7 +193,7 @@
 <p><strong>游戏引擎</strong>：Unity3D 2021版LTS</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.staticaly.com/gh/ggw2021/images@main/courses/game_programming/Snipaste_2023-06-01_08-16-46.png" alt=""></p>
 <p><strong>主要文件结构</strong>：</p>
-<pre><code>Assets
+<pre class="line-numbers language-none"><code class="language-none">Assets
 ├─Animations	动画
 │  ├─Bat
 │  ├─Coin
@@ -213,8 +213,7 @@
 │  ├─Enemys
 │  ├─Player
 │  └─Scences
-└─TileMaps		瓦片地图
-</code></pre>
+└─TileMaps		瓦片地图<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>游戏脚本</strong>：语言C#</p>
 <table>
 <thead>
