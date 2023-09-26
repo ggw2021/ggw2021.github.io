@@ -17,7 +17,7 @@
   localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  highlight: undefined,
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -312,7 +312,9 @@
 <li>通过三角形列表来描述物体的形状和轮廓。</li>
 <li>三角形列表中包含了每个需要绘制的三角形数据。</li>
 </ul>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Vertex rect[<span class="number">6</span>] = &#123; v0, v1, v2, <span class="comment">//三角形0</span></span><br><span class="line">v0, v2, v3 &#125;; <span class="comment">// 三角形1</span></span><br></pre></td></tr></table></figure>
+<pre><code class="language-c#">Vertex rect[6] = &#123; v0, v1, v2, //三角形0
+v0, v2, v3 &#125;; // 三角形1
+</code></pre>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/courses/game_programming/Snipaste_2023-05-06_16-53-27.png" alt=""></p>
 <p><strong>顶点索引</strong></p>
 <ul>
@@ -321,7 +323,10 @@
 </ul>
 <p>索引列表中保存什么呢？<br>
 保存顶点列表中的索引，或者说顶点数组的下标</p>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vertex vertexList[<span class="number">4</span>] = &#123;v0, v1, v2, v3&#125;;</span><br><span class="line">DWORD indexList[<span class="number">6</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="comment">// 三角形0 </span></span><br><span class="line"><span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>&#125;; <span class="comment">// 三角形1 </span></span><br></pre></td></tr></table></figure>
+<pre><code class="language-c#">Vertex vertexList[4] = &#123;v0, v1, v2, v3&#125;;
+DWORD indexList[6] = &#123;0, 1, 2, // 三角形0 
+0, 2, 3&#125;; // 三角形1 
+</code></pre>
 <p>与前面用顶点表示的三角形列表相比较<br>
 36个点和8个点的区别</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/courses/game_programming/Snipaste_2023-05-06_16-58-46.png" alt=""></p>
@@ -353,7 +358,22 @@
 <ul>
 <li>索引：下面代码展示了一个顶点数组用来组成四边形和八边形：</li>
 </ul>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Vertex quad[<span class="number">6</span>] = &#123;</span><br><span class="line">    v0，v1, v2， <span class="comment">// Triangle 0</span></span><br><span class="line">    ve, v2, v3, <span class="comment">// Triangle 1</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Vertex octagon[<span class="number">24</span>] = &#123;</span><br><span class="line">v0, v1, v2，<span class="comment">// Triangle 0</span></span><br><span class="line">v0, v2, v3, <span class="comment">// Triangle 1</span></span><br><span class="line">v0， v3, v4, <span class="comment">// Triangle 2</span></span><br><span class="line">v0, v4, v5， <span class="comment">// Triangle 3</span></span><br><span class="line">v0, v5, v6, <span class="comment">// Triangle 4</span></span><br><span class="line">v0, v6, v7, <span class="comment">// Triangle 5</span></span><br><span class="line">v0, v7, v8, <span class="comment">// Triangle 6</span></span><br><span class="line">ve， v8, v1 <span class="comment">// Triangle 7</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-c#">Vertex quad[6] = &#123;
+    v0，v1, v2， // Triangle 0
+    ve, v2, v3, // Triangle 1
+&#125;;
+
+Vertex octagon[24] = &#123;
+v0, v1, v2，// Triangle 0
+v0, v2, v3, // Triangle 1
+v0， v3, v4, // Triangle 2
+v0, v4, v5， // Triangle 3
+v0, v5, v6, // Triangle 4
+v0, v6, v7, // Triangle 5
+v0, v7, v8, // Triangle 6
+ve， v8, v1 // Triangle 7
+&#125;;
+</code></pre>
 <p><strong>顶点着色阶段</strong><br>
 GPU会对每个顶点使用定义的顶点着色器执行一遍，许多效果可以在顶点着色器中实现，比如：变换，光照，贴图置换等。 它不仅可以访问顶点数据，还可以访问其他保存在GPU内存中的数据，比如：纹理， 灯光数据等。</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/courses/game_programming/Snipaste_2023-05-06_17-06-21.png" alt=""></p>

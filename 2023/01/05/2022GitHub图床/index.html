@@ -17,7 +17,7 @@
   localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  highlight: undefined,
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -223,10 +223,12 @@
 <h4 id="解决jsdelivr-CDN加速问题">解决jsdelivr CDN加速问题</h4>
 <p><strong>这个现在失效了</strong>：<code>https://cdn.jsdelivr.net/gh/[github用户名]/[仓库名]@main</code></p>
 <p><strong>改成：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://cdn.jsdelivr.net/gh/[github用户名]/[仓库名]@main</span><br></pre></td></tr></table></figure>
+<pre><code class="language-bash">https://cdn.jsdelivr.net/gh/[github用户名]/[仓库名]@main
+</code></pre>
 <p>@后面跟的是填写的分支名，一定要一致</p>
 <p>或者这个</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://rawcdn.githack.com/[github用户名]/[仓库名]/[分支名]</span><br></pre></td></tr></table></figure>
+<pre><code class="language-bash">https://rawcdn.githack.com/[github用户名]/[仓库名]/[分支名]
+</code></pre>
 <h3 id="3、配置typora">3、配置typora</h3>
 <ul>
 <li>打开：<strong>文件 -&gt; 偏好设置 -&gt; 图像</strong></li>

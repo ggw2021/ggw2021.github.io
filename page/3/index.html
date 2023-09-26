@@ -15,7 +15,7 @@
   localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  highlight: undefined,
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -51,7 +51,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2023-09-26 16:24:11'
+  postUpdate: '2023-09-26 16:27:11'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -154,8 +154,13 @@
 
 输入样例：1 5 8 0 0 0 6 0 0
 这个采用的是先根遍历的方式创建的：首先读入根节点，然后一路向左创建新的节点，再向左搜索直至没有左节点，接着回溯至上一根节点寻找右节点，若无结束当层节点的递归，再返回上一个节点。这边要特别注意记得返回的是当前节点：
-1234567else&#123;		t = (struct node *)malloc(sizeof(struct node));		t-&gt;val = num;		//printf(&quot;%d&quot;, t-&gt;val);		t-&gt;left = create_tree(t-&gt;left);		t-&gt;right = create_tree(t-&gt;right); 	&#125;return t;
-ret ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/03/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" title="数据库系统原理"><img class="post_bg" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-38-36.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据库系统原理"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/03/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" title="数据库系统原理">数据库系统原理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-04T16:15:57.262Z" title="发表于 2023-03-05 00:15:57">2023-03-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="content">思维导图
+	else&#123;
+			t = (struct node *)malloc(sizeof(struct node));
+			t-&gt;val = num;
+			//printf(&quot;%d&quot;, t-&gt;val);
+			t-&gt;left = create_tree(t-&gt;left);
+			t-&gt;right = create_tree(t-&gt;right); 
+		&#125;return  ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/03/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" title="数据库系统原理"><img class="post_bg" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-38-36.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据库系统原理"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/03/05/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" title="数据库系统原理">数据库系统原理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-04T16:15:57.262Z" title="发表于 2023-03-05 00:15:57">2023-03-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="content">思维导图
 部分内容，气死了，后面的由于被旧文件覆盖丢失了
 Chapter1_Introduction
 
@@ -233,10 +238,18 @@ SPARKS 语言是一种算法描述语言，这种语言具有精简易懂的特�
 
 1、基本数据类型
 整型、实型、布尔型、字符型
-1234567integer x,y;double z,w;boolean a,b;char c,d;
+integer x,y;
+
+double z,w;
+
+boolean a,b;
+
+char c,d;
+
 2、赋值语句
 将y的值赋给x
-1x&lt;-y
+x&lt;-y
+
 3、两个布尔值
 true   false
 为了产生这两个布尔值，设置了逻辑运算符
@@ -250,7 +263,10 @@ integer A(l1:u1, l2:u2, ..., ln,un)
 例如：
 integer A(5,7:20)
 5、 条件语句
-12345if cond then     S1else    ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/01/27/html/" title="HTML5"><img class="post_bg" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/web/html/Snipaste_2023-01-27_23-01-55.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTML5"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/01/27/html/" title="HTML5">HTML5</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-27T15:03:22.947Z" title="发表于 2023-01-27 23:03:22">2023-01-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="content">【pink老师视频yyds】
+if cond then
+     S1
+else
+      ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/01/27/html/" title="HTML5"><img class="post_bg" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/web/html/Snipaste_2023-01-27_23-01-55.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTML5"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/01/27/html/" title="HTML5">HTML5</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-27T15:03:22.947Z" title="发表于 2023-01-27 23:03:22">2023-01-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="content">【pink老师视频yyds】
 一、HTML简介
 1、网页
 
@@ -379,23 +395,30 @@ B站视频
 由于脚本中 @ECHO 后面没有参数。而没有 参数的 ECHO, 会把当前脚本 ECHO 命令行的状态(ON/OFF)显示出来，显示出的结果也就是：ECHO is off/ECHO is on.
 解决：加上@echo off
 清屏
-1cls
+cls
+
 二 、批处理运算操作
 1、算数运算
 （1）命令模式
-1set \a 表达式
+set \a 表达式
+
 案例：
 
 （2）文本模式
 案例
-1234@echo offset /a var = 1 + 2echo %var%pause
+@echo off
+set /a var = 1 + 2
+echo %var%
+pause
+
 输出结果
 
 2、重定向操作运算
 （1）&gt;、&gt;&gt; 效果同Linux
 （2）&lt;、&lt;&lt; 效果同Linux
 查看文件内容
-1type 文件
+type 文件
+
 案例
 
 3、多命令运算
@@ -404,11 +427,13 @@ B站视频
 
 4、管道运算
 查看当前目录下文件和目录
-1dir
+dir
+
 |效果同linux
 三、批处理基本命令
 1、命令格式
-1命令 子命令 参数 操作
+命令 子命令 参数 操作
+
 命令帮助查看/?、/help
 
 2、批处理文件接收参数
@@ -416,7 +441,8 @@ B站视频
 案例：
 
 3、注释
-1rem 注释内容
+rem 注释内容
+
 或 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/01/05/%E8%A7%A3%E5%86%B3github%E6%89%93%E4%B8%8D%E5%BC%80%E8%BF%9B%E4%B8%8D%E5%8E%BB%E7%9A%84%E9%97%AE%E9%A2%98/" title="简单实用，解决github打不开进不去的问题"><img class="post_bg" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-08-41.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="简单实用，解决github打不开进不去的问题"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/01/05/%E8%A7%A3%E5%86%B3github%E6%89%93%E4%B8%8D%E5%BC%80%E8%BF%9B%E4%B8%8D%E5%8E%BB%E7%9A%84%E9%97%AE%E9%A2%98/" title="简单实用，解决github打不开进不去的问题">简单实用，解决github打不开进不去的问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-05T11:17:08.506Z" title="发表于 2023-01-05 19:17:08">2023-01-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%97%AE%E9%A2%98/">问题</a></span></div><div class="content">
 
 1、网易UU加速器
@@ -442,7 +468,10 @@ ps：如果没有安装的话下载网址在这里哦
 
 
 查看版本
-123javac –version或者java –version 
+javac –version
+或者
+java –version 
+
 
 
 2、Java程序
@@ -453,10 +482,19 @@ ps：如果没有安装的话下载网址在这里哦
 
 编译代码、运行代码
 
-123456// HelloWorld.javapublic class HelloWorld &#123;    public static void main(String[] args) &#123;        System.out.println(&quot;hello world&quot;);    &#125;&#125;
-12javac HelloWorld.javajava HelloWorld
+// HelloWorld.java
+public class HelloWorld &#123;
+    public static void main(String[] args) &#123;
+        System.out.println(&quot;hello world&quot;);
+    &#125;
+&#125;
+
+javac HelloWorld.java
+java HelloWorld
+
 jdk11开始，可以直接运行
-1java HelloWorld
+java HelloWorld
+
 3、IDEA使用
 
 
@@ -486,7 +524,7 @@ main/psvm、sout、…
 
 
 Ctrl + D
-复制当前行数据到 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ggw &amp; xpl</div><div class="author-info__description">笔记和解决的问题</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ggw2021"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/380394750" target="_blank" title=""><i class="fa-brands fa-bilibili"></i></a><a class="social-icon" href="https://blog.csdn.net/qq_53131850?spm=1000.2115.3001.5343" target="_blank" title=""><i class="fa-sharp fa-solid fa-copyright"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">自己的博客网站，看笔记用的。大家想看也可以看，但是别商用。</div></div><div class="sticky_layout"><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/github/" style="font-size: 1.35em; color: rgb(47, 148, 87)">github</a><a href="/tags/windows/" style="font-size: 1.15em; color: rgb(126, 177, 149)">windows</a><a href="/tags/%E8%80%83%E7%A0%94/" style="font-size: 1.45em; color: rgb(19, 76, 33)">考研</a><a href="/tags/markdown/" style="font-size: 1.25em; color: rgb(36, 16, 138)">markdown</a><a href="/tags/%E4%BC%AA%E4%BB%A3%E7%A0%81/" style="font-size: 1.15em; color: rgb(114, 77, 175)">伪代码</a><a href="/tags/php/" style="font-size: 1.15em; color: rgb(132, 195, 175)">php</a><a href="/tags/python/" style="font-size: 1.35em; color: rgb(4, 19, 173)">python</a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 1.35em; color: rgb(45, 174, 187)">游戏</a><a href="/tags/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.25em; color: rgb(58, 175, 191)">算法与数据结构</a><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 1.25em; color: rgb(162, 179, 189)">人工智能</a><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 1.15em; color: rgb(22, 43, 147)">数据库</a><a href="/tags/Java/" style="font-size: 1.15em; color: rgb(75, 107, 133)">Java</a><a href="/tags/web/" style="font-size: 1.15em; color: rgb(104, 86, 157)">web</a><a href="/tags/linux/" style="font-size: 1.15em; color: rgb(49, 128, 84)">linux</a></div></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">32</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-01-04T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">398.3k</div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-09-26T08:24:10.006Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function subtitleType () {
+复制当前行数据到 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ggw &amp; xpl</div><div class="author-info__description">笔记和解决的问题</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ggw2021"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/380394750" target="_blank" title=""><i class="fa-brands fa-bilibili"></i></a><a class="social-icon" href="https://blog.csdn.net/qq_53131850?spm=1000.2115.3001.5343" target="_blank" title=""><i class="fa-sharp fa-solid fa-copyright"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">自己的博客网站，看笔记用的。大家想看也可以看，但是别商用。</div></div><div class="sticky_layout"><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/github/" style="font-size: 1.35em; color: rgb(162, 25, 49)">github</a><a href="/tags/%E8%80%83%E7%A0%94/" style="font-size: 1.45em; color: rgb(105, 113, 123)">考研</a><a href="/tags/windows/" style="font-size: 1.15em; color: rgb(130, 31, 174)">windows</a><a href="/tags/markdown/" style="font-size: 1.25em; color: rgb(151, 11, 16)">markdown</a><a href="/tags/%E4%BC%AA%E4%BB%A3%E7%A0%81/" style="font-size: 1.15em; color: rgb(82, 137, 23)">伪代码</a><a href="/tags/php/" style="font-size: 1.15em; color: rgb(88, 37, 33)">php</a><a href="/tags/python/" style="font-size: 1.35em; color: rgb(22, 106, 134)">python</a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 1.35em; color: rgb(80, 138, 130)">游戏</a><a href="/tags/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.25em; color: rgb(145, 137, 187)">算法与数据结构</a><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 1.25em; color: rgb(49, 192, 90)">人工智能</a><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 1.15em; color: rgb(24, 148, 5)">数据库</a><a href="/tags/Java/" style="font-size: 1.15em; color: rgb(25, 54, 25)">Java</a><a href="/tags/web/" style="font-size: 1.15em; color: rgb(71, 127, 75)">web</a><a href="/tags/linux/" style="font-size: 1.15em; color: rgb(66, 111, 111)">linux</a></div></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">32</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-01-04T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">396.6k</div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-09-26T08:27:10.452Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function subtitleType () {
   if (true) { 
     window.typed = new Typed("#subtitle", {
       strings: ["每一步都算数。","在太阳消失四分之三时，会有故人来寻冷僵的你，不要害怕死亡带来的分别，不要害怕雪原里碎裂的逆十字架。不要害怕活着，或者死去的我，不要害怕我离开你的夏天。","我是一个没有夏天的陨落神明，但我拥有一整个等待你的冬日。","狂风将初夏宠爱的娇蕊作践，夏天租赁的时期未免太短，太阳灼烈如神明遗落的一柄眼。","颠倒世界的一万六千亩玫瑰凋落了，但你的长夏永远不会凋落——那是连神明都夸口称赞过美丽的夏天。"],
