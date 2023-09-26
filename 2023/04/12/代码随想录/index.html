@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>代码随想录刷题代码 | ggw和xpl的博客</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="【代码随想录】 一、数组 704.二分查找 力扣题目链接 class Solution &amp;#123; public:     int search(vector&amp; nums, int target) &amp;#123;         int left &#x3D; 0, right &#x3D; nums.size() - 1;         int center &#x3D; 0;    &#x2F;&#x2F; 二分位置         whi">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>代码随想录刷题代码 | ggw和xpl的博客</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="【代码随想录】 一、数组 704.二分查找 力扣题目链接 class Solution &amp;#123; public:     int search(vector&lt;int&gt;&amp; nums, int target) &amp;#123;         int left &#x3D; 0, right &#x3D; nums.size() - 1;         int center &#x3D; 0;    &#x2F;&#x2F; 二">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代码随想录刷题代码">
 <meta property="og:url" content="https://gxblogs.netlify.app/2023/04/12/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95/index.html">
 <meta property="og:site_name" content="ggw和xpl的博客">
-<meta property="og:description" content="【代码随想录】 一、数组 704.二分查找 力扣题目链接 class Solution &amp;#123; public:     int search(vector&amp; nums, int target) &amp;#123;         int left &#x3D; 0, right &#x3D; nums.size() - 1;         int center &#x3D; 0;    &#x2F;&#x2F; 二分位置         whi">
+<meta property="og:description" content="【代码随想录】 一、数组 704.二分查找 力扣题目链接 class Solution &amp;#123; public:     int search(vector&lt;int&gt;&amp; nums, int target) &amp;#123;         int left &#x3D; 0, right &#x3D; nums.size() - 1;         int center &#x3D; 0;    &#x2F;&#x2F; 二">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ggw2021/images@main/leetcode/carl/Snipaste_2023-04-12_18-54-09.png">
 <meta property="article:published_time" content="2023-04-12T11:03:40.856Z">
-<meta property="article:modified_time" content="2023-09-26T07:36:08.625Z">
+<meta property="article:modified_time" content="2023-09-26T07:41:03.297Z">
 <meta property="article:author" content="ggw &amp; xpl">
 <meta property="article:tag" content="算法与数据结构">
 <meta name="twitter:card" content="summary">
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2023-09-26 15:36:08'
+  postUpdate: '2023-09-26 15:41:03'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,20 +142,20 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/leetcode/carl/Snipaste_2023-04-12_18-54-09.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">代码随想录刷题代码</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-12T11:03:40.856Z" title="发表于 2023-04-12 19:03:40">2023-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-26T07:36:08.625Z" title="更新于 2023-09-26 15:36:08">2023-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">10.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>55分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/04/12/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/04/12/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>【<a target="_blank" rel="noopener" href="https://www.programmercarl.com/">代码随想录</a>】</p>
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/leetcode/carl/Snipaste_2023-04-12_18-54-09.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">代码随想录刷题代码</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-12T11:03:40.856Z" title="发表于 2023-04-12 19:03:40">2023-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-26T07:41:03.297Z" title="更新于 2023-09-26 15:41:03">2023-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">12.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>66分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/04/12/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/04/12/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>【<a target="_blank" rel="noopener" href="https://www.programmercarl.com/">代码随想录</a>】</p>
 <h1>一、数组</h1>
 <h2 id="704-二分查找">704.二分查找</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-search/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    int search(vector<int>& nums, int target) &#123;
+    int search(vector&lt;int&gt;&amp; nums, int target) &#123;
         int left = 0, right = nums.size() - 1;
         int center = 0;    // 二分位置
-        while (left <= right) &#123;
+        while (left &lt;= right) &#123;
             center = (left + right) / 2;
             if (nums[center] == target) return center;
-            if (nums[center] > target) right = center - 1;
-            if (nums[center] < target) left = center + 1;
+            if (nums[center] &gt; target) right = center - 1;
+            if (nums[center] &lt; target) left = center + 1;
         &#125;
         // --查找失败--
         return -1;
@@ -171,15 +171,15 @@ public:
 <h2 id="27-移除元素">27.移除元素</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-element/">力扣题目链接</a></p>
 <p><strong>1、暴力解法</strong>：</p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    int removeElement(vector<int>& nums, int val) &#123;
+    int removeElement(vector&lt;int&gt;&amp; nums, int val) &#123;
         int nowLength = nums.size();  // 记录现在长度
-        for (int i = 0; i < nowLength; i++) &#123;
+        for (int i = 0; i &lt; nowLength; i++) &#123;
             // --逐个查找--
             if (nums[i] == val) &#123;
                 // --删除元素--
-                for (int j = i; j < nowLength - 1; j++) &#123;
+                for (int j = i; j &lt; nowLength - 1; j++) &#123;
                     nums[j] = nums[j + 1];
                 &#125;
                 // --改变上界--
@@ -199,13 +199,13 @@ public:
 </ul>
 <p><strong>2、快慢指针</strong>：</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://code-thinking.cdn.bcebos.com/gifs/27.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95.gif" alt="27.移除元素-双指针法"></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    int removeElement(vector<int>& nums, int val) &#123;
+    int removeElement(vector&lt;int&gt;&amp; nums, int val) &#123;
         int len = nums.size();  // 执行一次
         int slow = 0;
         // --看n次，值为val的舍弃（即需要值不为val的选出来放到新位置（slow）上）--
-        for (int fast = 0; fast < len; fast++) &#123;
+        for (int fast = 0; fast &lt; len; fast++) &#123;
             if (nums[fast] != val) &#123;
                 nums[slow++] = nums[fast];
             &#125;
@@ -221,11 +221,11 @@ public:
 <h2 id="977-有序数组的平方">977.有序数组的平方</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/squares-of-a-sorted-array/">力扣题目链接</a></p>
 <p><strong>1、平方后排序</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    vector<int> sortedSquares(vector<int>& nums) &#123;
+    vector&lt;int&gt; sortedSquares(vector&lt;int&gt;&amp; nums) &#123;
         int len = nums.size();
-        for (int i = 0; i < len; i++) &#123;
+        for (int i = 0; i &lt; len; i++) &#123;
             nums[i] = nums[i] * nums[i];
         &#125;
         // --快排--
@@ -236,17 +236,17 @@ public:
 </code></pre>
 <p>时间复杂度：O(nlogn)</p>
 <p><strong>2、双指针</strong></p>
-<pre class=" language-language-cpp"><code class="language-language-cpp">class Solution &#123;
+<pre><code class="language-cpp">class Solution &#123;
 public:
-    vector<int> sortedSquares(vector<int>& nums) &#123;
+    vector&lt;int&gt; sortedSquares(vector&lt;int&gt;&amp; nums) &#123;
         int len = nums.size();
         // --长度为len，初值为0--
-        vector<int> ans(len, 0);
+        vector&lt;int&gt; ans(len, 0);
         int cnt = len;
         int i = 0, j = len - 1;
-        while(i <= j) &#123;
+        while(i &lt;= j) &#123;
             // --前进左边--
-            if (nums[i] * nums[i] > nums[j] * nums[j]) &#123;
+            if (nums[i] * nums[i] &gt; nums[j] * nums[j]) &#123;
                 ans[--cnt] = nums[i] * nums[i];
                 i++;
             &#125;
@@ -266,29 +266,29 @@ public:
 <h2 id="209-长度最小的子数组">209.长度最小的子数组</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum/">力扣题目链接</a></p>
 <p><strong>快慢指针</strong>（滑动窗口）</p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    int minSubArrayLen(int target, vector<int>& nums) &#123;
+    int minSubArrayLen(int target, vector&lt;int&gt;&amp; nums) &#123;
         int len = nums.size();
         int fast = 0, slow = 0;     
         int sum = 0;    // 总和
         int ans = 0x7fffffff;
-        for (; fast <= len; fast++) &#123;
+        for (; fast &lt;= len; fast++) &#123;
             // --和小于target，加上右边--
-            if (fast < len && sum < target) &#123;
+            if (fast &lt; len &amp;&amp; sum &lt; target) &#123;
                 sum += nums[fast];
-                // printf("[sum:%d slow:%d, fast:%d, ans=%d]\n", sum, slow, fast, ans);
+                // printf(&quot;[sum:%d slow:%d, fast:%d, ans=%d]\n&quot;, sum, slow, fast, ans);
                 continue;
             &#125;
             // --和大于等于target，最小值更新；减去左边，slow向前移动，fast暂时不动--
-            if (sum >= target) &#123;
-                ans = (fast - slow) < ans ? (fast - slow) : ans;
+            if (sum &gt;= target) &#123;
+                ans = (fast - slow) &lt; ans ? (fast - slow) : ans;
                 sum -= nums[slow++];
                 fast--;
-                // printf("[sum:%d slow:%d, fast:%d, ans=%d]\n", sum, slow, fast, ans);
+                // printf(&quot;[sum:%d slow:%d, fast:%d, ans=%d]\n&quot;, sum, slow, fast, ans);
             &#125;
         &#125;
-        if (ans < 0x7fffffff) return ans;
+        if (ans &lt; 0x7fffffff) return ans;
         else return 0;
     &#125;
 &#125;;
@@ -300,12 +300,12 @@ public:
 <h2 id="59-螺旋矩阵II">59.螺旋矩阵II</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/spiral-matrix-ii/">力扣题目链接</a></p>
 <p><strong>1、一个一个看，走满就换方向</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     enum Direction &#123;RIGHT, DOWN, LEFT, UP&#125;d;
     // --是否越界--
     bool isOver(int x, int y, int maxX, int maxY) &#123;
-        if (x < 0 || y < 0 || x >= maxX || y >= maxY) return true;
+        if (x &lt; 0 || y &lt; 0 || x &gt;= maxX || y &gt;= maxY) return true;
         return false;
     &#125;
     // --转向--
@@ -318,60 +318,60 @@ public:
         &#125;
         return d;
     &#125;
-    vector<vector<int>> generateMatrix(int n) &#123;
-        vector<vector<int> > ans(n, vector<int>(n, 0)); // n*n，初值为0
+    vector&lt;vector&lt;int&gt;&gt; generateMatrix(int n) &#123;
+        vector&lt;vector&lt;int&gt; &gt; ans(n, vector&lt;int&gt;(n, 0)); // n*n，初值为0
         d = RIGHT;
         int x = 0, y = 0;
-        for (int i = 1; i <= n * n; i++) &#123;
+        for (int i = 1; i &lt;= n * n; i++) &#123;
             // --&#123;延伸&#125;或者&#123;转向 + 暂停一次位置&#125;
             switch (d) &#123;
                 case RIGHT:
-                    if (!isOver(x, y, n, n) && ans[x][y] == 0) &#123;
+                    if (!isOver(x, y, n, n) &amp;&amp; ans[x][y] == 0) &#123;
                         ans[x][y] = i;
                         y++;
                     &#125;
                     else &#123;
                         d = changeDirection(d);
-                        // printf("1(%d,%d,[%d])\n", x, y, d);
+                        // printf(&quot;1(%d,%d,[%d])\n&quot;, x, y, d);
                         i--;
                         // --放到正确的位置上--
                         y--; x++;
                     &#125;
                     break;
                 case DOWN:
-                    if (!isOver(x, y, n, n) && ans[x][y] == 0) &#123;
+                    if (!isOver(x, y, n, n) &amp;&amp; ans[x][y] == 0) &#123;
                         ans[x][y] = i;
                         x++;
                     &#125;
                     else &#123;
                         d = changeDirection(d);
-                        // printf("2(%d,%d,[%d])\n", x, y, d);
+                        // printf(&quot;2(%d,%d,[%d])\n&quot;, x, y, d);
                         i--;
                         // --放到正确的位置上--
                         x--; y--;
                     &#125;
                     break;
                 case LEFT:
-                    if (!isOver(x, y, n, n) && ans[x][y] == 0) &#123;
+                    if (!isOver(x, y, n, n) &amp;&amp; ans[x][y] == 0) &#123;
                         ans[x][y] = i;
                         y--;
                     &#125;
                     else &#123;
                         d = changeDirection(d);
-                        // printf("3(%d,%d,[%d])\n", x, y, d);
+                        // printf(&quot;3(%d,%d,[%d])\n&quot;, x, y, d);
                         i--;
                         // --放到正确的位置上--
                         y++; x--;
                     &#125;
                     break;
                 case UP:
-                    if (!isOver(x, y, n, n) && ans[x][y] == 0) &#123;
+                    if (!isOver(x, y, n, n) &amp;&amp; ans[x][y] == 0) &#123;
                         ans[x][y] = i;
                         x--;
                     &#125;
                     else &#123;
                         d = changeDirection(d);
-                        // printf("4(%d,%d,[%d])\n", x, y, d);
+                        // printf(&quot;4(%d,%d,[%d])\n&quot;, x, y, d);
                         i--;
                         // --放到正确的位置上--
                         x++; y++;
@@ -391,7 +391,7 @@ public:
 <h2 id="203-移除链表元素">203.移除链表元素</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-linked-list-elements/">力扣题目链接</a></p>
 <p><strong>增加哨兵节点</strong>（养成删除内存的习惯）</p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for singly-linked list.
  * struct ListNode &#123;
  *     int val;
@@ -408,18 +408,18 @@ public:
         if (!head)  return nullptr;
         // --增加一个哨兵节点--
         ListNode* head0 = new ListNode;
-        head0->next = head;
+        head0-&gt;next = head;
         ListNode* tmp = head0;
         // --遍历--
         while (tmp) &#123;
             // --删除--
-            if (tmp->next && tmp->next->val == val) &#123;
-                tmp->next = tmp->next->next;
+            if (tmp-&gt;next &amp;&amp; tmp-&gt;next-&gt;val == val) &#123;
+                tmp-&gt;next = tmp-&gt;next-&gt;next;
                 continue;   // 不然会跳判
             &#125;
-            tmp = tmp->next;
+            tmp = tmp-&gt;next;
         &#125;
-        return head0->next;
+        return head0-&gt;next;
     &#125;
 &#125;;
 </code></pre>
@@ -429,7 +429,7 @@ public:
 <h2 id="707-设计链表">707.设计链表</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-linked-list/">力扣题目链接</a></p>
 <p>遇到tmp-&gt;next，还是判一下tmp吧</p>
-<pre class=" language-language-C++"><code class="language-language-C++">class MyLinkedList &#123;
+<pre><code class="language-C++">class MyLinkedList &#123;
 public:
     // --单链表--
     struct ListNode &#123;
@@ -446,44 +446,44 @@ public:
     &#125;
     // --获取index位置的值，不存在返回-1--
     int get(int index) &#123;
-        ListNode *tmp = head->next;
+        ListNode *tmp = head-&gt;next;
         while (index--) &#123;
             if (!tmp) return -1;
-            tmp = tmp->next;
+            tmp = tmp-&gt;next;
         &#125;
         if (!tmp) return -1;
-        return tmp->val;
+        return tmp-&gt;val;
     &#125;
     // --加到开头--
     void addAtHead(int val) &#123;
         ListNode *newNode = new ListNode(val);
-        newNode->next = head->next;
-        head->next = newNode;
+        newNode-&gt;next = head-&gt;next;
+        head-&gt;next = newNode;
     &#125;
     // --加到结尾--
     void addAtTail(int val) &#123;
         ListNode *newNode = new ListNode(val);
         ListNode *tmp = head;
-        while (tmp->next) tmp = tmp->next;
-        tmp->next = newNode;
+        while (tmp-&gt;next) tmp = tmp-&gt;next;
+        tmp-&gt;next = newNode;
     &#125;
     // --加到index位置前--
     void addAtIndex(int index, int val) &#123;
         ListNode *newNode = new ListNode(val);
         ListNode *tmp = head;
-        while (index-- && tmp) tmp = tmp->next;
-        if (index > 0 || !tmp) return;
-        newNode->next = tmp->next;
-        tmp->next = newNode;
+        while (index-- &amp;&amp; tmp) tmp = tmp-&gt;next;
+        if (index &gt; 0 || !tmp) return;
+        newNode-&gt;next = tmp-&gt;next;
+        tmp-&gt;next = newNode;
     &#125;
     // --删除index节点--
     void deleteAtIndex(int index) &#123;
         ListNode *tmp = head;
-        // --目标为tmp->next
-        while (index-- && tmp) tmp = tmp->next;
-        if (index > 0 || !tmp || !tmp->next) return;
-        ListNode *need2Delete = tmp->next;
-        tmp->next = tmp->next->next;
+        // --目标为tmp-&gt;next
+        while (index-- &amp;&amp; tmp) tmp = tmp-&gt;next;
+        if (index &gt; 0 || !tmp || !tmp-&gt;next) return;
+        ListNode *need2Delete = tmp-&gt;next;
+        tmp-&gt;next = tmp-&gt;next-&gt;next;
         delete need2Delete;
     &#125;
 &#125;;
@@ -491,17 +491,17 @@ public:
 /**
  * Your MyLinkedList object will be instantiated and called as such:
  * MyLinkedList* obj = new MyLinkedList();
- * int param_1 = obj->get(index);
- * obj->addAtHead(val);
- * obj->addAtTail(val);
- * obj->addAtIndex(index,val);
- * obj->deleteAtIndex(index);
+ * int param_1 = obj-&gt;get(index);
+ * obj-&gt;addAtHead(val);
+ * obj-&gt;addAtTail(val);
+ * obj-&gt;addAtIndex(index,val);
+ * obj-&gt;deleteAtIndex(index);
  */
 </code></pre>
 <h2 id="206-反转链表">206.反转链表</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-linked-list/">力扣题目链接</a></p>
 <p><strong>1、双指针法</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for singly-linked list.
  * struct ListNode &#123;
  *     int val;
@@ -514,17 +514,17 @@ public:
 class Solution &#123;
 public:
     ListNode* reverseList(ListNode* head) &#123;
-        if (!head || !head->next) return head;
+        if (!head || !head-&gt;next) return head;
         // --一次记录两个节点--
         ListNode *slow = head;
-        ListNode *fast = head->next;
+        ListNode *fast = head-&gt;next;
         ListNode *tmp = nullptr;
         // --第一个先指向空--
-        slow->next = nullptr;
+        slow-&gt;next = nullptr;
         while (fast) &#123;
             // --改为：后一个指向前一个--
-            tmp = fast->next;
-            fast->next = slow;
+            tmp = fast-&gt;next;
+            fast-&gt;next = slow;
             slow = fast;
             fast = tmp;
         &#125;
@@ -538,7 +538,7 @@ public:
 <p>2、递归法</p>
 <h2 id="24-两两交换链表中的节点">24.两两交换链表中的节点</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/swap-nodes-in-pairs/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for singly-linked list.
  * struct ListNode &#123;
  *     int val;
@@ -551,23 +551,23 @@ public:
 class Solution &#123;
 public:
     ListNode* swapPairs(ListNode* head) &#123;
-        if (!head || !head->next) return head;
+        if (!head || !head-&gt;next) return head;
         // --添加一个哨兵节点--
         // --一次记录三个节点--
         ListNode *head0 = new ListNode(0, head);
         ListNode *pre = head0;
-        ListNode *key1 = head, *key2 = head->next;
+        ListNode *key1 = head, *key2 = head-&gt;next;
         while (1) &#123;
             // --改变结构--
-            pre->next = key2;
-            key1->next = key2->next;
-            key2->next = key1;
+            pre-&gt;next = key2;
+            key1-&gt;next = key2-&gt;next;
+            key2-&gt;next = key1;
             // --准备下一次操作--
             pre = key1;
-            key1 = key1->next;
-            if (!key1) return head0->next;
-            key2 = key1->next;
-            if (!key2) return head0->next;
+            key1 = key1-&gt;next;
+            if (!key1) return head0-&gt;next;
+            key2 = key1-&gt;next;
+            if (!key2) return head0-&gt;next;
         &#125;
     &#125;
 &#125;;
@@ -578,7 +578,7 @@ public:
 <h2 id="19-删除链表的倒数第N个节点">19.删除链表的倒数第N个节点</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-nth-node-from-end-of-list/">力扣题目链接</a></p>
 <p><strong>1、循环两次</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for singly-linked list.
  * struct ListNode &#123;
  *     int val;
@@ -595,7 +595,7 @@ public:
         int cnt = 0;
         while (head) &#123;
             cnt++;
-            head = head->next;
+            head = head-&gt;next;
         &#125;
         return cnt;
     &#125;
@@ -603,7 +603,7 @@ public:
         // --倒数化为正数--
         n = count(head) - n + 1;
         // --只有一个的话，n也只能为1了--
-        if (!head->next) &#123;
+        if (!head-&gt;next) &#123;
             delete head;
             return nullptr;
         &#125;
@@ -612,11 +612,11 @@ public:
         ListNode *fast = head0, *slow = nullptr;
         while (n--) &#123;
             slow = fast;
-            fast = fast->next;
+            fast = fast-&gt;next;
         &#125;
-        slow->next = fast->next;
+        slow-&gt;next = fast-&gt;next;
         delete fast;
-        return head0->next;
+        return head0-&gt;next;
     &#125;
 &#125;;
 </code></pre>
@@ -624,7 +624,7 @@ public:
 <li>时间复杂度：O(2n)</li>
 </ul>
 <p><strong>2、双指针【进阶】</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for singly-linked list.
  * struct ListNode &#123;
  *     int val;
@@ -640,19 +640,19 @@ public:
         // --增加一个哨兵节点--
         ListNode *head0 = new ListNode(0, head);
         ListNode *fast = head0, *slow = head0;
-        // --fast比slow块n个，fast都是有效节点，slow->next是最后要删除的节点--
+        // --fast比slow块n个，fast都是有效节点，slow-&gt;next是最后要删除的节点--
         // --fast先前进n次--
-        while (n--) fast = fast->next;
+        while (n--) fast = fast-&gt;next;
         // --fast和slow一起前进，知道fast取到最后一个有效节点--
-        while (fast->next) &#123;
-            fast = fast->next;
-            slow = slow->next;
+        while (fast-&gt;next) &#123;
+            fast = fast-&gt;next;
+            slow = slow-&gt;next;
         &#125;
-        // --删除slow->next--
-        ListNode *need2Delete = slow->next;
-        slow->next = slow->next->next;
+        // --删除slow-&gt;next--
+        ListNode *need2Delete = slow-&gt;next;
+        slow-&gt;next = slow-&gt;next-&gt;next;
         delete need2Delete;
-        return head0->next;
+        return head0-&gt;next;
     &#125;
 &#125;;
 </code></pre>
@@ -662,7 +662,7 @@ public:
 <h2 id="面试题-02-07-链表相交">面试题 02.07. 链表相交</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-linked-lists-lcci/">力扣题目链接</a></p>
 <p>同：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-linked-lists/">160. 相交链表 - 力扣（Leetcode）</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for singly-linked list.
  * struct ListNode &#123;
  *     int val;
@@ -677,28 +677,28 @@ public:
         int cnt = 0;
         while (head) &#123;
             cnt++;
-            head = head->next;
+            head = head-&gt;next;
         &#125;
         return cnt;
     &#125;
-    // --传入的值nA >= nB--
+    // --传入的值nA &gt;= nB--
     ListNode *findAnsNode(int nA, int nB, ListNode *headA, ListNode *headB) &#123;
         // --headA先前进nA - nB个--
-        for (int i = 0; i < nA - nB; i++) headA = headA->next;
+        for (int i = 0; i &lt; nA - nB; i++) headA = headA-&gt;next;
         if (headA == headB) return headA;
         while (nB--) &#123;
             // --走到最后都没有相等--
-            if (!headA->next || !headB->next) return nullptr;
-            // --目标是->next--
-            if (headA->next == headB->next) return headA->next;
-            headA = headA->next;
-            headB = headB->next;
+            if (!headA-&gt;next || !headB-&gt;next) return nullptr;
+            // --目标是-&gt;next--
+            if (headA-&gt;next == headB-&gt;next) return headA-&gt;next;
+            headA = headA-&gt;next;
+            headB = headB-&gt;next;
         &#125;
         return nullptr;
     &#125;
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) &#123;
         int nA = count(headA), nB = count(headB);
-        if (nA >= nB) return findAnsNode(nA, nB, headA, headB);
+        if (nA &gt;= nB) return findAnsNode(nA, nB, headA, headB);
         else return findAnsNode(nB, nA, headB, headA);
     &#125;
 &#125;;
@@ -715,7 +715,7 @@ public:
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/linked-list-cycle-ii/">力扣题目链接</a></p>
 <p><strong>找到相遇点</strong></p>
 <p><img src="/static/imgs/loading.gif" data-original="https://code-thinking-1253855093.file.myqcloud.com/pics/20210318165123581.png" alt=""></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for singly-linked list.
  * struct ListNode &#123;
  *     int val;
@@ -727,10 +727,10 @@ class Solution &#123;
 public:
     ListNode *detectCycle(ListNode *head) &#123;
         ListNode *slow = head, *fast = head;
-        while (fast && fast->next) &#123;
+        while (fast &amp;&amp; fast-&gt;next) &#123;
             // --slow移动一步， fast移动两步--
-            slow = slow->next;
-            fast = fast->next->next;
+            slow = slow-&gt;next;
+            fast = fast-&gt;next-&gt;next;
             // --相遇了--
             if (slow == fast) &#123;
                 // --x：起始点到环入口的距离--
@@ -741,8 +741,8 @@ public:
                 // --slow从起点开始，fast从相遇点开始--
                 slow = head; 
                 while (slow != fast) &#123;
-                    slow = slow->next;
-                    fast = fast->next;
+                    slow = slow-&gt;next;
+                    fast = fast-&gt;next;
                 &#125;
                 return slow;
             &#125;
@@ -755,18 +755,18 @@ public:
 <h1>三、哈希表</h1>
 <h2 id="242-有效的字母异位词">242.有效的字母异位词</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-anagram/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     bool isAnagram(string s, string t) &#123;
-        vector<int> charSet(26, 0);
+        vector&lt;int&gt; charSet(26, 0);
         int ns = s.size(), nt = t.size();
-        for (int i = 0; i < ns; i++) &#123;
+        for (int i = 0; i &lt; ns; i++) &#123;
             charSet[s[i] - 'a']++;
         &#125;
-        for (int i = 0; i < nt; i++) &#123;
+        for (int i = 0; i &lt; nt; i++) &#123;
             charSet[t[i] - 'a']--;
         &#125;
-        for (int i = 0; i < 26; i++) &#123;
+        for (int i = 0; i &lt; 26; i++) &#123;
             if (charSet[i] != 0) return false;
         &#125;
         return true;
@@ -776,42 +776,42 @@ public:
 <h2 id="349-两个数组的交集">349.两个数组的交集</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-arrays/">力扣题目链接</a></p>
 <p>1、哈希表</p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) &#123;
-        unordered_set<int> ans;
-        unordered_set<int> nums1_set(nums1.begin(), nums1.end());
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) &#123;
+        unordered_set&lt;int&gt; ans;
+        unordered_set&lt;int&gt; nums1_set(nums1.begin(), nums1.end());
         for (int item : nums2) &#123;
             // --在nums1中，但是不重复出现--
             if (nums1_set.find(item) != nums1_set.end()) &#123;
                 ans.insert(item);	
             &#125;
         &#125;
-        return vector<int>(ans.begin(), ans.end());
+        return vector&lt;int&gt;(ans.begin(), ans.end());
     &#125;
 &#125;;
 </code></pre>
 <p>2、数组做哈希表</p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) &#123;
-        unordered_set<int> ans;
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) &#123;
+        unordered_set&lt;int&gt; ans;
         int record[1000] = &#123;0&#125;; // 初始化为0
         int n1 = nums1.size(), n2 = nums2.size();
-        for (int i = 0; i < n1; i++) &#123;
+        for (int i = 0; i &lt; n1; i++) &#123;
             record[nums1[i]] = 1;
         &#125;
-        for (int i = 0; i < n2; i++) &#123;
+        for (int i = 0; i &lt; n2; i++) &#123;
             if (record[nums2[i]]) ans.insert(nums2[i]);
         &#125;
-        return vector<int>(ans.begin(), ans.end());;
+        return vector&lt;int&gt;(ans.begin(), ans.end());;
     &#125;
 &#125;;
 </code></pre>
 <h2 id="202-快乐数">202.快乐数</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/happy-number/">力扣题目链接</a></p>
 <p>1、快慢指针 + 递归</p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     // --计算位平方和--
     int getSum(int n) &#123;
@@ -838,7 +838,7 @@ public:
 &#125;;
 </code></pre>
 <p>2、哈希表</p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     // --计算位平方和--
     int getSum(int n) &#123;
@@ -849,7 +849,7 @@ public:
         &#125;
         return sum;
     &#125;
-    bool judge(int n, unordered_set<int>& cnt) &#123;
+    bool judge(int n, unordered_set&lt;int&gt;&amp; cnt) &#123;
         if (n == 1) return true;
         if (cnt.find(n) != cnt.end()) &#123;
             return false;
@@ -862,25 +862,25 @@ public:
     &#125;
     bool isHappy(int n) &#123;
         // --哈希表（元素不重复）--
-        unordered_set<int> cnt;
+        unordered_set&lt;int&gt; cnt;
         return judge(n, cnt);
     &#125;
 &#125;;
 </code></pre>
 <h2 id="1-两数之和">1.两数之和</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    vector<int> twoSum(vector<int>& nums, int target) &#123;
-        unordered_map<int, int> record;
+    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;
+        unordered_map&lt;int, int&gt; record;
         // --查找差是否在map中--
         int n = nums.size();
-        for (int i = 0; i < n; i++) &#123;
+        for (int i = 0; i &lt; n; i++) &#123;
             if (record.find(target - nums[i]) != record.end()) &#123;
-                return &#123;i, record.find(target - nums[i])->second&#125;;
+                return &#123;i, record.find(target - nums[i])-&gt;second&#125;;
             &#125;
             // --不在则记到map中--
-            record.insert(pair<int, int>(nums[i], i));
+            record.insert(pair&lt;int, int&gt;(nums[i], i));
         &#125;
         return &#123;&#125;;
     &#125;
@@ -888,12 +888,12 @@ public:
 </code></pre>
 <h2 id="454-四数相加II">454.四数相加II</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/4sum-ii/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) &#123;
+    int fourSumCount(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2, vector&lt;int&gt;&amp; nums3, vector&lt;int&gt;&amp; nums4) &#123;
         int ans = 0;
         int n1 = nums1.size(), n2 = nums2.size(), n3 = nums3.size(), n4 = nums4.size();
-        unordered_map<int, int> map;
+        unordered_map&lt;int, int&gt; map;
         for (int i : nums1) &#123;
             for (int j : nums2) &#123;
                 map[i + j]++;
@@ -913,16 +913,16 @@ public:
 </code></pre>
 <h2 id="383-赎金信">383.赎金信</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ransom-note/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     bool canConstruct(string ransomNote, string magazine) &#123;
-        vector<int> mCnt(26, 0);  // 记录杂志字母出现次数
+        vector&lt;int&gt; mCnt(26, 0);  // 记录杂志字母出现次数
         for (char i : magazine)
             mCnt[i - 'a']++;
         for (char i : ransomNote) &#123;
             mCnt[i - 'a']--;
             // --单词不够了--
-            if (mCnt[i - 'a'] < 0) return false;
+            if (mCnt[i - 'a'] &lt; 0) return false;
         &#125;
         return true;
     &#125;
@@ -935,11 +935,11 @@ public:
 <h1>四、字符串</h1>
 <h2 id="344-反转字符串">344.反转字符串</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-string/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
-    void reverseString(vector<char>& s) &#123;
+    void reverseString(vector&lt;char&gt;&amp; s) &#123;
         int left = 0, right = s.size() - 1;
-        while (left < right) &#123;
+        while (left &lt; right) &#123;
             char tmp = s[left];
             s[left] = s[right];
             s[right] = tmp;
@@ -950,11 +950,11 @@ public:
 </code></pre>
 <h2 id="541-反转字符串II">541.反转字符串II</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-string-ii/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     // --修改了344.反转字符串的代码--
-    void reverseString(string& s, int left, int right) &#123;
-        while (left < right) &#123;
+    void reverseString(string&amp; s, int left, int right) &#123;
+        while (left &lt; right) &#123;
             char tmp = s[left];
             s[left] = s[right];
             s[right] = tmp;
@@ -964,14 +964,14 @@ public:
     string reverseStr(string s, int k) &#123;
         int n = s.size();   // 获取长度
         int begin = 0;      // 第几2k的起止位置
-        for (int i = 0; i < n; i += 2 * k) &#123;
+        for (int i = 0; i &lt; n; i += 2 * k) &#123;
             // --判断一下剩余字符--
             int left = n - i;
-            if (left < k) &#123;
+            if (left &lt; k) &#123;
                 reverseString(s, begin, n - 1);
                 break;
             &#125;
-            else if (left < 2 * k) &#123;
+            else if (left &lt; 2 * k) &#123;
                 reverseString(s, begin, begin + k - 1);
                 break;
             &#125;
@@ -986,13 +986,13 @@ public:
 <h2 id="剑指Offer-05-替换空格">剑指Offer 05.替换空格</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ti-huan-kong-ge-lcof/">力扣题目链接</a></p>
 <p><img src="/static/imgs/loading.gif" data-original="https://code-thinking.cdn.bcebos.com/gifs/%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC.gif" alt=""></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     string replaceSpace(string s) &#123;
         // --计算空格数--
         int oldSize = s.size();
         int cnt = 0;
-        for (int i = 0; i < oldSize; i++) &#123;
+        for (int i = 0; i &lt; oldSize; i++) &#123;
             if (s[i] == ' ') cnt++;
         &#125;
         // --扩大数组，加上所有空格的大小（本来就占用一个了）--
@@ -1000,7 +1000,7 @@ public:
         int newSize = s.size();
         // --slow遍历，fast指向下一个存放的位置--
         int slow = oldSize - 1, fast = newSize - 1;
-        while (slow < fast) &#123;
+        while (slow &lt; fast) &#123;
             if (s[slow] == ' ') &#123;
                 s[fast--] = '0';
                 s[fast--] = '2';
@@ -1019,11 +1019,11 @@ public:
 </ul>
 <h2 id="151-翻转字符串里的单词">151.翻转字符串里的单词</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-words-in-a-string/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     // --修改了344.反转字符串的代码--
-    void reverseString(string& s, int left, int right) &#123;
-        while (left < right) &#123;
+    void reverseString(string&amp; s, int left, int right) &#123;
+        while (left &lt; right) &#123;
             char tmp = s[left];
             s[left] = s[right];
             s[right] = tmp;
@@ -1031,11 +1031,11 @@ public:
         &#125;
     &#125;
     // --处理多余空格--
-    void processSpaces(string& s) &#123;
+    void processSpaces(string&amp; s) &#123;
         int slow = 0;
         int n = s.size();
         int flag = 0;   // 1；遇到过单词
-        for (int fast = 0; fast < n; fast++) &#123;
+        for (int fast = 0; fast &lt; n; fast++) &#123;
             if (s[fast] != ' ') &#123;
                 flag = 1;
                 s[slow++] = s[fast];
@@ -1058,7 +1058,7 @@ public:
         // --每个单词进行翻转--
         int begin = 0, end = 0;
         int n = s.size();
-        while (end < n) &#123;
+        while (end &lt; n) &#123;
             // --区间为[begin, end - 1]--
             if (s[end] == ' ') &#123;
                 reverseString(s, begin, end - 1);
@@ -1075,11 +1075,11 @@ public:
 <h2 id="剑指Offer58-II-左旋转字符串">剑指Offer58-II.左旋转字符串</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/">力扣题目链接</a></p>
 <p>不开辟新的空间</p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     // --修改了344.反转字符串的代码--
-    void reverseString(string& s, int left, int right) &#123;
-        while (left < right) &#123;
+    void reverseString(string&amp; s, int left, int right) &#123;
+        while (left &lt; right) &#123;
             char tmp = s[left];
             s[left] = s[right];
             s[right] = tmp;
@@ -1098,18 +1098,18 @@ public:
 </code></pre>
 <h2 id="28-实现-strStr">28.实现 strStr()</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     // --获取模式串s的next数组--
-    vector<int> getNext(string s) &#123;
+    vector&lt;int&gt; getNext(string s) &#123;
         int n = s.size();
-        vector<int> next(n, 0);  // 大小和初值
+        vector&lt;int&gt; next(n, 0);  // 大小和初值
         int j = -1;
         next[0] = j;
         // --j + 1指向前缀的末尾，i指向后缀的末尾--
-        for (int i = 1; i < n; i++) &#123;
+        for (int i = 1; i &lt; n; i++) &#123;
             // --不匹配，j回退--
-            while (j >= 0 && s[j + 1] != s[i]) &#123;
+            while (j &gt;= 0 &amp;&amp; s[j + 1] != s[i]) &#123;
                 j = next[j];
             &#125;
             // --匹配，同时前进--
@@ -1122,12 +1122,12 @@ public:
     int strStr(string haystack, string needle) &#123;
         // --对于本题可以不写--
         if (needle.size() == 0) return 0;
-        vector<int> next = getNext(needle);
+        vector&lt;int&gt; next = getNext(needle);
         int n = haystack.size(), m = needle.size();
         int j = -1;
-        for (int i = 0; i < n; i++) &#123;
+        for (int i = 0; i &lt; n; i++) &#123;
             // --不匹配，j回退--
-            while (j >= 0 && needle[j + 1] != haystack[i]) &#123;
+            while (j &gt;= 0 &amp;&amp; needle[j + 1] != haystack[i]) &#123;
                 j = next[j];
             &#125;
             // --匹配，前进--
@@ -1143,18 +1143,18 @@ public:
 </code></pre>
 <h2 id="459-重复的子字符串">459.重复的子字符串</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/repeated-substring-pattern/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     // --来自28. 实现 strStr()--
-    vector<int> getNext(string s) &#123;
+    vector&lt;int&gt; getNext(string s) &#123;
         int n = s.size();
-        vector<int> next(n, 0);  // 大小和初值
+        vector&lt;int&gt; next(n, 0);  // 大小和初值
         int j = -1;
         next[0] = j;
         // --j + 1指向前缀的末尾，i指向后缀的末尾--
-        for (int i = 1; i < n; i++) &#123;
+        for (int i = 1; i &lt; n; i++) &#123;
             // --不匹配，j回退--
-            while (j >= 0 && s[j + 1] != s[i]) &#123;
+            while (j &gt;= 0 &amp;&amp; s[j + 1] != s[i]) &#123;
                 j = next[j];
             &#125;
             // --匹配，同时前进--
@@ -1166,9 +1166,9 @@ public:
     &#125;
     bool repeatedSubstringPattern(string s) &#123;
         if (s.size() == 0) return false;
-        vector<int> next = getNext(s);
+        vector&lt;int&gt; next = getNext(s);
         if (next[next.size() - 1] != -1 
-        && s.size() % (next.size() - next[next.size() - 1] - 1) == 0)
+        &amp;&amp; s.size() % (next.size() - next[next.size() - 1] - 1) == 0)
         return true;
         return false;
     &#125;
@@ -1201,11 +1201,11 @@ public:
 <h1>六、栈与队列</h1>
 <h2 id="232-用栈实现队列">232.用栈实现队列</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-queue-using-stacks/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class MyQueue &#123;
+<pre><code class="language-c++">class MyQueue &#123;
 public:
     // -- 输入栈、输出栈 --
-    stack<int> stackIn;
-    stack<int> stackOut;
+    stack&lt;int&gt; stackIn;
+    stack&lt;int&gt; stackOut;
     MyQueue() &#123; &#125;
     void push(int x) &#123;
         stackIn.push(x);
@@ -1220,7 +1220,7 @@ public:
         &#125;
         // -- 输出栈为空，输入栈为空，报错 --
         if (stackOut.empty()) &#123;
-            printf("当前没有元素\n");
+            printf(&quot;当前没有元素\n&quot;);
             return -1;
         &#125;
         // -- 输出栈不为空，直接输出 --
@@ -1231,13 +1231,13 @@ public:
     
     int peek() &#123;
         // --使用了自身的函数，但是pop删除了元素，需要恢复--
-        int res = this->pop();
+        int res = this-&gt;pop();
         stackOut.push(res);
         return res;
     &#125;
     
     bool empty() &#123;
-        if (stackOut.empty() && stackIn.empty()) return true;
+        if (stackOut.empty() &amp;&amp; stackIn.empty()) return true;
         return false;
     &#125;
 &#125;;
@@ -1245,20 +1245,20 @@ public:
 /**
  * Your MyQueue object will be instantiated and called as such:
  * MyQueue* obj = new MyQueue();
- * obj->push(x);
- * int param_2 = obj->pop();
- * int param_3 = obj->peek();
- * bool param_4 = obj->empty();
+ * obj-&gt;push(x);
+ * int param_2 = obj-&gt;pop();
+ * int param_3 = obj-&gt;peek();
+ * bool param_4 = obj-&gt;empty();
  */
 </code></pre>
 <h2 id="225-用队列实现栈">225.用队列实现栈</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-stack-using-queues/">力扣题目链接</a></p>
 <p><strong>1、两个队列</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class MyStack &#123;
+<pre><code class="language-c++">class MyStack &#123;
 public:
     // --q1作为输入输出栈，q2作为辅助备份栈--
-    queue<int> q1;
-    queue<int> q2;
+    queue&lt;int&gt; q1;
+    queue&lt;int&gt; q2;
     MyStack() &#123;&#125;
     
     void push(int x) &#123;
@@ -1267,7 +1267,7 @@ public:
 
     int pop() &#123;
         // --q1为空，q2为空，报错--
-        if (this->empty()) printf("当前没有元素\n");
+        if (this-&gt;empty()) printf(&quot;当前没有元素\n&quot;);
         // --q1所有元素放到q2，除了最后一个元素--
         int size = q1.size() - 1;
         while (size--) &#123;
@@ -1284,13 +1284,13 @@ public:
     
     int top() &#123;
          // --使用了自身的函数，但是pop删除了元素，需要恢复--
-        int res = this->pop();
+        int res = this-&gt;pop();
         q1.push(res);
         return res;
     &#125;
     
     bool empty() &#123;
-        if (q1.empty() && q2.empty()) return true;
+        if (q1.empty() &amp;&amp; q2.empty()) return true;
         return false;
     &#125;
 &#125;;
@@ -1298,16 +1298,16 @@ public:
 /**
  * Your MyStack object will be instantiated and called as such:
  * MyStack* obj = new MyStack();
- * obj->push(x);
- * int param_2 = obj->pop();
- * int param_3 = obj->top();
- * bool param_4 = obj->empty();
+ * obj-&gt;push(x);
+ * int param_2 = obj-&gt;pop();
+ * int param_3 = obj-&gt;top();
+ * bool param_4 = obj-&gt;empty();
  */
 </code></pre>
 <p><strong>2、一个队列（优化）</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class MyStack &#123;
+<pre><code class="language-c++">class MyStack &#123;
 public:
-    queue<int> q;
+    queue&lt;int&gt; q;
     MyStack() &#123; &#125;
     
     void push(int x) &#123;
@@ -1328,7 +1328,7 @@ public:
     
     int top() &#123;
         // --调用自己的pop，将弹出的添加回去--
-        int res = this->pop();
+        int res = this-&gt;pop();
         q.push(res);
         return res;
     &#125;
@@ -1342,20 +1342,20 @@ public:
 /**
  * Your MyStack object will be instantiated and called as such:
  * MyStack* obj = new MyStack();
- * obj->push(x);
- * int param_2 = obj->pop();
- * int param_3 = obj->top();
- * bool param_4 = obj->empty();
+ * obj-&gt;push(x);
+ * int param_2 = obj-&gt;pop();
+ * int param_3 = obj-&gt;top();
+ * bool param_4 = obj-&gt;empty();
  */
 </code></pre>
 <h2 id="20-有效的括号">20.有效的括号</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-parentheses/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     bool isValid(string s) &#123;
-        stack<char> st;
+        stack&lt;char&gt; st;
         int n = s.size();
-        for (int i = 0; i < n; i++ ) &#123;
+        for (int i = 0; i &lt; n; i++ ) &#123;
             // --放入对应的括号，匹配问题变成了相等问题--
             if (s[i] == '(') st.push(')');
             else if (s[i] == '[') st.push(']');
@@ -1376,11 +1376,11 @@ public:
 </code></pre>
 <h2 id="1047-删除字符串中的所有相邻重复项">1047.删除字符串中的所有相邻重复项</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     string removeDuplicates(string s) &#123;
         int slow = 0;   // 指向栈顶的下一个位置
-        for (int i = 0; i < s.size(); i++) &#123;
+        for (int i = 0; i &lt; s.size(); i++) &#123;
             // --1、栈为空--
             if (slow == 0) &#123;
                 s[slow++] = s[i];
@@ -1401,7 +1401,7 @@ public:
 </code></pre>
 <h2 id="150-逆波兰表达式求值">150.逆波兰表达式求值</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/evaluate-reverse-polish-notation/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">class Solution &#123;
+<pre><code class="language-c++">class Solution &#123;
 public:
     // --转为整数--
     int str2int(const string str) &#123;
@@ -1416,14 +1416,14 @@ public:
         &#125;
         return flag ? 0 - res : res;
     &#125;
-    int evalRPN(vector<string>& tokens) &#123;
+    int evalRPN(vector&lt;string&gt;&amp; tokens) &#123;
         // --数字栈, 力扣修改了后台测试数据，需要用longlong--
-        stack<long long> st;
+        stack&lt;long long&gt; st;
         for (string i : tokens) &#123;
             // --是数字, 考虑负数--
-            if (i[0] >= '0' && i[0] <= '9' || i[0] == '-' && i.size() > 1) &#123;
+            if (i[0] &gt;= '0' &amp;&amp; i[0] &lt;= '9' || i[0] == '-' &amp;&amp; i.size() &gt; 1) &#123;
                 st.push(str2int(i));
-                printf("%d压入栈\n", str2int(i));
+                printf(&quot;%d压入栈\n&quot;, str2int(i));
             &#125;
             // --是符号--
             else &#123;
@@ -1447,7 +1447,7 @@ public:
                 &#125;
                 // --压入计算结果--
                 st.push(tmp);
-                printf("%d %c %d = %d\n", key1, i[0], key2, tmp);
+                printf(&quot;%d %c %d = %d\n&quot;, key1, i[0], key2, tmp);
             &#125;
         &#125;
         return st.top();
@@ -1459,7 +1459,7 @@ public:
 <h3 id="144-二叉树的前序遍历">144.二叉树的前序遍历</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-preorder-traversal/">力扣题目链接</a></p>
 <p><strong>1、递归遍历</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1472,22 +1472,22 @@ public:
  */
 class Solution &#123;
 public:
-    void traverse(TreeNode *node, vector<int>& ans) &#123;
+    void traverse(TreeNode *node, vector&lt;int&gt;&amp; ans) &#123;
         if (node == nullptr) return;
-        ans.push_back(node->val);
-        traverse(node->left, ans);
-        traverse(node->right, ans);
+        ans.push_back(node-&gt;val);
+        traverse(node-&gt;left, ans);
+        traverse(node-&gt;right, ans);
         return;
     &#125;
-    vector<int> preorderTraversal(TreeNode* root) &#123;
-        vector<int> ans;
+    vector&lt;int&gt; preorderTraversal(TreeNode* root) &#123;
+        vector&lt;int&gt; ans;
         traverse(root, ans);
         return ans;
     &#125;
 &#125;;
 </code></pre>
 <p><strong>2、迭代遍历</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1500,17 +1500,17 @@ public:
  */
 class Solution &#123;
 public:
-    vector<int> preorderTraversal(TreeNode* root) &#123;
-        vector<int> ans;
-        stack<TreeNode *> st;
+    vector&lt;int&gt; preorderTraversal(TreeNode* root) &#123;
+        vector&lt;int&gt; ans;
+        stack&lt;TreeNode *&gt; st;
         st.push(root);
         while (!st.empty()) &#123;
             TreeNode *tmp = st.top();
             st.pop();
             if (tmp == nullptr) continue;
-            ans.push_back(tmp->val);
-            st.push(tmp->right);
-            st.push(tmp->left);
+            ans.push_back(tmp-&gt;val);
+            st.push(tmp-&gt;right);
+            st.push(tmp-&gt;left);
         &#125;
         return ans;
     &#125;
@@ -1519,7 +1519,7 @@ public:
 <h3 id="145-二叉树的后序遍历">145.二叉树的后序遍历</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-postorder-traversal/">力扣题目链接</a></p>
 <p><strong>1、递归遍历</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1532,22 +1532,22 @@ public:
  */
 class Solution &#123;
 public:
-    void traverse(TreeNode *node, vector<int>& ans) &#123;
+    void traverse(TreeNode *node, vector&lt;int&gt;&amp; ans) &#123;
         if (node == nullptr) return;
-        traverse(node->left, ans);
-        traverse(node->right, ans);
-        ans.push_back(node->val);
+        traverse(node-&gt;left, ans);
+        traverse(node-&gt;right, ans);
+        ans.push_back(node-&gt;val);
         return;
     &#125;
-    vector<int> postorderTraversal(TreeNode* root) &#123;
-        vector<int> ans;
+    vector&lt;int&gt; postorderTraversal(TreeNode* root) &#123;
+        vector&lt;int&gt; ans;
         traverse(root, ans);
         return ans;
     &#125;
 &#125;;
 </code></pre>
 <p><strong>2、迭代遍历</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1560,18 +1560,18 @@ public:
  */
 class Solution &#123;
 public:
-    vector<int> postorderTraversal(TreeNode* root) &#123;
-        vector<int> ans;
-        stack<TreeNode *> st;
+    vector&lt;int&gt; postorderTraversal(TreeNode* root) &#123;
+        vector&lt;int&gt; ans;
+        stack&lt;TreeNode *&gt; st;
         st.push(root);
         // --修改前序，将顺序变为中右左，最后再翻转就是答案--
         while (!st.empty()) &#123;
             TreeNode *tmp = st.top();
             st.pop();
             if (tmp == nullptr) continue;
-            ans.push_back(tmp->val);
-            st.push(tmp->left);
-            st.push(tmp->right);
+            ans.push_back(tmp-&gt;val);
+            st.push(tmp-&gt;left);
+            st.push(tmp-&gt;right);
         &#125;
         reverse(ans.begin(), ans.end());
         return ans;
@@ -1581,7 +1581,7 @@ public:
 <h3 id="94-二叉树的中序遍历">94.二叉树的中序遍历</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-inorder-traversal/">力扣题目链接</a></p>
 <p><strong>1、递归遍历</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1594,22 +1594,22 @@ public:
  */
 class Solution &#123;
 public:
-    void traverse(TreeNode *node, vector<int>& ans) &#123;
+    void traverse(TreeNode *node, vector&lt;int&gt;&amp; ans) &#123;
         if (node == nullptr) return;
-        traverse(node->left, ans);
-        ans.push_back(node->val);
-        traverse(node->right, ans);
+        traverse(node-&gt;left, ans);
+        ans.push_back(node-&gt;val);
+        traverse(node-&gt;right, ans);
         return;
     &#125;
-    vector<int> inorderTraversal(TreeNode* root) &#123;
-        vector<int> ans;
+    vector&lt;int&gt; inorderTraversal(TreeNode* root) &#123;
+        vector&lt;int&gt; ans;
         traverse(root, ans);
         return ans;
     &#125;
 &#125;;
 </code></pre>
 <p><strong>2、迭代遍历</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1622,21 +1622,21 @@ public:
  */
 class Solution &#123;
 public:
-    vector<int> inorderTraversal(TreeNode* root) &#123;
-        vector<int> ans;
-        stack<TreeNode *> st;
+    vector&lt;int&gt; inorderTraversal(TreeNode* root) &#123;
+        vector&lt;int&gt; ans;
+        stack&lt;TreeNode *&gt; st;
         while (root || !st.empty()) &#123;
             if (root != nullptr) &#123;
                 st.push(root);
-                // printf("%d进栈\n", root->val);
-                root = root->left;
+                // printf(&quot;%d进栈\n&quot;, root-&gt;val);
+                root = root-&gt;left;
             &#125;
             else &#123;
                 root = st.top();
-                ans.push_back(root->val);
+                ans.push_back(root-&gt;val);
                 st.pop();
-                // printf("%d出栈\n", root->val);
-                root = root->right;
+                // printf(&quot;%d出栈\n&quot;, root-&gt;val);
+                root = root-&gt;right;
             &#125;
         &#125;
         return ans;
@@ -1645,12 +1645,12 @@ public:
 </code></pre>
 <h3 id="589-N-叉树的前序遍历">589.N 叉树的前序遍历</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/*
+<pre><code class="language-c++">/*
 // Definition for a Node.
 class Node &#123;
 public:
     int val;
-    vector<Node*> children;
+    vector&lt;Node*&gt; children;
 
     Node() &#123;&#125;
 
@@ -1658,7 +1658,7 @@ public:
         val = _val;
     &#125;
 
-    Node(int _val, vector<Node*> _children) &#123;
+    Node(int _val, vector&lt;Node*&gt; _children) &#123;
         val = _val;
         children = _children;
     &#125;
@@ -1667,24 +1667,24 @@ public:
 
 class Solution &#123;
 public:
-    vector<int> ans;
-    vector<int> preorder(Node* root) &#123;
+    vector&lt;int&gt; ans;
+    vector&lt;int&gt; preorder(Node* root) &#123;
         if (root == nullptr) return ans;
-        ans.push_back(root->val);   // 前
-        for (int i = 0; i < root->children.size(); i++) 
-            preorder(root->children[i]);
+        ans.push_back(root-&gt;val);   // 前
+        for (int i = 0; i &lt; root-&gt;children.size(); i++) 
+            preorder(root-&gt;children[i]);
         return ans;
     &#125;
 &#125;;
 </code></pre>
 <h3 id="590-N-叉树的后序遍历">590.N 叉树的后序遍历</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/n-ary-tree-postorder-traversal/submissions/425568531/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/*
+<pre><code class="language-c++">/*
 // Definition for a Node.
 class Node &#123;
 public:
     int val;
-    vector<Node*> children;
+    vector&lt;Node*&gt; children;
 
     Node() &#123;&#125;
 
@@ -1692,7 +1692,7 @@ public:
         val = _val;
     &#125;
 
-    Node(int _val, vector<Node*> _children) &#123;
+    Node(int _val, vector&lt;Node*&gt; _children) &#123;
         val = _val;
         children = _children;
     &#125;
@@ -1701,12 +1701,12 @@ public:
 
 class Solution &#123;
 public:
-    vector<int> ans;
-    vector<int> postorder(Node* root) &#123;
+    vector&lt;int&gt; ans;
+    vector&lt;int&gt; postorder(Node* root) &#123;
         if (root == nullptr) return ans;
-        for (int i = 0; i < root->children.size(); i++) 
-            preorder(root->children[i]);
-        ans.push_back(root->val);   // 后
+        for (int i = 0; i &lt; root-&gt;children.size(); i++) 
+            preorder(root-&gt;children[i]);
+        ans.push_back(root-&gt;val);   // 后
         return ans;
     &#125;
 &#125;;
@@ -1715,7 +1715,7 @@ public:
 <p><img src="/static/imgs/loading.gif" data-original="https://code-thinking.cdn.bcebos.com/gifs/%E6%88%91%E8%A6%81%E6%89%93%E5%8D%81%E4%B8%AA.gif" alt=""></p>
 <h3 id="102-二叉树的层序遍历">102.二叉树的层序遍历</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-level-order-traversal/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1728,20 +1728,20 @@ public:
  */
 class Solution &#123;
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) &#123;
-        vector<vector<int>> ans;
+    vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) &#123;
+        vector&lt;vector&lt;int&gt;&gt; ans;
         if (!root) return ans;
-        queue<TreeNode *> que;
+        queue&lt;TreeNode *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int curSize = que.size();  // 当前层有多少个
-            vector<int> curAns;     // 记录当前层答案
-            for (int i = 0; i < curSize; i++) &#123;
+            vector&lt;int&gt; curAns;     // 记录当前层答案
+            for (int i = 0; i &lt; curSize; i++) &#123;
                 TreeNode *tmp = que.front();
-                curAns.push_back(tmp->val);
+                curAns.push_back(tmp-&gt;val);
                 que.pop();
-                if (tmp->left) que.push(tmp->left);
-                if (tmp->right) que.push(tmp->right);
+                if (tmp-&gt;left) que.push(tmp-&gt;left);
+                if (tmp-&gt;right) que.push(tmp-&gt;right);
             &#125;
             ans.push_back(curAns);
         &#125;
@@ -1751,7 +1751,7 @@ public:
 </code></pre>
 <h3 id="107-二叉树的层序遍历-II">107.二叉树的层序遍历 II</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/submissions/425573189/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1764,20 +1764,20 @@ public:
  */
 class Solution &#123;
 public:
-    vector<vector<int>> levelOrderBottom(TreeNode* root) &#123;
-        vector<vector<int>> ans;
+    vector&lt;vector&lt;int&gt;&gt; levelOrderBottom(TreeNode* root) &#123;
+        vector&lt;vector&lt;int&gt;&gt; ans;
         if (!root) return ans;
-        queue<TreeNode *> que;
+        queue&lt;TreeNode *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int curSize = que.size();  // 当前层有多少个
-            vector<int> curAns;     // 记录当前层答案
-            for (int i = 0; i < curSize; i++) &#123;
+            vector&lt;int&gt; curAns;     // 记录当前层答案
+            for (int i = 0; i &lt; curSize; i++) &#123;
                 TreeNode *tmp = que.front();
-                curAns.push_back(tmp->val);
+                curAns.push_back(tmp-&gt;val);
                 que.pop();
-                if (tmp->left) que.push(tmp->left);
-                if (tmp->right) que.push(tmp->right);
+                if (tmp-&gt;left) que.push(tmp-&gt;left);
+                if (tmp-&gt;right) que.push(tmp-&gt;right);
             &#125;
             ans.push_back(curAns);
         &#125;
@@ -1788,7 +1788,7 @@ public:
 </code></pre>
 <h3 id="199-二叉树的右视图">199. 二叉树的右视图</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-right-side-view/submissions/425644101/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1801,22 +1801,22 @@ public:
  */
 class Solution &#123;
 public:
-    vector<int> rightSideView(TreeNode* root) &#123;
-        vector<int> ans;
+    vector&lt;int&gt; rightSideView(TreeNode* root) &#123;
+        vector&lt;int&gt; ans;
         if (root == nullptr) return ans;
-        queue<TreeNode *> que;
+        queue&lt;TreeNode *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int n = que.size() - 1;
             // --把每一层的最后一个记录下来后弹出，其他弹出即可--
             while (n--) &#123;
-                if (que.front()->left) que.push(que.front()->left);
-                if (que.front()->right) que.push(que.front()->right);
+                if (que.front()-&gt;left) que.push(que.front()-&gt;left);
+                if (que.front()-&gt;right) que.push(que.front()-&gt;right);
                 que.pop();
             &#125;
-            if (que.front()->left) que.push(que.front()->left);
-            if (que.front()->right) que.push(que.front()->right);
-            ans.push_back(que.front()->val);
+            if (que.front()-&gt;left) que.push(que.front()-&gt;left);
+            if (que.front()-&gt;right) que.push(que.front()-&gt;right);
+            ans.push_back(que.front()-&gt;val);
             que.pop();
         &#125;
         return ans;
@@ -1825,7 +1825,7 @@ public:
 </code></pre>
 <h3 id="637-二叉树的层平均值">637.二叉树的层平均值</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/average-of-levels-in-binary-tree/description/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1838,18 +1838,18 @@ public:
  */
 class Solution &#123;
 public:
-    vector<double> averageOfLevels(TreeNode* root) &#123;
-        vector<double> ans;
+    vector&lt;double&gt; averageOfLevels(TreeNode* root) &#123;
+        vector&lt;double&gt; ans;
         if (!root) return ans;
-        queue<TreeNode *> que;
+        queue&lt;TreeNode *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             double curSum = 0; // 当前层数的和
             int size = que.size();
-            for (int i = 0; i < size; i++) &#123;
-                curSum += que.front()->val;
-                if (que.front()->left) que.push(que.front()->left);
-                if (que.front()->right) que.push(que.front()->right);
+            for (int i = 0; i &lt; size; i++) &#123;
+                curSum += que.front()-&gt;val;
+                if (que.front()-&gt;left) que.push(que.front()-&gt;left);
+                if (que.front()-&gt;right) que.push(que.front()-&gt;right);
                 que.pop();
             &#125;
             ans.push_back(curSum / size);   // 写入平均值
@@ -1860,12 +1860,12 @@ public:
 </code></pre>
 <h3 id="429-N叉树的层序遍历">429.N叉树的层序遍历</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/n-ary-tree-level-order-traversal/description/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/*
+<pre><code class="language-c++">/*
 // Definition for a Node.
 class Node &#123;
 public:
     int val;
-    vector<Node*> children;
+    vector&lt;Node*&gt; children;
 
     Node() &#123;&#125;
 
@@ -1873,7 +1873,7 @@ public:
         val = _val;
     &#125;
 
-    Node(int _val, vector<Node*> _children) &#123;
+    Node(int _val, vector&lt;Node*&gt; _children) &#123;
         val = _val;
         children = _children;
     &#125;
@@ -1882,20 +1882,20 @@ public:
 
 class Solution &#123;
 public:
-    vector<vector<int>> levelOrder(Node* root) &#123;
-        vector<vector<int>> ans;
+    vector&lt;vector&lt;int&gt;&gt; levelOrder(Node* root) &#123;
+        vector&lt;vector&lt;int&gt;&gt; ans;
         if (!root) return ans;
-        queue<Node *> que;
+        queue&lt;Node *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int curSize = que.size();  // 当前层有多少个
-            vector<int> curAns;     // 记录当前层答案
-            for (int i = 0; i < curSize; i++) &#123;
+            vector&lt;int&gt; curAns;     // 记录当前层答案
+            for (int i = 0; i &lt; curSize; i++) &#123;
                 Node *tmp = que.front();
-                curAns.push_back(tmp->val);
+                curAns.push_back(tmp-&gt;val);
                 que.pop();
                 // --压入孩子节点--
-                for (Node* j : tmp->children) 
+                for (Node* j : tmp-&gt;children) 
                     if (j) que.push(j);
             &#125;
             ans.push_back(curAns);
@@ -1906,7 +1906,7 @@ public:
 </code></pre>
 <h3 id="515-在每个树行中找最大值">515.在每个树行中找最大值</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-largest-value-in-each-tree-row/description/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -1919,18 +1919,18 @@ public:
  */
 class Solution &#123;
 public:
-    vector<int> largestValues(TreeNode* root) &#123;
-        vector<int> ans;
+    vector&lt;int&gt; largestValues(TreeNode* root) &#123;
+        vector&lt;int&gt; ans;
         if (!root) return ans;
-        queue<TreeNode *> que;
+        queue&lt;TreeNode *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int curMax = INT_MIN; // 当前层的最大值
             int size = que.size();
-            for (int i = 0; i < size; i++) &#123;
-                curMax = curMax < que.front()->val ? que.front()->val : curMax;
-                if (que.front()->left) que.push(que.front()->left);
-                if (que.front()->right) que.push(que.front()->right);
+            for (int i = 0; i &lt; size; i++) &#123;
+                curMax = curMax &lt; que.front()-&gt;val ? que.front()-&gt;val : curMax;
+                if (que.front()-&gt;left) que.push(que.front()-&gt;left);
+                if (que.front()-&gt;right) que.push(que.front()-&gt;right);
                 que.pop();
             &#125;
             ans.push_back(curMax);   // 写入答案
@@ -1941,7 +1941,7 @@ public:
 </code></pre>
 <h3 id="116-填充每个节点的下一个右侧节点指针">116.填充每个节点的下一个右侧节点指针</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/description/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/*
+<pre><code class="language-c++">/*
 // Definition for a Node.
 class Node &#123;
 public:
@@ -1963,18 +1963,18 @@ class Solution &#123;
 public:
     Node* connect(Node* root) &#123;
         if (!root) return root;
-        queue<Node *> que;
+        queue&lt;Node *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int curSize = que.size();  // 当前层有多少个
-            for (int i = 0; i < curSize; i++) &#123;
+            for (int i = 0; i &lt; curSize; i++) &#123;
                 Node *tmp = que.front();
                 que.pop();
                 // --如果是最后一个--
-                if (i == curSize - 1) tmp->next = nullptr;
-                else tmp->next = que.front();
-                if (tmp->left) que.push(tmp->left);
-                if (tmp->right) que.push(tmp->right);
+                if (i == curSize - 1) tmp-&gt;next = nullptr;
+                else tmp-&gt;next = que.front();
+                if (tmp-&gt;left) que.push(tmp-&gt;left);
+                if (tmp-&gt;right) que.push(tmp-&gt;right);
             &#125;
         &#125;
         return root;
@@ -1983,7 +1983,7 @@ public:
 </code></pre>
 <h3 id="117-填充每个节点的下一个右侧节点指针II">117.填充每个节点的下一个右侧节点指针II</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/description/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/*
+<pre><code class="language-c++">/*
 // Definition for a Node.
 class Node &#123;
 public:
@@ -2005,18 +2005,18 @@ class Solution &#123;
 public:
     Node* connect(Node* root) &#123;
         if (!root) return root;
-        queue<Node *> que;
+        queue&lt;Node *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int curSize = que.size();  // 当前层有多少个
-            for (int i = 0; i < curSize; i++) &#123;
+            for (int i = 0; i &lt; curSize; i++) &#123;
                 Node *tmp = que.front();
                 que.pop();
                 // --如果是最后一个--
-                if (i == curSize - 1) tmp->next = nullptr;
-                else tmp->next = que.front();
-                if (tmp->left) que.push(tmp->left);
-                if (tmp->right) que.push(tmp->right);
+                if (i == curSize - 1) tmp-&gt;next = nullptr;
+                else tmp-&gt;next = que.front();
+                if (tmp-&gt;left) que.push(tmp-&gt;left);
+                if (tmp-&gt;right) que.push(tmp-&gt;right);
             &#125;
         &#125;
         return root;
@@ -2025,7 +2025,7 @@ public:
 </code></pre>
 <h3 id="104-二叉树的最大深度">104.二叉树的最大深度</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-depth-of-binary-tree/description/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2041,14 +2041,14 @@ public:
     int maxDepth(TreeNode* root) &#123;
         int ans = 0;
         if (!root) return ans;
-        queue<TreeNode *> que;
+        queue&lt;TreeNode *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             ans++;
             int curSize = que.size();  // 当前层有多少个
-            for (int i = 0; i < curSize; i++) &#123;
-                if (que.front()->left) que.push(que.front()->left);
-                if (que.front()->right) que.push(que.front()->right);
+            for (int i = 0; i &lt; curSize; i++) &#123;
+                if (que.front()-&gt;left) que.push(que.front()-&gt;left);
+                if (que.front()-&gt;right) que.push(que.front()-&gt;right);
                 que.pop();
             &#125;
         &#125;
@@ -2058,7 +2058,7 @@ public:
 </code></pre>
 <h3 id="111-二叉树的最小深度">111.二叉树的最小深度</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-depth-of-binary-tree/description/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2074,16 +2074,16 @@ public:
     int minDepth(TreeNode* root) &#123;
         int ans = 0;
         if (!root) return ans;
-        queue<TreeNode *> que;
+        queue&lt;TreeNode *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int curSize = que.size();  // 当前层有多少个
             ans++;
-            for (int i = 0; i < curSize; i++) &#123;
+            for (int i = 0; i &lt; curSize; i++) &#123;
                 // --是否是叶子节点，是的话后面都没必要执行了--
-                if (!que.front()->left && !que.front()->right) return ans;
-                if (que.front()->left) que.push(que.front()->left);
-                if (que.front()->right) que.push(que.front()->right);
+                if (!que.front()-&gt;left &amp;&amp; !que.front()-&gt;right) return ans;
+                if (que.front()-&gt;left) que.push(que.front()-&gt;left);
+                if (que.front()-&gt;right) que.push(que.front()-&gt;right);
                 que.pop();
             &#125;
         &#125;
@@ -2094,7 +2094,7 @@ public:
 <h2 id="226-翻转二叉树">226.翻转二叉树</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/invert-binary-tree/">力扣题目链接</a></p>
 <p><strong>1、递归法</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2109,15 +2109,15 @@ class Solution &#123;
 public:
     TreeNode* invertTree(TreeNode* root) &#123;
         if (root == nullptr) return root;
-        swap(root->left, root->right);
-        invertTree(root->left);
-        invertTree(root->right);
+        swap(root-&gt;left, root-&gt;right);
+        invertTree(root-&gt;left);
+        invertTree(root-&gt;right);
         return root;
     &#125;
 &#125;;
 </code></pre>
 <p><strong>2、迭代法</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2132,14 +2132,14 @@ class Solution &#123;
 public:
     TreeNode* invertTree(TreeNode* root) &#123;
         if (root == nullptr) return root;
-        stack<TreeNode*> st;
+        stack&lt;TreeNode*&gt; st;
         st.push(root);
         while (!st.empty()) &#123;
             TreeNode *tmp = st.top();
-            swap(tmp->left, tmp->right);
+            swap(tmp-&gt;left, tmp-&gt;right);
             st.pop();
-            if (tmp->right) st.push(tmp->right);
-            if (tmp->left) st.push(tmp->left);
+            if (tmp-&gt;right) st.push(tmp-&gt;right);
+            if (tmp-&gt;left) st.push(tmp-&gt;left);
         &#125;
         return root;
     &#125;
@@ -2147,7 +2147,7 @@ public:
 </code></pre>
 <h2 id="100-相同的树">100.相同的树</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/same-tree/description/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2162,13 +2162,13 @@ class Solution &#123;
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) &#123;
         // --1. 子树都为空--
-        if (!p && !q) return true;
+        if (!p &amp;&amp; !q) return true;
         // --2. 子树有一个不为空--
-        if (p && !q || !p && q) return false;
+        if (p &amp;&amp; !q || !p &amp;&amp; q) return false;
         // --3. 子树都不为空--
-        if (p->val == q->val      // 自己是否相等
-            && isSameTree(p->left, q->left)  // p左子树和q左子树是否相等
-            && isSameTree(p->right, q->right))  // p右子树和q右子树是否相等
+        if (p-&gt;val == q-&gt;val      // 自己是否相等
+            &amp;&amp; isSameTree(p-&gt;left, q-&gt;left)  // p左子树和q左子树是否相等
+            &amp;&amp; isSameTree(p-&gt;right, q-&gt;right))  // p右子树和q右子树是否相等
             return true;
         return false;
     &#125;
@@ -2176,7 +2176,7 @@ public:
 </code></pre>
 <h2 id="101-对称二叉树">101.对称二叉树</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/symmetric-tree/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2191,25 +2191,25 @@ class Solution &#123;
 public:
     bool preOrdertraverse(TreeNode *t1, TreeNode *t2) &#123;
         // --1. 子树都为空--
-        if (!t1 && !t2) return true;
+        if (!t1 &amp;&amp; !t2) return true;
         // --2. 子树有一个不为空--
-        if (t1 && !t2 || !t1 && t2) return false;
+        if (t1 &amp;&amp; !t2 || !t1 &amp;&amp; t2) return false;
         // --3. 子树都不为空--
-        if (t1->val == t2->val      // 自己是否相等
-            && preOrdertraverse(t1->left, t2->right)  // t1左子树和t2右子树是否相等
-            && preOrdertraverse(t1->right, t2->left))  // t1右子树和t2左子树是否相等
+        if (t1-&gt;val == t2-&gt;val      // 自己是否相等
+            &amp;&amp; preOrdertraverse(t1-&gt;left, t2-&gt;right)  // t1左子树和t2右子树是否相等
+            &amp;&amp; preOrdertraverse(t1-&gt;right, t2-&gt;left))  // t1右子树和t2左子树是否相等
             return true;
         return false;
     &#125;
     bool isSymmetric(TreeNode* root) &#123;
         if (!root) return true;
-        return preOrdertraverse(root->left, root->right);
+        return preOrdertraverse(root-&gt;left, root-&gt;right);
     &#125;
 &#125;;
 </code></pre>
 <h2 id="572-另一棵树的子树">572.另一棵树的子树</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subtree-of-another-tree/description/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2225,32 +2225,32 @@ public:
     // --来自 100.相同的树 --
     bool isSameTree(TreeNode* p, TreeNode* q) &#123;
         // --1. 子树都为空--
-        if (!p && !q) return true;
+        if (!p &amp;&amp; !q) return true;
         // --2. 子树有一个不为空--
-        if (p && !q || !p && q) return false;
+        if (p &amp;&amp; !q || !p &amp;&amp; q) return false;
         // --3. 子树都不为空--
-        if (p->val == q->val      // 自己是否相等
-            && isSameTree(p->left, q->left)  // p左子树和q左子树是否相等
-            && isSameTree(p->right, q->right))  // p右子树和q右子树是否相等
+        if (p-&gt;val == q-&gt;val      // 自己是否相等
+            &amp;&amp; isSameTree(p-&gt;left, q-&gt;left)  // p左子树和q左子树是否相等
+            &amp;&amp; isSameTree(p-&gt;right, q-&gt;right))  // p右子树和q右子树是否相等
             return true;
         return false;
     &#125;
     bool isSubtree(TreeNode* root, TreeNode* subRoot) &#123;
         if (!root) return false;
         return isSameTree(root, subRoot) 
-            || isSubtree(root->left, subRoot) 
-            || isSubtree(root->right, subRoot);
+            || isSubtree(root-&gt;left, subRoot) 
+            || isSubtree(root-&gt;right, subRoot);
     &#125;
 &#125;;
 </code></pre>
 <h2 id="559-n叉树的最大深度">559.n叉树的最大深度</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-depth-of-n-ary-tree/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/*
+<pre><code class="language-c++">/*
 // Definition for a Node.
 class Node &#123;
 public:
     int val;
-    vector<Node*> children;
+    vector&lt;Node*&gt; children;
 
     Node() &#123;&#125;
 
@@ -2258,7 +2258,7 @@ public:
         val = _val;
     &#125;
 
-    Node(int _val, vector<Node*> _children) &#123;
+    Node(int _val, vector&lt;Node*&gt; _children) &#123;
         val = _val;
         children = _children;
     &#125;
@@ -2270,13 +2270,13 @@ public:
     int maxDepth(Node* root) &#123;
         int ans = 0;
         if (!root) return ans;
-        queue<Node *> que;
+        queue&lt;Node *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             ans++;
             int curSize = que.size();  // 当前层有多少个
-            for (int i = 0; i < curSize; i++) &#123;
-                for (Node* j : que.front()->children)
+            for (int i = 0; i &lt; curSize; i++) &#123;
+                for (Node* j : que.front()-&gt;children)
                     if (j) que.push(j);
                 que.pop();
             &#125;
@@ -2288,7 +2288,7 @@ public:
 <h2 id="222-完全二叉树的节点个数">222.完全二叉树的节点个数</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-complete-tree-nodes/">力扣题目链接</a></p>
 <p><strong>1、当做普通二叉树遍历</strong></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2304,14 +2304,14 @@ public:
     int countNodes(TreeNode* root) &#123;
         int ans = 0;
         if (!root) return ans;
-        stack<TreeNode*> st;
+        stack&lt;TreeNode*&gt; st;
         st.push(root);
         while (!st.empty()) &#123;
             ans++;
             TreeNode *tmp = st.top();   // 中
             st.pop();
-            if (tmp->right) st.push(tmp->right);    // 右
-            if (tmp->left) st.push(tmp->left);      // 左
+            if (tmp-&gt;right) st.push(tmp-&gt;right);    // 右
+            if (tmp-&gt;left) st.push(tmp-&gt;left);      // 左
         &#125;
         return ans;
     &#125;
@@ -2325,7 +2325,7 @@ public:
 <p>完全二叉树只有两种情况，情况一：就是满二叉树，情况二：最后一层叶子节点没有满。<br>
 对于情况一，可以直接用 2^树深度 - 1 来计算，注意这里根节点深度为1。<br>
 对于情况二，分别递归左孩子，和右孩子，递归到某一深度一定会有左孩子或者右孩子为满二叉树，然后依然可以按照情况1来计算。</p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2340,22 +2340,22 @@ class Solution &#123;
 public:
     int countNodes(TreeNode* root) &#123;
         if (!root) return 0;
-        TreeNode *left = root->left;
-        TreeNode *right = root->right;
+        TreeNode *left = root-&gt;left;
+        TreeNode *right = root-&gt;right;
         int lenLeft = 0, lenRight = 0;
         // --统计左边深度--
         while (left) &#123;
             lenLeft++;
-            left = left->left;
+            left = left-&gt;left;
         &#125;
         // --统计右边深度--
         while (left) &#123;
             lenRight++;
-            right = right->right;
+            right = right-&gt;right;
         &#125;
         // --左边深度 等于 右边深度，说明这里完全二叉树是满二叉树--
-        if (lenLeft == lenRight) return (2 << lenLeft) - 1;   // 右移相当于*2
-        return 1 + countNodes(root->left) + countNodes(root->right);
+        if (lenLeft == lenRight) return (2 &lt;&lt; lenLeft) - 1;   // 右移相当于*2
+        return 1 + countNodes(root-&gt;left) + countNodes(root-&gt;right);
     &#125;
 &#125;;
 </code></pre>
@@ -2365,7 +2365,7 @@ public:
 </ul>
 <h2 id="110-平衡二叉树">110.平衡二叉树</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/balanced-binary-tree/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2381,9 +2381,9 @@ public:
     // --返回深度--
     int postOrderTravese(TreeNode *t, int depth) &#123;
         if (!t) return depth - 1;
-        int lenLeft = postOrderTravese(t->left, depth + 1);
-        int lenRight = postOrderTravese(t->right, depth + 1);
-        return abs(lenLeft - lenRight) > 1 ? -1 : max(lenLeft, lenRight);
+        int lenLeft = postOrderTravese(t-&gt;left, depth + 1);
+        int lenRight = postOrderTravese(t-&gt;right, depth + 1);
+        return abs(lenLeft - lenRight) &gt; 1 ? -1 : max(lenLeft, lenRight);
     &#125;
     bool isBalanced(TreeNode* root) &#123;
         if (!root) return true;
@@ -2394,7 +2394,7 @@ public:
 </code></pre>
 <h2 id="257-二叉树的所有路径">257.二叉树的所有路径</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-paths/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2407,28 +2407,28 @@ public:
  */
 class Solution &#123;
 public:
-    void postOrderTraverse(TreeNode *t, string s, vector<string>& ans) &#123;
+    void postOrderTraverse(TreeNode *t, string s, vector&lt;string&gt;&amp; ans) &#123;
         // --是叶子节点--
-        if (!t->left && !t->right) ans.push_back(s);
+        if (!t-&gt;left &amp;&amp; !t-&gt;right) ans.push_back(s);
         else &#123;
             // --左子树不为空--
-            if (t->left) postOrderTraverse(t->left, s + "->" + to_string(t->left->val), ans);
+            if (t-&gt;left) postOrderTraverse(t-&gt;left, s + &quot;-&gt;&quot; + to_string(t-&gt;left-&gt;val), ans);
             // --右子树不为空--
-            if (t->right) postOrderTraverse(t->right, s + "->" + to_string(t->right->val), ans);
+            if (t-&gt;right) postOrderTraverse(t-&gt;right, s + &quot;-&gt;&quot; + to_string(t-&gt;right-&gt;val), ans);
         &#125;
         return;
     &#125;
-    vector<string> binaryTreePaths(TreeNode* root) &#123;
-        vector<string> ans;
+    vector&lt;string&gt; binaryTreePaths(TreeNode* root) &#123;
+        vector&lt;string&gt; ans;
         if (!root) return ans;
-        postOrderTraverse(root, to_string(root->val), ans);
+        postOrderTraverse(root, to_string(root-&gt;val), ans);
         return ans;
     &#125;
 &#125;;
 </code></pre>
 <h2 id="404-左叶子之和">404.左叶子之和</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sum-of-left-leaves/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2444,18 +2444,18 @@ public:
     int sumOfLeftLeaves(TreeNode* root) &#123;
         if (!root) return 0;
         int ans = 0;
-        queue<TreeNode *> que;
+        queue&lt;TreeNode *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int size = que.size();
             while (size--) &#123;
-                if (que.front()->left) &#123;
-                    que.push(que.front()->left);
+                if (que.front()-&gt;left) &#123;
+                    que.push(que.front()-&gt;left);
                     // --是左子树，判断是否是叶子结点--
-                    if (!que.front()->left->left && !que.front()->left->right)
-                        ans += que.front()->left->val;
+                    if (!que.front()-&gt;left-&gt;left &amp;&amp; !que.front()-&gt;left-&gt;right)
+                        ans += que.front()-&gt;left-&gt;val;
                 &#125;
-                if (que.front()->right) que.push(que.front()->right);
+                if (que.front()-&gt;right) que.push(que.front()-&gt;right);
                 que.pop();
             &#125;
         &#125;
@@ -2465,7 +2465,7 @@ public:
 </code></pre>
 <h2 id="513-找树左下角的值">513.找树左下角的值</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-bottom-left-tree-value/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">// @lc code=start
+<pre><code class="language-c++">// @lc code=start
 /**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
@@ -2482,15 +2482,15 @@ public:
     int findBottomLeftValue(TreeNode* root) &#123;
         if (!root) return 0;
         int ans = 0;
-        queue<TreeNode *> que;
+        queue&lt;TreeNode *&gt; que;
         que.push(root);
         while (!que.empty()) &#123;
             int size = que.size();
             // --更新为这一层的第一个即可--
-            ans = que.front()->val;
+            ans = que.front()-&gt;val;
             while (size--) &#123;
-                if (que.front()->left) que.push(que.front()->left);
-                if (que.front()->right) que.push(que.front()->right);
+                if (que.front()-&gt;left) que.push(que.front()-&gt;left);
+                if (que.front()-&gt;right) que.push(que.front()-&gt;right);
                 que.pop();
             &#125;
         &#125;
@@ -2500,7 +2500,7 @@ public:
 </code></pre>
 <h2 id="112-路径总和">112.路径总和</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/path-sum/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2515,12 +2515,12 @@ class Solution &#123;
 public:
     bool traverse(TreeNode *t, int targetSum, int curSum) &#123;
         if (!t) return false;
-        curSum += t->val;
+        curSum += t-&gt;val;
         // --是叶子节点并且，curSum 为目标值
-        if (curSum == targetSum && !t->left && !t->right)
+        if (curSum == targetSum &amp;&amp; !t-&gt;left &amp;&amp; !t-&gt;right)
             return true;
-        return traverse(t->left, targetSum, curSum) 
-            || traverse(t->right, targetSum, curSum);
+        return traverse(t-&gt;left, targetSum, curSum) 
+            || traverse(t-&gt;right, targetSum, curSum);
     &#125;
     bool hasPathSum(TreeNode* root, int targetSum) &#123;
         return traverse(root, targetSum, 0);
@@ -2529,7 +2529,7 @@ public:
 </code></pre>
 <h2 id="106-从中序与后序遍历序列构造二叉树">106.从中序与后序遍历序列构造二叉树</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2543,17 +2543,17 @@ public:
 class Solution &#123;
 public:
     // --返回key的索引--
-    int findRoot (vector<int>& inorder, int key, int inbegin, int inend) &#123;
-        for (int i = inbegin; i <= inend; i++) &#123;
+    int findRoot (vector&lt;int&gt;&amp; inorder, int key, int inbegin, int inend) &#123;
+        for (int i = inbegin; i &lt;= inend; i++) &#123;
             if (inorder[i] == key) return i;
         &#125;
         return -1;
     &#125;
-    TreeNode* preOrder(vector<int>& inorder, int inbegin, int inend, 
-                vector<int>& postorder, int postbegin, int postend) &#123;
-        // printf("[%d, %d], [%d, %d]\n", inbegin, inend, postbegin, postend);
+    TreeNode* preOrder(vector&lt;int&gt;&amp; inorder, int inbegin, int inend, 
+                vector&lt;int&gt;&amp; postorder, int postbegin, int postend) &#123;
+        // printf(&quot;[%d, %d], [%d, %d]\n&quot;, inbegin, inend, postbegin, postend);
         // --没有节点了--
-        if (inbegin > inend) return nullptr; 
+        if (inbegin &gt; inend) return nullptr; 
         // --在中根序中找到根节点--
         int inRoot = findRoot(inorder, postorder[postend], inbegin, inend);
         // --构造节点，改变区间接着递归--
@@ -2561,14 +2561,14 @@ public:
         preOrder(inorder, inbegin, inRoot - 1, postorder, postbegin, postbegin + (inRoot - 1 - inbegin)),    // 左子树
         preOrder(inorder, inRoot + 1, inend, postorder, postend - 1 - (inend - inRoot - 1) ,postend - 1));   // 右子树
     &#125;
-    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) &#123;
+    TreeNode* buildTree(vector&lt;int&gt;&amp; inorder, vector&lt;int&gt;&amp; postorder) &#123;
         return preOrder(inorder, 0, inorder.size() - 1, postorder, 0, postorder.size() - 1);
     &#125;
 &#125;;
 </code></pre>
 <h2 id="654-最大二叉树">654.最大二叉树</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-binary-tree/">力扣题目地址</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2582,30 +2582,30 @@ public:
 class Solution &#123;
 public:
     // --返回最大值的索引--
-    int findRoot (vector<int>& nums, int begin, int end) &#123;
+    int findRoot (vector&lt;int&gt;&amp; nums, int begin, int end) &#123;
         int maxVal = INT_MIN, index = -1;
-        for (int i = begin; i <= end; i++) 
-            if (maxVal < nums[i]) &#123;
+        for (int i = begin; i &lt;= end; i++) 
+            if (maxVal &lt; nums[i]) &#123;
                 maxVal = nums[i];
                 index = i;
             &#125;
         return index;
     &#125;
-    TreeNode* construct(vector<int>& nums, int begin, int end) &#123;
-        if (begin > end) return nullptr;
+    TreeNode* construct(vector&lt;int&gt;&amp; nums, int begin, int end) &#123;
+        if (begin &gt; end) return nullptr;
         int indexRoot = findRoot(nums, begin, end);
         return new TreeNode(nums[indexRoot],    // 根
         construct(nums, begin, indexRoot - 1),  // 左子树
         construct(nums, indexRoot + 1, end));   // 右子树
     &#125;
-    TreeNode* constructMaximumBinaryTree(vector<int>& nums) &#123;
+    TreeNode* constructMaximumBinaryTree(vector&lt;int&gt;&amp; nums) &#123;
         return construct(nums, 0, nums.size() - 1);
     &#125;
 &#125;;
 </code></pre>
 <h2 id="617-合并二叉树">617.合并二叉树</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-two-binary-trees/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2620,21 +2620,21 @@ class Solution &#123;
 public:
     TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) &#123;
         // --1、两个都为空--
-        if (!root1 && !root2) return nullptr;
+        if (!root1 &amp;&amp; !root2) return nullptr;
         // --2、有一个为空--
-        if (!root1 && root2) return root2;
-        if (root1 && !root2) return root1;
+        if (!root1 &amp;&amp; root2) return root2;
+        if (root1 &amp;&amp; !root2) return root1;
         // --3、都不为空--
-        root1->val += root2->val;
-        root1->left = mergeTrees(root1->left, root2->left);
-        root1->right = mergeTrees(root1->right, root2->right);
+        root1-&gt;val += root2-&gt;val;
+        root1-&gt;left = mergeTrees(root1-&gt;left, root2-&gt;left);
+        root1-&gt;right = mergeTrees(root1-&gt;right, root2-&gt;right);
         return root1;
     &#125;
 &#125;;
 </code></pre>
 <h2 id="700-二叉搜索树中的搜索">700.二叉搜索树中的搜索</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/search-in-a-binary-search-tree/">力扣题目地址</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2650,17 +2650,17 @@ public:
     TreeNode* searchBST(TreeNode* root, int val) &#123;
         if (!root) return nullptr;
         // --本节点是--
-        if (root->val == val) return root;
+        if (root-&gt;val == val) return root;
         // 递归
-        TreeNode *left = searchBST(root->left, val);
+        TreeNode *left = searchBST(root-&gt;left, val);
         if (left) return left;
-        return searchBST(root->right, val);
+        return searchBST(root-&gt;right, val);
     &#125;
 &#125;;
 </code></pre>
 <h2 id="98-验证二叉搜索树">98.验证二叉搜索树</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/validate-binary-search-tree/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2673,26 +2673,26 @@ public:
  */
 class Solution &#123;
 public:
-    void inorder(TreeNode* t, vector<int>& res) &#123;
+    void inorder(TreeNode* t, vector&lt;int&gt;&amp; res) &#123;
         if (!t) return;
-        inorder(t->left, res);
-        res.push_back(t->val);
-        inorder(t->right, res);
+        inorder(t-&gt;left, res);
+        res.push_back(t-&gt;val);
+        inorder(t-&gt;right, res);
         return;
     &#125;
     bool isValidBST(TreeNode* root) &#123;
         // --将中根序放入数组中，检查是否有序即可--
-        vector<int> res;
+        vector&lt;int&gt; res;
         inorder(root, res);
-        for (int i = 1; i < res.size(); i++) 
-            if (res[i - 1] >= res[i]) return false;
+        for (int i = 1; i &lt; res.size(); i++) 
+            if (res[i - 1] &gt;= res[i]) return false;
         return true;
     &#125;
 &#125;;
 </code></pre>
 <h2 id="530-二叉搜索树的最小绝对差">530.二叉搜索树的最小绝对差</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-absolute-difference-in-bst/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2705,21 +2705,21 @@ public:
  */
 class Solution &#123;
 public:
-    void inorder(TreeNode* t, vector<int>& res) &#123;
+    void inorder(TreeNode* t, vector&lt;int&gt;&amp; res) &#123;
         if (!t) return;
-        inorder(t->left, res);
-        res.push_back(t->val);
-        inorder(t->right, res);
+        inorder(t-&gt;left, res);
+        res.push_back(t-&gt;val);
+        inorder(t-&gt;right, res);
         return;
     &#125;
     int getMinimumDifference(TreeNode* root) &#123;
         // --将中根序放入数组中，计算最小差值即可--
-        vector<int> res;
+        vector&lt;int&gt; res;
         inorder(root, res);
         int minDiff = INT_MAX;
-        for (int i = 1; i < res.size(); i++) &#123;
+        for (int i = 1; i &lt; res.size(); i++) &#123;
             int tmp = res[i] - res[i - 1];
-            minDiff = minDiff > tmp ? tmp : minDiff;
+            minDiff = minDiff &gt; tmp ? tmp : minDiff;
         &#125;
         return minDiff;
     &#125;
@@ -2727,7 +2727,7 @@ public:
 </code></pre>
 <h2 id="501-二叉搜索树中的众数">501.二叉搜索树中的众数</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-mode-in-binary-search-tree/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2740,28 +2740,28 @@ public:
  */
 class Solution &#123;
 public:
-    vector<int> majority; // 记录当前找到的众数
+    vector&lt;int&gt; majority; // 记录当前找到的众数
     int curMSize = 0;     // 记录当前找到的众数,它有多少个
     int cnt = 0;          // 记录当前重复元素
     int pre = INT_MIN;    // 上一个元素
     void inOrderTraverse(TreeNode* root) &#123;
         if (!root) return;
-        inOrderTraverse(root->left);
+        inOrderTraverse(root-&gt;left);
         // --与上一个元素相同，意味着重复了--
-        if (pre == root->val) cnt++;
+        if (pre == root-&gt;val) cnt++;
         else cnt = 1;
-        pre = root->val;
-        printf("%d %d\n", curMSize, cnt);
-        if (curMSize == cnt) majority.push_back(root->val);
-        else if (curMSize < cnt) &#123;
+        pre = root-&gt;val;
+        printf(&quot;%d %d\n&quot;, curMSize, cnt);
+        if (curMSize == cnt) majority.push_back(root-&gt;val);
+        else if (curMSize &lt; cnt) &#123;
             // --将所有元素清空，将这个众数放入--
-            vector<int>().swap(majority);
-            majority.push_back(root->val);
+            vector&lt;int&gt;().swap(majority);
+            majority.push_back(root-&gt;val);
             curMSize = cnt;
         &#125;
-        inOrderTraverse(root->right);
+        inOrderTraverse(root-&gt;right);
     &#125;
-    vector<int> findMode(TreeNode* root) &#123;
+    vector&lt;int&gt; findMode(TreeNode* root) &#123;
         inOrderTraverse(root);
         return majority;
     &#125;
@@ -2769,7 +2769,7 @@ public:
 </code></pre>
 <h2 id="236-二叉树的最近公共祖先">236. 二叉树的最近公共祖先</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2782,18 +2782,18 @@ class Solution &#123;
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) &#123;
         if (root == p || root == q || root == NULL) return root;
-        TreeNode *left = lowestCommonAncestor(root->left, p, q);
-        TreeNode *right = lowestCommonAncestor(root->right, p, q);
-        if (left && !right) return left;
-        if (!left && right) return right;
-        if (left && right) return root;
+        TreeNode *left = lowestCommonAncestor(root-&gt;left, p, q);
+        TreeNode *right = lowestCommonAncestor(root-&gt;right, p, q);
+        if (left &amp;&amp; !right) return left;
+        if (!left &amp;&amp; right) return right;
+        if (left &amp;&amp; right) return root;
         return nullptr;
     &#125;
 &#125;;
 </code></pre>
 <h2 id="701-二叉搜索树中的插入操作">701.二叉搜索树中的插入操作</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/insert-into-a-binary-search-tree/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2809,16 +2809,16 @@ public:
     TreeNode* insertIntoBST(TreeNode* root, int val) &#123;
         if (!root) return root = new TreeNode(val);
         // --看左子树--
-        if (val < root->val) &#123;
-            if (!root->left)
-                root->left = new TreeNode(val);
-            else insertIntoBST(root->left, val);
+        if (val &lt; root-&gt;val) &#123;
+            if (!root-&gt;left)
+                root-&gt;left = new TreeNode(val);
+            else insertIntoBST(root-&gt;left, val);
         &#125;
         // --看右子树--
-        if (val > root->val) &#123;
-            if (!root->right) 
-                root->right = new TreeNode(val);
-            else insertIntoBST(root->right, val);
+        if (val &gt; root-&gt;val) &#123;
+            if (!root-&gt;right) 
+                root-&gt;right = new TreeNode(val);
+            else insertIntoBST(root-&gt;right, val);
         &#125;
         return root;
     &#125;
@@ -2826,7 +2826,7 @@ public:
 </code></pre>
 <h2 id="450-删除二叉搜索树中的节点">450.删除二叉搜索树中的节点</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-node-in-a-bst/">力扣题目链接</a></p>
-<pre class=" language-language-c++"><code class="language-language-c++">/**
+<pre><code class="language-c++">/**
  * Definition for a binary tree node.
  * struct TreeNode &#123;
  *     int val;
@@ -2842,28 +2842,28 @@ public:
     TreeNode* deleteNode(TreeNode* root, int key) &#123;
         if (!root) return root;
         // --找到要删除的节点--
-        if (root->val == key) &#123;
+        if (root-&gt;val == key) &#123;
             TreeNode *need2delete = root;
             // --1、左右孩子都为空--
-            if (!root->left && !root->right) root = nullptr;
+            if (!root-&gt;left &amp;&amp; !root-&gt;right) root = nullptr;
             // --2、左孩子为空--
-            else if (!root->left && root->right) root = root->right;
+            else if (!root-&gt;left &amp;&amp; root-&gt;right) root = root-&gt;right;
             // --3、右孩子为空--
-            else if (root->left && !root->right) root = root->left;
+            else if (root-&gt;left &amp;&amp; !root-&gt;right) root = root-&gt;left;
             // --4、左右孩子都不为空--
-            else if (root->left && root->right) &#123;
+            else if (root-&gt;left &amp;&amp; root-&gt;right) &#123;
                 // --左子树放到右子树的左下角叶节点的左孩子上--
-                TreeNode *tmp = root->right;
-                while (tmp->left) tmp = tmp->left;
-                tmp->left = root->left;
-                root = root->right;
+                TreeNode *tmp = root-&gt;right;
+                while (tmp-&gt;left) tmp = tmp-&gt;left;
+                tmp-&gt;left = root-&gt;left;
+                root = root-&gt;right;
             &#125;
             delete need2delete;
         &#125;
         // --没找到--
         else &#123;
-            if (root->val > key) root->left = deleteNode(root->left, key);
-            if (root->val < key) root->right = deleteNode(root->right, key);
+            if (root-&gt;val &gt; key) root-&gt;left = deleteNode(root-&gt;left, key);
+            if (root-&gt;val &lt; key) root-&gt;right = deleteNode(root-&gt;right, key);
         &#125;
         return root;
     &#125;
@@ -2950,7 +2950,7 @@ if (true) {
       Chatra('show')
     }
   }
-}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script>
+}</script></div>
         <style>
             [bg-lazy] {
                 background-image: none !important;
@@ -2963,4 +2963,4 @@ if (true) {
                 preloadRatio: 1,
                 processImages: null,
             };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>

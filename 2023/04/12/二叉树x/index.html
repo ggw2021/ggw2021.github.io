@@ -142,7 +142,7 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.staticaly.com/gh/ggw2021/images@main/aandds/snipaste20230128_112429.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">二叉树学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-12T11:20:11.352Z" title="发表于 2023-04-12 19:20:11">2023-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-13T03:13:00.161Z" title="更新于 2023-04-13 11:13:00">2023-04-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>16分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/04/12/%E4%BA%8C%E5%8F%89%E6%A0%91x/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/04/12/%E4%BA%8C%E5%8F%89%E6%A0%91x/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>二叉树</h1>
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.staticaly.com/gh/ggw2021/images@main/aandds/snipaste20230128_112429.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">二叉树学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-12T11:20:11.352Z" title="发表于 2023-04-12 19:20:11">2023-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-13T03:13:00.161Z" title="更新于 2023-04-13 11:13:00">2023-04-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/04/12/%E4%BA%8C%E5%8F%89%E6%A0%91x/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/04/12/%E4%BA%8C%E5%8F%89%E6%A0%91x/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>二叉树</h1>
 <p>内容来源于<a target="_blank" rel="noopener" href="https://www.programmercarl.com/">代码随想录</a></p>
 <h2 id="二叉树的递归遍历">二叉树的递归遍历</h2>
 <h3 id="递归推理的三个思考点">递归推理的三个思考点</h3>
@@ -156,18 +156,18 @@
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.staticaly.com/gh/ggw2021/images@main/aandds/snipaste20230128_112429.jpg" alt=""></p>
 <p>输入样例：1 5 8 0 0 0 6 0 0</p>
 <p>这个采用的是先根遍历的方式创建的：首先读入根节点，然后一路向左创建新的节点，再向左搜索直至没有左节点，接着回溯至上一根节点寻找右节点，若无结束当层节点的递归，再返回上一个节点。这边要特别注意记得返回的是当前节点：</p>
-<pre class=" language-language-C"><code class="language-language-C">	else&#123;
+<pre><code class="language-C">	else&#123;
 			t = (struct node *)malloc(sizeof(struct node));
-			t->val = num;
-			//printf("%d", t->val);
-			t->left = create_tree(t->left);
-			t->right = create_tree(t->right); 
+			t-&gt;val = num;
+			//printf(&quot;%d&quot;, t-&gt;val);
+			t-&gt;left = create_tree(t-&gt;left);
+			t-&gt;right = create_tree(t-&gt;right); 
 		&#125;return t;
 </code></pre>
 <p><code>return t</code> 特别注意</p>
 <p>接下来就是根据先根中跟后跟的口诀来依次递归：</p>
-<pre class=" language-language-c"><code class="language-language-c">#include<stdio.h>
-#include<stdlib.h>
+<pre><code class="language-c">#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
 struct treenode&#123;
 	int data;
 	struct treenode * left;
@@ -177,14 +177,14 @@ struct treenode&#123;
 struct treenode * create(struct treenode * root)&#123;
 	int d;
 	struct treenode * node;
-	while(scanf("%d", &d)!= EOF)&#123;
+	while(scanf(&quot;%d&quot;, &amp;d)!= EOF)&#123;
 		if(d == 0)return NULL;
 		else&#123;
 		
 			node = (struct treenode *)malloc(sizeof(struct treenode));
-			node->data = d;
-			node->left = create(node->left);
-			node->right = create(node->right);
+			node-&gt;data = d;
+			node-&gt;left = create(node-&gt;left);
+			node-&gt;right = create(node-&gt;right);
 					&#125;
 		return node;
 	&#125;
@@ -192,34 +192,34 @@ struct treenode * create(struct treenode * root)&#123;
 void travel_first(struct treenode *node)&#123;//先根
 	       if(node == NULL)return;
 		   else&#123;
-		   	printf("%d ", node->data);
-		   	travel_first(node->left);
-		   	travel_first(node->right);
+		   	printf(&quot;%d &quot;, node-&gt;data);
+		   	travel_first(node-&gt;left);
+		   	travel_first(node-&gt;right);
 		   &#125; 
 &#125;
 void travel_second(struct treenode *node)&#123;//中跟
 	       if(node ==NULL)return;
 		   else&#123;
-		   	travel_second(node->left);
-		   	printf("%d ", node->data);
-		   	travel_second(node->right);
+		   	travel_second(node-&gt;left);
+		   	printf(&quot;%d &quot;, node-&gt;data);
+		   	travel_second(node-&gt;right);
 		   &#125; 
 &#125;
 void travel_third(struct treenode *node)&#123;//后根
 	       if(node ==NULL)return;
 		   else&#123;
-		   	travel_third(node->left);
+		   	travel_third(node-&gt;left);
 		   	
-		   	travel_third(node->right);
-		   	printf("%d ", node->data);
+		   	travel_third(node-&gt;right);
+		   	printf(&quot;%d &quot;, node-&gt;data);
 		   &#125; 
 &#125;
 int main() &#123;
      struct treenode* r = NULL;
      r = create(r);
-     travel_first(r);printf("\n");
-     travel_second(r);printf("\n");
-     travel_third(r);printf("\n");
+     travel_first(r);printf(&quot;\n&quot;);
+     travel_second(r);printf(&quot;\n&quot;);
+     travel_third(r);printf(&quot;\n&quot;);
 	return 0;
 &#125;
 
@@ -227,7 +227,7 @@ int main() &#123;
 <h2 id="二叉树的非递归遍历">二叉树的非递归遍历</h2>
 <p>前序遍历是中左右，每次先处理的是中间节点，那么先将根节点放入栈中，然后将右孩子加入栈，再加入左孩子。</p>
 <p>为了方便说明，先附上代码：</p>
-<pre class=" language-language-c"><code class="language-language-c">void travel_first(struct node *r)&#123;
+<pre><code class="language-c">void travel_first(struct node *r)&#123;
 	struct node*stack[100];
 	int top = 0;
     if(r == NULL)return;
@@ -237,9 +237,9 @@ int main() &#123;
     	tmp = stack[top];
     	stack[top]=NULL;
     	top--;
-    	result[++toper] = tmp->val;
-    	if(tmp->right != NULL)stack[++top] = tmp->right;
-    	if(tmp->left != NULL)stack[++top] = tmp->left;	
+    	result[++toper] = tmp-&gt;val;
+    	if(tmp-&gt;right != NULL)stack[++top] = tmp-&gt;right;
+    	if(tmp-&gt;left != NULL)stack[++top] = tmp-&gt;left;	
 	&#125;
 &#125;
 </code></pre>
@@ -255,22 +255,22 @@ int main() &#123;
 </ol>
 <p>这个时候需要一个指针用来存储临时遍历的节点，直至遍历到左子树最下面的一个叶子节点：我们常常把对根节点的处理作为递归出口，然后使用临时栈来判断循环条件。</p>
 <p>这边要特别注意不能直接将临时栈中的数据直接取出来存入结果数组中，因为这样子树的链表连接就直接断开了，在这一步和上面相同的是要更新这个临时节点指向的数据，将其更新为栈顶元素。</p>
-<pre class=" language-language-C"><code class="language-language-C">void travel_first(struct node *r)&#123;
+<pre><code class="language-C">void travel_first(struct node *r)&#123;
 	struct node*stack[100];
 	int top = 0;
     if(r == NULL)return;
     struct node * temp = r;
     while(top != 0||temp != NULL)&#123;//根节点为空、栈为空 
-       if(temp != NULL)&#123;//temp代表的是一路向左的指针，有可能本身为空，不要写成temp->left 
+       if(temp != NULL)&#123;//temp代表的是一路向左的指针，有可能本身为空，不要写成temp-&gt;left 
        	stack[++top] = temp;
-       	temp = temp->left;
+       	temp = temp-&gt;left;
 	   &#125;
 	   else&#123;//这个地方特别注意这个节点的传递
 	   	temp = stack[top]; 
 	   	stack[top] = NULL;
 	   	  	top--;
-	   	  	result[++toper] = temp->val;
-	   	  	temp = temp->right;
+	   	  	result[++toper] = temp-&gt;val;
+	   	  	temp = temp-&gt;right;
 	   &#125; 
     &#125;
     
@@ -279,7 +279,7 @@ int main() &#123;
 <h3 id="统一迭代法">统一迭代法</h3>
 <p>统一迭代法使用一个空指针作为标记，用以区分访问过的节点和决定弹出的顺序；根后面跟着一个空指针，然后压入顺序记得颠倒：</p>
 <p>中序遍历：</p>
-<pre class=" language-language-C"><code class="language-language-C">void travel_first(struct node *r)&#123;
+<pre><code class="language-C">void travel_first(struct node *r)&#123;
 	struct node*stack[100];
 	int top = 0;
     if(r == NULL)return;
@@ -289,17 +289,17 @@ int main() &#123;
        if(temp != NULL)&#123;//temp不为空的时候代表一种标记，不必弹栈
         stack[top] = NULL;
         top--;//弹栈
-		if(temp->right != NULL)stack[++top] = temp->right;
+		if(temp-&gt;right != NULL)stack[++top] = temp-&gt;right;
 		stack[++top] = temp; 
        	stack[++top] = NULL;//根节点后做标记
-       	if(temp->left != NULL)stack[++top] = temp->left;
+       	if(temp-&gt;left != NULL)stack[++top] = temp-&gt;left;
 	   &#125;
 	   else&#123;//遇到NULL则弹栈
 	   	top--;//开始弹出节点
 	   	temp = stack[top]; 
 	   	stack[top] = NULL;
 	   	  	top--;
-	   	  	result[++toper] = temp->val;
+	   	  	result[++toper] = temp-&gt;val;
 	   &#125; 
     &#125;
     
@@ -309,7 +309,7 @@ int main() &#123;
 <h2 id="二叉树的层序遍历">二叉树的层序遍历</h2>
 <h3 id="广度优先搜索">广度优先搜索</h3>
 <p>利用辅助队列，每层节点按顺序进入队列，接着分别判断左右节点是否为空，若不为空则分别进入队列，再按顺序依次弹出：</p>
-<pre class=" language-language-C"><code class="language-language-C">void leverOrder(struct node * r)&#123;
+<pre><code class="language-C">void leverOrder(struct node * r)&#123;
 	struct node * queue[100];
 	int front= 0;
 	int rear = 0;
@@ -317,13 +317,13 @@ int main() &#123;
 	//front = rear;
 	while(front != rear)&#123;
 		int size = rear-front;//size实际上是每层节点的数目 
-		for(int i = 0;i < size;i++)&#123;
+		for(int i = 0;i &lt; size;i++)&#123;
 			struct node *tmp = queue[front+1];
             //这边要注意出队的时候我们记录的是front+1 
-			result[++toper] = tmp->val;
+			result[++toper] = tmp-&gt;val;
             front++;
-		    if(tmp->left != NULL)queue[++rear] = tmp->left;
-		    if(tmp->right != NULL)queue[++rear] = tmp->right;
+		    if(tmp-&gt;left != NULL)queue[++rear] = tmp-&gt;left;
+		    if(tmp-&gt;right != NULL)queue[++rear] = tmp-&gt;right;
 		&#125;	
 	&#125;
 &#125; 
@@ -335,12 +335,12 @@ int main() &#123;
 <li>二叉树节点的高度：指从该节点到叶子节点的最长简单路径边的条数后者节点数</li>
 </ul>
 <p>注意：使用递归求取最大深度，（后序遍历）分别对左子树和右子树求，然后再返回左右子树中深度最大的。不可直接返回左右子树求出来的那个值：原因不详。</p>
-<pre class=" language-language-C"><code class="language-language-C">int depth(struct node * r)&#123;
+<pre><code class="language-C">int depth(struct node * r)&#123;
 	if(r == NULL)return 0;
 	else&#123;
-		int leftdepth = depth(r->left);
-		int rightdepth = depth(r->right);
-		int max = leftdepth > rightdepth ?leftdepth:rightdepth;
+		int leftdepth = depth(r-&gt;left);
+		int rightdepth = depth(r-&gt;right);
+		int max = leftdepth &gt; rightdepth ?leftdepth:rightdepth;
 			return max+1; 
 	&#125;
 
@@ -358,13 +358,13 @@ int main() &#123;
 <p>3.明确单层递归逻辑</p>
 <p>如何判断以当前传入节点为根节点的二叉树是否是平衡二叉树呢？当然是其左子树高度和其右子树高度的差值。</p>
 <p>分别求出其左右子树的高度，然后如果差值小于等于1，则返回当前二叉树的高度，否则返回-1，表示已经不是二叉平衡树了。</p>
-<pre class=" language-language-c"><code class="language-language-c">int get_height(struct node * r)&#123;
+<pre><code class="language-c">int get_height(struct node * r)&#123;
 	if(r == NULL)return 0;
-	int leftheight = get_height(r->left);//这边不需要判断该节点的左子树 是否为空 
+	int leftheight = get_height(r-&gt;left);//这边不需要判断该节点的左子树 是否为空 
 	if(leftheight == -1)return -1;
-    int rightheight = get_height(r->right);
+    int rightheight = get_height(r-&gt;right);
 	if(rightheight == -1)return -1;
-	return abs(leftheight-rightheight) >1? -1:1+max(leftheight,rightheight);//这个语句的语法最好还是记一下挺常见的 
+	return abs(leftheight-rightheight) &gt;1? -1:1+max(leftheight,rightheight);//这个语句的语法最好还是记一下挺常见的 
 &#125;
 </code></pre>
 <h2 id="二叉树的所有路径">二叉树的所有路径</h2>
@@ -373,29 +373,29 @@ int main() &#123;
 <p>​           2.本题第二个麻烦的是输出路径必然为char数组，鉴于动态分配我实在是没学会，我就还是选择将数组开大一点然后一次存储路径。</p>
 <p>​           3.本题采用的是先根序列的方式，前面我们提到一般求深度的时候首选先根，所有路径的起点均为根，所以我们还是选择了先根序列。</p>
 <p>​           4.单层递归思路，往左一直走，走到没有路了将这条路记录给stack，这边要注意的是stack是个int 整型而我们需要一个临时字符串数组来存储，这边借助了别人的方法来使用sprintf函数，值得一提的是，它的头文件正是<code>include&lt;stdio.h&gt;</code></p>
-<pre class=" language-language-c"><code class="language-language-c">int count = 0;
+<pre><code class="language-c">int count = 0;
 int stack[1001];//存储单条路径访问过的节点 
 int top;    
 void dfs(struct node* root,char result[][101],int* stack, int top)
 &#123;
     if(root == NULL)return;
-    if(root->left == NULL && root->right == NULL)
+    if(root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL)
     &#123;
         char tmp[101];//tmp最终记录当前叶子节点对应得路径 
         int len = 0;
-        for (int i = 0; i < top; i++) //将栈中所有暂存的点全部输出出来 
+        for (int i = 0; i &lt; top; i++) //将栈中所有暂存的点全部输出出来 
         &#123;//按照顺序输出节点 
-            len += sprintf(tmp + len, "%d->", stack[i]);//sprintf返回的是该字符串的长度，len是这个路径字符串的长度，
+            len += sprintf(tmp + len, &quot;%d-&gt;&quot;, stack[i]);//sprintf返回的是该字符串的长度，len是这个路径字符串的长度，
 			//tmp是字符串的指针，要向后移动多少长度才能把stack中包括箭头加入进来 
         &#125;
-        sprintf(tmp + len, "%d", root->val);//记得加入最后一个节点 
+        sprintf(tmp + len, &quot;%d&quot;, root-&gt;val);//记得加入最后一个节点 
         strcpy(result[count++],tmp);  // 把路径加入到答案中
     &#125;
     else
     &#123;
-        stack[top++] = root->val;  // 当前节点不是叶子节点，继续递归遍历
-        dfs(root->left, result, stack, top);
-        dfs(root->right, result, stack, top);
+        stack[top++] = root-&gt;val;  // 当前节点不是叶子节点，继续递归遍历
+        dfs(root-&gt;left, result, stack, top);
+        dfs(root-&gt;right, result, stack, top);
     &#125;
 &#125;
 
@@ -407,25 +407,25 @@ void dfs(struct node* root,char result[][101],int* stack, int top)
 <p>给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。</p>
 <p>这道题还是常规的回溯，但是它是依次减去根节点的数值，从而来判断是否符合给出的目标值。</p>
 <p>注意：本题给出的解答并未将根节点的数值进行录入，如果考虑输入输出情况需要在主函数中判断根节点是否为空，如果不为空将目标值减去根节点的数值然后再进行求解</p>
-<pre class=" language-language-C"><code class="language-language-C">bool sum_tree(struct node *r, int target)&#123;
-	if(r->left == NULL && r->right == NULL && target == 0)return true;//符合路径和 
-	if(r->left == NULL && r->right == NULL)return false;//遇到叶子节点直接返回 
-	if(r->left)&#123;
-		target -= r->left->val;
-		if(sum_tree(r->left,target))return true;
-		target+=r->left->val; 
+<pre><code class="language-C">bool sum_tree(struct node *r, int target)&#123;
+	if(r-&gt;left == NULL &amp;&amp; r-&gt;right == NULL &amp;&amp; target == 0)return true;//符合路径和 
+	if(r-&gt;left == NULL &amp;&amp; r-&gt;right == NULL)return false;//遇到叶子节点直接返回 
+	if(r-&gt;left)&#123;
+		target -= r-&gt;left-&gt;val;
+		if(sum_tree(r-&gt;left,target))return true;
+		target+=r-&gt;left-&gt;val; 
 	&#125;
-	if(r->right)&#123;
-		target -= r->right->val;
-		if(sum_tree(r->right,target))return true;
-		target += r->right->val; //记得每次回溯要加回去，才能去检测下一条路径 
+	if(r-&gt;right)&#123;
+		target -= r-&gt;right-&gt;val;
+		if(sum_tree(r-&gt;right,target))return true;
+		target += r-&gt;right-&gt;val; //记得每次回溯要加回去，才能去检测下一条路径 
 	&#125;
 	return false;//所有路径走完均没有找到符合条件的值，返回false
 &#125;
 </code></pre>
 <h2 id="二叉树线索化">二叉树线索化</h2>
 <p>介个是我们老师课内拓展的内容–为了强化记忆我特意还原了老师pdf内的算法。首先结构体内会多出两部分内容：</p>
-<pre class=" language-language-C"><code class="language-language-C">struct node&#123;
+<pre><code class="language-C">struct node&#123;
 	int val;
 	int Lthread;
 	int Rthread;
@@ -435,21 +435,21 @@ void dfs(struct node* root,char result[][101],int* stack, int top)
 </code></pre>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.staticaly.com/gh/ggw2021/images@main/aandds/snipaste20230129_214705.jpg" alt=""></p>
 <p>先描述如何将一个二叉树线索化：首先它的基本思路就是中序遍历：在中序遍历的基础上进行修改。访问完左子树后，对左子树进行判断，为空进行线索化，此时我们需要借助一个父节点用来实时更新左子树指向的位置。同理对于右子树，我们利用了pre这一节点来进行判断是否需要线索化，当满足pre不为空且右子树为空（这边一开始错了改了半个点QAQ）从而来实现线索化，最后尤其注意更新pre的位置，将其变化为下一个节点，再递归进行右子树。</p>
-<pre class=" language-language-c"><code class="language-language-c">void travel_second(struct node *r)&#123;
+<pre><code class="language-c">void travel_second(struct node *r)&#123;
     if(r == NULL)return;
-	travel_second(r->left);
-	if(r->left == NULL)&#123;
-		r->Lthread = 1;
-		r->left = pre;
+	travel_second(r-&gt;left);
+	if(r-&gt;left == NULL)&#123;
+		r-&gt;Lthread = 1;
+		r-&gt;left = pre;
 	&#125;
-    else r->Lthread = 0;
-    if(pre != NULL && pre->right == NULL)&#123;//
-    	pre->Rthread = 1;
-    	pre->right = r;
+    else r-&gt;Lthread = 0;
+    if(pre != NULL &amp;&amp; pre-&gt;right == NULL)&#123;//
+    	pre-&gt;Rthread = 1;
+    	pre-&gt;right = r;
 	&#125;
-	else if(pre != NULL)pre->Rthread = 0;
+	else if(pre != NULL)pre-&gt;Rthread = 0;
 	pre = r;
-	travel_second(r->right);
+	travel_second(r-&gt;right);
 	return;
 &#125; 
 </code></pre>
@@ -458,25 +458,25 @@ void dfs(struct node* root,char result[][101],int* stack, int top)
 <p>下个节点：当Rthread=1时，意味着它的右指针指向下个节点，直接返回</p>
 <p>​                    否则，则返回它右子树的第一个节点。</p>
 <p>那么利用上述两个函数，我们最终写出了遍历的算法：</p>
-<pre class=" language-language-C"><code class="language-language-C">struct node* first_order(struct node *r)&#123;
-	while(r->Lthread == 0)&#123;
-		r = r->left;
+<pre><code class="language-C">struct node* first_order(struct node *r)&#123;
+	while(r-&gt;Lthread == 0)&#123;
+		r = r-&gt;left;
 	&#125;
 	return r;
 &#125;
 struct node* next_order(struct node *t)&#123;
-	if(t->Rthread ==1)&#123;
-	return t->right;&#125;
+	if(t-&gt;Rthread ==1)&#123;
+	return t-&gt;right;&#125;
 	else &#123;
-		//printf("%d",t->right->val);
-	return first_order(t->right);
+		//printf(&quot;%d&quot;,t-&gt;right-&gt;val);
+	return first_order(t-&gt;right);
 &#125;
 &#125; 
 void inorder(struct node *r)&#123;
 	struct node * tmp = r;
 	tmp = first_order(r);
 	while(tmp!= NULL)&#123;
-		printf("%d ", tmp->val);
+		printf(&quot;%d &quot;, tmp-&gt;val);
 		tmp = next_order(tmp);
 	&#125;
 	
@@ -490,11 +490,11 @@ void inorder(struct node *r)&#123;
 <li>要理解如果返回值left为空，right不为空为什么要返回right，为什么可以用返回right传给上一层结果</li>
 </ol>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.staticaly.com/gh/ggw2021/images@main/aandds/snipaste20230130_221716.jpg" alt=""></p>
-<pre class=" language-language-C"><code class="language-language-C">struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q) &#123;
+<pre><code class="language-C">struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q) &#123;
     if(root == NULL)return NULL;//根节点为空直接返回空
     if(root==p || root == q)return root;
-    struct TreeNode *left =lowestCommonAncestor (root->left,p,q);
-    struct TreeNode *right = lowestCommonAncestor(root->right,p,q);
+    struct TreeNode *left =lowestCommonAncestor (root-&gt;left,p,q);
+    struct TreeNode *right = lowestCommonAncestor(root-&gt;right,p,q);
     if(left == NULL)return right;//可以看上图中2和4，
     //在5这一层递归时left == NULL,于是在右侧查找，找到2时返回right,而这个时候返回的值为3这一层的左值
     if(right == NULL)return left;//同理可得
@@ -506,55 +506,55 @@ void inorder(struct node *r)&#123;
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.staticaly.com/gh/ggw2021/images@main/aandds/snipaste20230131_102811.jpg" alt=""></p>
 <h3 id="查找算法：">查找算法：</h3>
 <p>要强调的就是返回值的问题，如果发现不需要记录沿途的路径值，就直接返回它查找得到的节点。</p>
-<pre class=" language-language-c"><code class="language-language-c">struct TreeNode* searchBST(struct TreeNode* root, int val)&#123;
+<pre><code class="language-c">struct TreeNode* searchBST(struct TreeNode* root, int val)&#123;
          if(root == NULL)return root;//这个地方要返回的是root，而不是NULL会出现野指针
-         if(root->val == val)return root;
-         if(root->val > val)return searchBST(root->left,val);
-         if(root->val < val)return searchBST(root->right,val);
+         if(root-&gt;val == val)return root;
+         if(root-&gt;val &gt; val)return searchBST(root-&gt;left,val);
+         if(root-&gt;val &lt; val)return searchBST(root-&gt;right,val);
     return root;
 &#125;
 </code></pre>
 <h3 id="插入算法：">插入算法：</h3>
 <p>一个是递归终点的判断错误，不是找到叶子节点就结束，而是找到叶子结点下一位并对此新分配新的空间。</p>
 <p>还有就是递归返回的判断错误：这边是要返回当前节点左子树和右子树的位置，也没有判断正确。</p>
-<pre class=" language-language-c"><code class="language-language-c">struct TreeNode* insertIntoBST(struct TreeNode* root, int val)&#123;
+<pre><code class="language-c">struct TreeNode* insertIntoBST(struct TreeNode* root, int val)&#123;
          if(root == NULL)&#123;
              struct TreeNode * tmp =(struct TreeNode* )malloc(sizeof(struct TreeNode));
-             tmp->val = val;
-             tmp->left = tmp->right = NULL;//没有对左右指针赋值会出现问题在力扣
+             tmp-&gt;val = val;
+             tmp-&gt;left = tmp-&gt;right = NULL;//没有对左右指针赋值会出现问题在力扣
              return tmp;//回溯，层层上交
          &#125;
-         if(root->val < val)&#123;
-             root->right =  insertIntoBST(root->right, val);//只有让root的位置一直在才能回溯
+         if(root-&gt;val &lt; val)&#123;
+             root-&gt;right =  insertIntoBST(root-&gt;right, val);//只有让root的位置一直在才能回溯
          &#125;
-        if(root->val >val)
-             root->left = insertIntoBST(root->left, val);
+        if(root-&gt;val &gt;val)
+             root-&gt;left = insertIntoBST(root-&gt;left, val);
     return root;
 &#125;
 </code></pre>
 <h3 id="删除算法：">删除算法：</h3>
 <p>删除算法整体逻辑不变，就是找到后记得分五种情况处理：</p>
-<pre class=" language-language-C"><code class="language-language-C">
+<pre><code class="language-C">
 struct TreeNode* deleteNode(struct TreeNode* root, int key)&#123;
           if(root == NULL)return root;//大框架还是找到了，比它大比它小
-          if(root->val == key)&#123;//这里是在找到这个节点下要删除的四种情况
-              if(root->left == NULL)return root->right;
+          if(root-&gt;val == key)&#123;//这里是在找到这个节点下要删除的四种情况
+              if(root-&gt;left == NULL)return root-&gt;right;
               //左子树为空，右子树可空可不空，直接返回右子树
-              else if(root->right == NULL)return root->left;//右子树为空返回左子树
+              else if(root-&gt;right == NULL)return root-&gt;left;//右子树为空返回左子树
               else&#123;//最复杂的是左右子树都不为空，这个时候我们要先找到这个点右子树最小的点，就是最左边
               //然后将根的左子树变为这个点的左子树
               //临时记录根的位置，然后让根删除
-                  struct TreeNode * cur = root->right;
-                  while(cur->left != NULL) cur = cur->left;
-                  cur->left = root->left;
+                  struct TreeNode * cur = root-&gt;right;
+                  while(cur-&gt;left != NULL) cur = cur-&gt;left;
+                  cur-&gt;left = root-&gt;left;
                   struct TreeNode * tmp = root;
-                root = root->right;//此时这个已经失去左子树，只剩右子树，让右子树的根覆盖它即可
+                root = root-&gt;right;//此时这个已经失去左子树，只剩右子树，让右子树的根覆盖它即可
                 free(tmp);
                 return root;
               &#125;
           &#125;
-        if (root->val > key) root->left = deleteNode(root->left, key);
-        if (root->val < key) root->right = deleteNode(root->right, key);
+        if (root-&gt;val &gt; key) root-&gt;left = deleteNode(root-&gt;left, key);
+        if (root-&gt;val &lt; key) root-&gt;right = deleteNode(root-&gt;right, key);
           return root;
 &#125;
 </code></pre>
@@ -635,7 +635,7 @@ if (true) {
       Chatra('show')
     }
   }
-}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script>
+}</script></div>
         <style>
             [bg-lazy] {
                 background-image: none !important;
@@ -648,4 +648,4 @@ if (true) {
                 preloadRatio: 1,
                 processImages: null,
             };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
