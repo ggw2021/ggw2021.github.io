@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Windows DOS命令\批处理脚本学习(进行中) | ggw和xpl的博客</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、带入 B站视频 由于脚本中 @ECHO 后面没有参数。而没有 参数的 ECHO, 会把当前脚本 ECHO 命令行的状态(ON&#x2F;OFF)显示出来，显示出的结果也就是：ECHO is off&#x2F;ECHO is on. 解决：加上@echo off 清屏 cls  二 、批处理运算操作 1、算数运算 （1）命令模式 set \a 表达式  案例：  （2）文本模式 案例 @echo off set &#x2F;">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Windows DOS命令\批处理脚本学习(进行中) | ggw和xpl的博客</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、带入 B站视频 由于脚本中 @ECHO 后面没有参数。而没有 参数的 ECHO, 会把当前脚本 ECHO 命令行的状态(ON&#x2F;OFF)显示出来，显示出的结果也就是：ECHO is off&#x2F;ECHO is on. 解决：加上@echo off 清屏 1cls 二 、批处理运算操作 1、算数运算 （1）命令模式 1set \a 表达式 案例：  （2）文本模式 案例 1234@echo offse">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Windows DOS命令\批处理脚本学习(进行中)">
 <meta property="og:url" content="https://gxblogs.netlify.app/2023/01/14/DOS%E5%91%BD%E4%BB%A4%20%E6%89%B9%E5%A4%84%E7%90%86%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="ggw和xpl的博客">
-<meta property="og:description" content="一、带入 B站视频 由于脚本中 @ECHO 后面没有参数。而没有 参数的 ECHO, 会把当前脚本 ECHO 命令行的状态(ON&#x2F;OFF)显示出来，显示出的结果也就是：ECHO is off&#x2F;ECHO is on. 解决：加上@echo off 清屏 cls  二 、批处理运算操作 1、算数运算 （1）命令模式 set \a 表达式  案例：  （2）文本模式 案例 @echo off set &#x2F;">
+<meta property="og:description" content="一、带入 B站视频 由于脚本中 @ECHO 后面没有参数。而没有 参数的 ECHO, 会把当前脚本 ECHO 命令行的状态(ON&#x2F;OFF)显示出来，显示出的结果也就是：ECHO is off&#x2F;ECHO is on. 解决：加上@echo off 清屏 1cls 二 、批处理运算操作 1、算数运算 （1）命令模式 1set \a 表达式 案例：  （2）文本模式 案例 1234@echo offse">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-13_23-53-53.png">
 <meta property="article:published_time" content="2023-01-13T17:46:41.327Z">
-<meta property="article:modified_time" content="2023-09-26T07:41:03.302Z">
+<meta property="article:modified_time" content="2023-09-26T07:58:46.516Z">
 <meta property="article:author" content="ggw &amp; xpl">
 <meta property="article:tag" content="windows">
 <meta name="twitter:card" content="summary">
@@ -17,7 +17,7 @@
   localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2023-09-26 15:41:03'
+  postUpdate: '2023-09-26 15:58:46'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,35 +142,28 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-13_23-53-53.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Windows DOS命令\批处理脚本学习(进行中)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-13T17:46:41.327Z" title="发表于 2023-01-14 01:46:41">2023-01-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-26T07:41:03.302Z" title="更新于 2023-09-26 15:41:03">2023-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">423</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/01/14/DOS%E5%91%BD%E4%BB%A4%20%E6%89%B9%E5%A4%84%E7%90%86%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/01/14/DOS%E5%91%BD%E4%BB%A4%20%E6%89%B9%E5%A4%84%E7%90%86%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="一、带入">一、带入</h2>
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-13_23-53-53.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ggw和xpl的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Windows DOS命令\批处理脚本学习(进行中)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-13T17:46:41.327Z" title="发表于 2023-01-14 01:46:41">2023-01-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-26T07:58:46.516Z" title="更新于 2023-09-26 15:58:46">2023-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">422</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/01/14/DOS%E5%91%BD%E4%BB%A4%20%E6%89%B9%E5%A4%84%E7%90%86%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/01/14/DOS%E5%91%BD%E4%BB%A4%20%E6%89%B9%E5%A4%84%E7%90%86%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="一、带入">一、带入</h2>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Qv411q7bN?t=137.3">B站视频</a></p>
 <p>由于脚本中 @ECHO 后面没有参数。而没有 参数的 ECHO, 会把当前脚本 ECHO 命令行的状态(ON/OFF)显示出来，显示出的结果也就是：ECHO is off/ECHO is on.</p>
 <p>解决：加上<code>@echo off</code></p>
 <p><strong>清屏</strong></p>
-<pre><code class="language-bash">cls
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cls</span><br></pre></td></tr></table></figure>
 <h2 id="二-、批处理运算操作">二 、批处理运算操作</h2>
 <h3 id="1、算数运算">1、算数运算</h3>
 <p>（1）命令模式</p>
-<pre><code class="language-bash">set \a 表达式
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> \a 表达式</span><br></pre></td></tr></table></figure>
 <p>案例：</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-14_00-07-26.png" alt=""></p>
 <p>（2）文本模式</p>
 <p>案例</p>
-<pre><code class="language-bash">@echo off
-set /a var = 1 + 2
-echo %var%
-pause
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">set</span> /a var = 1 + 2</span><br><span class="line"><span class="built_in">echo</span> %var%</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
 <p>输出结果</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-14_00-29-05.png" alt=""></p>
 <h3 id="2、重定向操作运算">2、重定向操作运算</h3>
 <p>（1）&gt;、&gt;&gt; 效果同Linux</p>
 <p>（2）&lt;、&lt;&lt; 效果同Linux</p>
 <p><strong>查看文件内容</strong></p>
-<pre><code class="language-bash">type 文件
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> 文件</span><br></pre></td></tr></table></figure>
 <p>案例</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-14_00-35-45.png" alt=""></p>
 <h3 id="3、多命令运算">3、多命令运算</h3>
@@ -179,13 +172,11 @@ pause
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-14_00-40-20.png" alt=""></p>
 <h3 id="4、管道运算">4、管道运算</h3>
 <p><strong>查看当前目录下文件和目录</strong></p>
-<pre><code class="language-bash">dir
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dir</span></span><br></pre></td></tr></table></figure>
 <p><code>|</code>效果同linux</p>
 <h2 id="三、批处理基本命令">三、批处理基本命令</h2>
 <h3 id="1、命令格式">1、命令格式</h3>
-<pre><code class="language-bash">命令 子命令 参数 操作
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">命令 子命令 参数 操作</span><br></pre></td></tr></table></figure>
 <p>命令帮助查看<code>/?</code>、<code>/help</code></p>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-14_00-52-56.png" alt=""></p>
 <h3 id="2、批处理文件接收参数">2、批处理文件接收参数</h3>
@@ -193,54 +184,38 @@ pause
 <p>案例：</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-14_01-04-42.png" alt=""></p>
 <h3 id="3、注释">3、注释</h3>
-<pre><code class="language-bash">rem 注释内容
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rem 注释内容</span><br></pre></td></tr></table></figure>
 <p>或者</p>
-<pre><code class="language-bash">:: 注释内容
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:: 注释内容</span><br></pre></td></tr></table></figure>
 <h3 id="4、装逼命令提示符窗口">4、装逼命令提示符窗口</h3>
 <p>没啥用</p>
 <p><strong>颜色命令</strong></p>
 <p>先查看一下</p>
-<pre><code class="language-bash">color /?
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">color /?</span><br></pre></td></tr></table></figure>
 <p>再自己设置成啥样，修改前景色，背景色</p>
-<pre><code class="language-bash">color 0a
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">color 0a</span><br></pre></td></tr></table></figure>
 <p>变成黑色背景，绿色字体啦（关掉再开就没了）</p>
 <p><strong>修改标题命令</strong></p>
-<pre><code class="language-bash">title 标题
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title 标题</span><br></pre></td></tr></table></figure>
 <h3 id="5、时间相关的命令">5、时间相关的命令</h3>
 <p><strong>date</strong></p>
-<pre><code class="language-bash">date /t
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">date</span> /t</span><br></pre></td></tr></table></figure>
 <p>输出为</p>
-<pre><code class="language-bash">2023-01-14
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2023-01-14</span><br></pre></td></tr></table></figure>
 <p><strong>time</strong></p>
-<pre><code class="language-bash">time /t
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time /t</span><br></pre></td></tr></table></figure>
 <p>输出为</p>
-<pre><code class="language-bash">01:19
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">01:19</span><br></pre></td></tr></table></figure>
 <h3 id="6、启动命令">6、启动命令</h3>
 <p><strong>start</strong></p>
 <p>运行bat文件</p>
-<pre><code class="language-bash">start .bat文件
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start .bat文件</span><br></pre></td></tr></table></figure>
 <p>打开一个title为“hello”的cmd窗口</p>
-<pre><code class="language-bash">start &quot;hello&quot;
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start <span class="string">&quot;hello&quot;</span></span><br></pre></td></tr></table></figure>
 <h3 id="7、调用其他bat文件">7、调用其他bat文件</h3>
 <p>同linux，略有区别</p>
 <p>案例</p>
-<pre><code class="language-bash">@echo off
-set /a var = %1 + %2
-echo %var%
-call demo.bat %1
-pause
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">set</span> /a var = %1 + %2</span><br><span class="line"><span class="built_in">echo</span> %var%</span><br><span class="line">call demo.bat %1</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
 <p>结果为</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/windows/Snipaste_2023-01-14_01-42-58.png" alt=""></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Qv411q7bN?t=8.4&amp;p=13">接着看</a></p>
@@ -321,7 +296,7 @@ if (true) {
       Chatra('show')
     }
   }
-}</script></div>
+}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script>
         <style>
             [bg-lazy] {
                 background-image: none !important;
@@ -334,4 +309,4 @@ if (true) {
                 preloadRatio: 1,
                 processImages: null,
             };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
