@@ -18,7 +18,7 @@ function updateCountup() {
 
     // 如果目标日期已经过去，显示消息
     if (timeDifference > 0) {
-        countupElement.innerHTML = '已经过去 ' + days + ' 天';
+        countupElement.innerHTML =  days + 1;
     }
 
     // 计算明天的日期
