@@ -14,6 +14,8 @@ function updateCountup() {
 
     // 更新页面上的计时
     const countupElement = document.getElementById('ggw_countdown'); // 注意这里的 ID 应该是 ggw_countdown
+    if (!countupElement) return         // 只在主页显示
+
     countupElement.innerHTML = `${days} 天`;
 
     // 如果目标日期已经过去，显示消息
