@@ -33,6 +33,9 @@ h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
     -webkit-animation: ccc 1.6s linear infinite ;
     animation: ccc 1.6s linear infinite ;
 }
+h1, h2, h3, h4, h5, h6 {
+  padding-left: 0px!important;
+}
 @-webkit-keyframes ccc {
     0% {
         -webkit-transform: rotate(0deg);
