@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>2023使用picgo + github搭建图床（typora）,解决jsdelivr问题 | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、图床是什么  图床一般是指储存图片的服务器 有国内和国外之分。国外的图床由于有空间距离等因素决定访问速度很慢影响图片显示速度。国内也分为单线空间、多线空间和cdn加速三种。    说人话： 就是把你博客，或者笔记中的图片存到云端上去，这样文本里面只留存图片链接   举个例子：写markdown笔记时，图片存储在本地，用相对路径或者绝对路径加载图片，如果要同步笔记或者迁移笔记的话， 那么是不是要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023使用picgo + github搭建图床（typora）,解决jsdelivr问题">
+<meta property="og:url" content="https://gxblogs.com/posts/22739/index.html">
+<meta property="og:site_name" content="GXBLOGS">
+<meta property="og:description" content="一、图床是什么  图床一般是指储存图片的服务器 有国内和国外之分。国外的图床由于有空间距离等因素决定访问速度很慢影响图片显示速度。国内也分为单线空间、多线空间和cdn加速三种。    说人话： 就是把你博客，或者笔记中的图片存到云端上去，这样文本里面只留存图片链接   举个例子：写markdown笔记时，图片存储在本地，用相对路径或者绝对路径加载图片，如果要同步笔记或者迁移笔记的话， 那么是不是要">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-11-01.png">
+<meta property="article:published_time" content="2023-01-05T07:32:32.410Z">
+<meta property="article:modified_time" content="2024-01-19T06:58:37.376Z">
+<meta property="article:author" content="ggw &amp; xpl">
+<meta property="article:tag" content="github">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-11-01.png"><link rel="shortcut icon" href="/static/imgs/paipai.ico"><link rel="canonical" href="https://gxblogs.com/posts/22739/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: ggw & xpl","link":"链接: ","source":"来源: GXBLOGS","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2023使用picgo + github搭建图床（typora）,解决jsdelivr问题',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-19 14:58:37'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script><script src="https://cdn.jsdelivr.net/gh/graingert/WOW@master/dist/wow.min.js"></script><script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/C5EAC1F2A55D115DB1654F59F20A9934.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">38</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-23-51.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">2023使用picgo + github搭建图床（typora）,解决jsdelivr问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-05T07:32:32.410Z" title="发表于 2023-01-05 15:32:32">2023-01-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-19T06:58:37.376Z" title="更新于 2024-01-19 14:58:37">2024-01-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%97%AE%E9%A2%98/">问题</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">749</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/22739/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/22739/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="一、图床是什么">一、图床是什么</h2>
+<blockquote>
+<p><strong>图床一般是指储存图片的服务器</strong></p>
+<p>有国内和国外之分。国外的图床由于有空间距离等因素决定访问速度很慢影响图片显示速度。国内也分为单线空间、多线空间和cdn加速三种。</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>说人话</strong>： 就是把你博客，或者笔记中的图片存到云端上去，这样文本里面只留存图片链接</p>
+</li>
+<li>
+<p><strong>举个例子</strong>：写<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/markdown/3245829?fr=aladdin">markdown</a>笔记时，图片存储在本地，用相对路径或者绝对路径加载图片，如果要同步笔记或者迁移笔记的话，</p>
+<p>那么是不是要把图片也进行迁移，很麻烦。<br>有人会说可以直接复制整个目录结构，也麻烦不了太多。但是这样是不是将来在两个设备写markdown时，就需要总是同步图片，特别是如果本地写好博客，去发布时，图片链接又该如何让去解决，一张一张处理，效率显然太慢了。</p>
+</li>
+<li>
+<p><strong>图床有什么效果</strong>：例子中那些问题，图床就可以很好的解决</p>
+<ul>
+<li>同步笔记时，利用iCloud，或者其他云盘，就可以直接同步markdown纯文本文件，不需要再考虑图片问题，笔记的体积还小，只需要存储markdown文本文件，去处理图片的体积。</li>
+<li>博客也只需要，将markdown全选 + 复制 + 粘贴 + 发布就好了</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、怎么搭建">二、怎么搭建</h2>
+<p>方法有很多，但是说到底还是选择用什么样的云存储，可以是自己用服务器写API来搭建，也可以使用大厂商提供的对象存储，还有就是本文的白嫖，白嫖<strong>GitHub</strong>。</p>
+<p>而<strong>picgo</strong>只是一个图床管理工具，帮助我们上传图片到图床。同样的应用还有upic，以及其他，都是同样的功能，但图床的方便一定少不了图床管理工具。picgo则是可以配合<a target="_blank" rel="noopener" href="http://www.cankaowang.com/question/245966.html">typora</a>使用。</p>
+<h3 id="1、配置GitHub">1、配置GitHub</h3>
+<ul>
+<li>
+<p><strong>（1）创建仓库</strong></p>
+<p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-02-25.png" alt=""></p>
+</li>
+<li>
+<p><strong>（2）生成token私钥</strong></p>
+<p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-11-35.png" alt=""></p>
+<hr>
+<p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-13-36.png" alt=""></p>
+<hr>
+<p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-18-48.png" alt=""></p>
+<hr>
+<img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-23-50.png" style="zoom:80%;" /> 
+<hr>
+<p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-19-16.png" alt=""></p>
+<p><strong>ps: 得到的私钥要保存下来，后面github上无法查看</strong></p>
+</li>
+</ul>
+<h3 id="2、配置picgo">2、配置picgo</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo/releases">picgo下载</a></p>
+<p>还需要配置node.js环境才可以使用。<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44893902/article/details/121788104?ops_request_misc=%7B%22request%5Fid%22%3A%22167245108816782425141530%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=167245108816782425141530&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-121788104-null-null.142%5Ev68%5Econtrol,201%5Ev4%5Eadd_ask,213%5Ev2%5Et3_esquery_v1&amp;utm_term=nodejs%E5%AE%89%E8%A3%85%E5%8F%8A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE&amp;spm=1018.2226.3001.4187">node.js安装及环境配置</a></p>
+<p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-33-00.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>填写</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设定仓库名</td>
+<td>用户名/仓库名</td>
+</tr>
+<tr>
+<td>设定分支名</td>
+<td>分支名，用户main就可以</td>
+</tr>
+<tr>
+<td>设定Token</td>
+<td>这个就是GitHub配置的token私钥</td>
+</tr>
+<tr>
+<td>设定存储路径</td>
+<td>相对于仓库来说，自定义填写</td>
+</tr>
+<tr>
+<td><strong>设定自定义域名</strong></td>
+<td><strong>重要！！！解决jsdelivr CDN加速问题</strong> <strong>如下填写.</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="解决jsdelivr-CDN加速问题">解决jsdelivr CDN加速问题</h4>
+<p><strong>这个现在失效了</strong>：<code>https://cdn.jsdelivr.net/gh/[github用户名]/[仓库名]@main</code></p>
+<p><strong>改成：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://cdn.jsdelivr.net/gh/[github用户名]/[仓库名]@main</span><br></pre></td></tr></table></figure>
+<p>@后面跟的是填写的分支名，一定要一致</p>
+<p>或者这个</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://rawcdn.githack.com/[github用户名]/[仓库名]/[分支名]</span><br></pre></td></tr></table></figure>
+<h3 id="3、配置typora">3、配置typora</h3>
+<ul>
+<li>打开：<strong>文件 -&gt; 偏好设置 -&gt; 图像</strong></li>
+</ul>
+<p><img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-49-53.png" alt=""></p>
+<ul>
+<li><strong>使用：</strong></li>
+</ul>
+<img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-57-31.png" style="zoom: 67%;" /> 
+<ul>
+<li><strong>效果：</strong></li>
+</ul>
+<img src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2022-12-31_22-59-42.png" style="zoom:67%;" /> 
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://gxblogs.com">ggw &amp; xpl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://gxblogs.com/posts/22739/">https://gxblogs.com/posts/22739/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gxblogs.com" target="_blank">GXBLOGS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/github/">github</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-11-01.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/e4da51d7/"><img class="prev-cover" src="/static/imgs/loading.gif" data-original="https://cdn.staticaly.com/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_17-01-20.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Java SE</div></div></a></div><div class="next-post pull-right"><a href="/posts/22297/"><img class="next-cover" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-33-27.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">markdown语法学习记录</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/43167/" title="git"><img class="cover" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/python/da/Snipaste_2023-01-26_18-19-47.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">git</div></div></a></div><div><a href="/posts/271/" title="简单实用，解决github打不开进不去的问题"><img class="cover" src="/static/imgs/loading.gif" data-original="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2023-01-06_16-08-41.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-05</div><div class="title">简单实用，解决github打不开进不去的问题</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9B%BE%E5%BA%8A%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">一、图床是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%8E%E4%B9%88%E6%90%AD%E5%BB%BA"><span class="toc-text">二、怎么搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%85%8D%E7%BD%AEGitHub"><span class="toc-text">1、配置GitHub</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AEpicgo"><span class="toc-text">2、配置picgo</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3jsdelivr-CDN%E5%8A%A0%E9%80%9F%E9%97%AE%E9%A2%98"><span class="toc-text">解决jsdelivr CDN加速问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E9%85%8D%E7%BD%AEtypora"><span class="toc-text">3、配置typora</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'QvVqZWBQWj9Aq2xrw4Z8z8Pz-gzGzoHsz',
+      appKey: 'COANudzj20V6IrCfAsD1Ufya',
+      avatar: 'robohash',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="/js/ggwsettings.js"></script><script>(function(d, w, c) {
+    w.ChatraID = 'dKkRxvMac7f9AeKhu';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
