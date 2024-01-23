@@ -16,12 +16,7 @@ function updateCountup() {
     const countupElement = document.getElementById('ggw_countdown'); // 注意这里的 ID 应该是 ggw_countdown
     if (!countupElement) return         // 只在主页显示
 
-    countupElement.innerHTML = `${days} 天`;
-
-    // 如果目标日期已经过去，显示消息
-    if (timeDifference > 0) {
-        countupElement.innerHTML =  days + 1;
-    }
+    countupElement.innerHTML = `${days + 1} 天`;
 
     // 计算明天的日期
     const tomorrow = new Date();
