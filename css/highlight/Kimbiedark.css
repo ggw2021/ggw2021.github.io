@@ -91,7 +91,7 @@
     display: block;
     overflow-x: auto;
     background: #23272e;
-    color: linear-gradient(180deg, rgba(33, 33, 33, 0.6), rgba(33, 33, 33, 0.9));
+    color: linear-gradient(180deg, rgba(33, 33, 33, 0.5), rgba(33, 33, 33, 1));
     ;
     padding: 0.5em;
 }
