@@ -1,0 +1,109 @@
+/* 新添加的内容
+  ------------------------------------- 
+  --hl-color                  代码框字体顔色 【必须】 (把下面.hljs的 color复制到这里来)
+  --hl-bg                     代码框背景色 【必须】 (把下面.hljs的 background复制到这里来)
+  --hltools-bg: #23272e       代码框顶部工具栏背景色 【可选】(如果你关掉了 copy、lang 和 shrink,可不用配置这个）
+  --hltools-color: #fff       代码框顶部工具栏字体顔色 【可选】(如果你关掉了 copy、lang 和 shrink,可不用配置这个）
+  --hlnumber-bg: #23272e      代码框行数背景色 【可选】(如果已经关掉 line_number,可以不用配置这个)
+  --hlnumber-color: #4a5162      代码框行数字体顔色 【可选】 (如果已经关掉 line_number,可以不用配置这个)
+  --hlscrollbar-bg: #23272e   代码框滚动条顔色 【可选】（默认为主题主顔色）
+  --hlexpand-bg: #23272e      代码框底部展开背景色 【可选】(如果已经关掉 highlight_height_limit,可以不用配置这个)
+*/
+
+:root {
+    --hl-color: #abb2bf;
+    --hl-bg: #23272e;
+    --hltools-bg: #23272e;
+    --hltools-color: #fff;
+    --hlnumber-bg: #23272e;
+    --hlnumber-color: #4a5162;
+    --hlscrollbar-bg: #23272e;
+    --hlexpand-bg: linear-gradient(180deg, rgba(33, 33, 33, 0.5), rgba(33, 33, 33, 1));
+    ;
+}
+
+.hljs {
+    color: #abb2bf;
+    background: #282c34;
+}
+
+.hljs-comment,
+.hljs-quote {
+    color: #5c6370;
+    font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+    color: #c678dd;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+    color: #e06c75;
+}
+
+.hljs-literal {
+    color: #56b6c2;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+    color: #98c379;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+    color: #d19a66;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+    color: #61aeee;
+}
+
+.hljs-built_in,
+.hljs-title.class_,
+.hljs-class .hljs-title {
+    color: #e6c07b;
+}
+
+/* 更改的內容 把.hljs改為 #article-container figure.highlight .hljs *、
+  /* ------------------------------------- */
+#article-container figure.highlight .hljs {
+    display: block;
+    overflow-x: auto;
+    background: #23272e;
+    color: linear-gradient(180deg, rgba(33, 33, 33, 0.6), rgba(33, 33, 33, 0.9));
+    ;
+    padding: 0.5em;
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
+}
+
+.hljs-link {
+    text-decoration: underline;
+}
