@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>面经 | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="我的简历 CS-Notes 面试笔记 (cyc2018.xyz) 大厂15万字C++开发面试手册出炉(C++和计算机基础全有) (qq.com) 编程十万问的个人空间 (bilibili.com)   手撕  宇量升：  查看解析 就是leetcode的动态规划原题，刷的不多，压根就没往动态规划想，下面是现场做的暴力解法 1234567891011121314151617181920212223">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>面经 | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="我的简历 CS-Notes 面试笔记 (cyc2018.xyz) 小林coding (xiaolincoding.com) 帅地玩编程-校招|面试|学习路线，你都可以在这里找到 (iamshuaidi.com) 大厂15万字C++开发面试手册出炉(C++和计算机基础全有) (qq.com) 编程十万问的个人空间 (bilibili.com) 程序员面试HR问题汇总及答案，好不容易过了一面二面，千">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面经">
 <meta property="og:url" content="https://gxblogs.com/posts/65115/index.html">
 <meta property="og:site_name" content="GXBLOGS">
-<meta property="og:description" content="我的简历 CS-Notes 面试笔记 (cyc2018.xyz) 大厂15万字C++开发面试手册出炉(C++和计算机基础全有) (qq.com) 编程十万问的个人空间 (bilibili.com)   手撕  宇量升：  查看解析 就是leetcode的动态规划原题，刷的不多，压根就没往动态规划想，下面是现场做的暴力解法 1234567891011121314151617181920212223">
+<meta property="og:description" content="我的简历 CS-Notes 面试笔记 (cyc2018.xyz) 小林coding (xiaolincoding.com) 帅地玩编程-校招|面试|学习路线，你都可以在这里找到 (iamshuaidi.com) 大厂15万字C++开发面试手册出炉(C++和计算机基础全有) (qq.com) 编程十万问的个人空间 (bilibili.com) 程序员面试HR问题汇总及答案，好不容易过了一面二面，千">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2024-03-28_23-36-48.png">
 <meta property="article:published_time" content="2024-03-28T15:39:23.113Z">
-<meta property="article:modified_time" content="2024-04-15T10:17:46.590Z">
+<meta property="article:modified_time" content="2024-04-17T13:42:23.828Z">
 <meta property="article:author" content="ggw &amp; xpl">
 <meta property="article:tag" content="求职">
 <meta name="twitter:card" content="summary">
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-04-15 18:17:46'
+  postUpdate: '2024-04-17 21:42:23'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,11 +142,14 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script><script src="https://cdn.jsdelivr.net/gh/graingert/WOW@master/dist/wow.min.js"></script><script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2024-03-28_23-36-48.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">面经</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-28T15:39:23.113Z" title="发表于 2024-03-28 23:39:23">2024-03-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-15T10:17:46.590Z" title="更新于 2024-04-15 18:17:46">2024-04-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">69.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>217分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/65115/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/65115/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script><script src="https://cdn.jsdelivr.net/gh/graingert/WOW@master/dist/wow.min.js"></script><script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/ggw2021/images@main/blogs/Snipaste_2024-03-28_23-36-48.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">面经</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-28T15:39:23.113Z" title="发表于 2024-03-28 23:39:23">2024-03-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-17T13:42:23.828Z" title="更新于 2024-04-17 21:42:23">2024-04-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">69.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>217分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/65115/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/65115/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
 <p><a href="https://gxblogs.com/resume_ggw">我的简历</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cyc2018.xyz/">CS-Notes 面试笔记 (cyc2018.xyz)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cyc2018.xyz/">CS-Notes 面试笔记 (cyc2018.xyz)</a><br>
+<a target="_blank" rel="noopener" href="https://xiaolincoding.com/">小林coding (xiaolincoding.com)</a><br>
+<a target="_blank" rel="noopener" href="https://www.iamshuaidi.com/">帅地玩编程-校招|面试|学习路线，你都可以在这里找到 (iamshuaidi.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU4MjgwNjQ0OQ==&amp;mid=2247487041&amp;idx=1&amp;sn=1c49fe6e12b1e52f66462b8b942e1644&amp;chksm=fdb3f09fcac47989e399f52a975a6d2b18bd15e8cdfe720e3d878866f2d05c758318e2f6241f#rd">大厂15万字C++开发面试手册出炉(C++和计算机基础全有) (qq.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://space.bilibili.com/1886950756">编程十万问的个人空间 (bilibili.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1RV4y1p7mz/?spm_id_from=333.337.search-card.all.click&amp;vd_source=eca8bef44f4d5efc79f226fa688a5064">程序员面试HR问题汇总及答案，好不容易过了一面二面，千万别栽在HR面_哔哩哔哩_bilibili</a></p>
 </blockquote>
 <p><br><br><br></p>
 <h2 id="手撕">手撕</h2>
@@ -206,11 +209,11 @@
 <li><strong>C和C++有什么区别？</strong></li>
 </ol>
 <details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><ul>
-<li>C++是面向对象的语言，⽽而C是面向过程的语言；</li>
-<li>C++引入 new/delete 运算符，取代了了C中的 malloc/free 库函数；</li>
-<li>C++引入引用的概念，⽽而C中没有；</li>
-<li>C++引入类的概念，⽽而C中没有；</li>
-<li>C++引入函数重载的特性，⽽而C中没有</li>
+<li>C++是面向对象的语言，而C是面向过程的语言；</li>
+<li>C++引入 new/delete 运算符，取代了C中的 malloc/free 库函数；</li>
+<li>C++引入引用的概念，而C中没有；</li>
+<li>C++引入类的概念，而C中没有；</li>
+<li>C++引入函数重载的特性，而C中没有</li>
 </ul>
 </div></details>
 <ol start="2">
@@ -1471,7 +1474,7 @@ FIN 报文，则代表对方成功就是 ACK 报文，此时处于 CLOSED 状态
 <p><strong>总结</strong></p>
 <p>选择<code>GET</code>还是<code>POST</code>，主要取决于操作的性质：如果是获取数据，应使用GET；如果是修改服务器上的数据或提交敏感信息，应使用POST。正确的使用GET和POST可以帮助遵循HTTP协议的设计原则，提高应用程序的可维护性和效率。</p>
 <p><br><br><br><br></p>
-<p>**<u>幂等性</u>**是一个在计算中常用的概念，特别是在网络协议和数据库操作中。在HTTP协议中，如果一个方法是幂等的，那么无论这个方法执行多少次，产生的效果和执行一次是相同的，至少在外部可观察的结果上是这样。</p>
+<p><strong>幂等性</strong>是一个在计算中常用的概念，特别是在网络协议和数据库操作中。在HTTP协议中，如果一个方法是幂等的，那么无论这个方法执行多少次，产生的效果和执行一次是相同的，至少在外部可观察的结果上是这样。</p>
 <p><strong>HTTP方法的幂等性</strong></p>
 <p>在HTTP中，以下方法被定义为幂等的：</p>
 <ul>
@@ -2757,7 +2760,7 @@ FTP使用端口21（命令）和20（数据）</p>
 </ul>
 </li>
 <li>
-<p>**读写锁（Read-Write Locks） **</p>
+<p><strong>读写锁（Read-Write Locks）</strong></p>
 <ul>
 <li>读写锁允许多个读操作同时进行，但在写操作执行时，它会阻止任何其他的读或写操作。这种锁适用于读多写少的情况，可以提高并发性。</li>
 <li>读写锁可以提升性能，因为它允许多个线程同时读取数据，只在写入数据时才需要排他访问。</li>
@@ -2942,7 +2945,7 @@ FTP使用端口21（命令）和20（数据）</p>
 <p>程序中的对象调用关系过于复杂，实在难以搞清楚某个对象究竟是否已经释放了内存，此时应该重新设计数据结构，从根本上解决对象管理的混乱局面。函数的return语句写错了，注意不要返回指向“栈内存”的“指针”或者“引用”，因为该内存在函数体结束时被自动销毁。使用free或delete释放了内存后，没有将指针设置为NULL。导致产生“野指针”。</p>
 </div></details>
 <ol start="30">
-<li>**内存交换中，被换出的进程保存在哪里？ **</li>
+<li><strong>内存交换中，被换出的进程保存在哪里？</strong></li>
 </ol>
 <details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看输出 </summary><div class="toggle-content"><p>保存在磁盘中，也就是外存中。具有对换功能的操作系统中，通常把磁盘空间分为文件区和对换区两部分。文件区主要用于存放文件，主要追求存储空间的利用率，因此对文件区空间的管理采用离散分配方式; 对换区空间只占磁盘空间的小部分，被换出的进程数据就存放在对换区。由于对换的速度直接影响到系统的整体速度，因此对换区空间的管理主要追求换入换出速度，因此通常对换区采用连续分配方式(学过文件管理章节后即可理解)。总之，对换区的I/O速度比文件区的更快。</p>
 </div></details>
@@ -3855,7 +3858,7 @@ if (true) {
       Chatra('show')
     }
   }
-}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script>
+}</script></div>
         <style>
             [bg-lazy] {
                 background-image: none !important;
@@ -3868,4 +3871,4 @@ if (true) {
                 preloadRatio: 1,
                 processImages: null,
             };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
