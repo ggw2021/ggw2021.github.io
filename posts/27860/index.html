@@ -1,0 +1,725 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>golang密码学 | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="文档链接 视频链接   一、密码 1.1 发送者、接收者和窃听者 请想象一个Alice向Bob发送电子邮件的场景。在这个场景中，发出邮件的Alice称为 发送者（sender） ，而收到邮件的Bob则称为 接收者（receiver） 。 在讲解发送者、接收者的概念时，用邮件这个例子会比较便于理解，但实际上发送者和接收者这两个术语的使用范围并不仅仅局限于邮件。当某个人向另一个人发送信息时，发出信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang密码学">
+<meta property="og:url" content="https://gxblogs.com/posts/27860/index.html">
+<meta property="og:site_name" content="GXBLOGS">
+<meta property="og:description" content="文档链接 视频链接   一、密码 1.1 发送者、接收者和窃听者 请想象一个Alice向Bob发送电子邮件的场景。在这个场景中，发出邮件的Alice称为 发送者（sender） ，而收到邮件的Bob则称为 接收者（receiver） 。 在讲解发送者、接收者的概念时，用邮件这个例子会比较便于理解，但实际上发送者和接收者这两个术语的使用范围并不仅仅局限于邮件。当某个人向另一个人发送信息时，发出信息">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/202409091733981.png">
+<meta property="article:published_time" content="2024-09-10T16:54:11.213Z">
+<meta property="article:modified_time" content="2024-09-10T16:54:11.213Z">
+<meta property="article:author" content="ggw &amp; xpl">
+<meta property="article:tag" content="Golang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/202409091733981.png"><link rel="shortcut icon" href="/static/imgs/paipai.ico"><link rel="canonical" href="https://gxblogs.com/posts/27860/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: ggw & xpl","link":"链接: ","source":"来源: GXBLOGS","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'golang密码学',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-11 00:54:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="/css/else/echarts.min.js"></script><script src="/css/else/wow.min.js"></script><script type="text/javascript" src="/css/else/echarts-gl.min.js"></script><script src="/css/else/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/202409091733981.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">golang密码学</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-10T16:54:11.213Z" title="发表于 2024-09-11 00:54:11">2024-09-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-10T16:54:11.213Z" title="更新于 2024-09-11 00:54:11">2024-09-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">10.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>33分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/27860/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/27860/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p><a target="_blank" rel="noopener" href="https://subingwen.cn/golang/cryptology/">文档链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1QU4y1t7g4?t=1.7&amp;p=2">视频链接</a></p>
+</blockquote>
+<br>
+<h2 id="一、密码">一、密码</h2>
+<h3 id="1-1-发送者、接收者和窃听者">1.1 发送者、接收者和窃听者</h3>
+<p>请想象一个Alice向Bob发送电子邮件的场景。在这个场景中，发出邮件的Alice称为 <strong>发送者（sender）</strong> ，而收到邮件的Bob则称为 <strong>接收者（receiver）</strong> 。</p>
+<p>在讲解发送者、接收者的概念时，用邮件这个例子会比较便于理解，但实际上发送者和接收者这两个术语的使用范围并不仅仅局限于邮件。当某个人向另一个人发送信息时，发出信息的人称为发送者，而收到信息的人称为接收者。另外，被发送的信息有时也统称为 <strong>消息（message）</strong> 。</p>
+<br>
+<p><strong>Alice向Bob发送邮件</strong>:</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-09_22-38-23.png" alt=""></p>
+<p>邮件是通过互联网从Alice的计算机发送到Bob的计算机的。在发送邮件时，邮件会经过许多台计算机和通信设备进行中转，在这个过程中，就存在被恶意窃听者（eavesdropper）偷看到的可能性。</p>
+<br>
+<p><strong>Eve（窃听者）看到邮件的内容</strong></p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-09_22-44-06.png" alt=""></p>
+<p>窃听者Eve并不一定是人类，有可能是安装在通信设备上的某种窃听器，也可能是安装在邮件软件和邮件服务器上的某些程序。</p>
+<p>尽管邮件内容原本应该只有发送者和接收者两个人知道，但如果不采取相应的对策，就存在被第三方知道的风险。</p>
+<hr>
+<p><br><br><br></p>
+<h3 id="1-2-加密和解密">1.2 加密和解密</h3>
+<p>Alice不想让别人看到邮件的内容，于是她决定将邮件进行加密（encrypt）后再发送出去。</p>
+<p>加密之前的消息称为明文（plaintext），加密之后的消息称为密文（cipher-text）。</p>
+<p>我们看到明文可以理解其中的含义，而看到密文则无法理解其中的含义。</p>
+<p><br><strong>明文加密之后就会变成看不懂的密文</strong></p>
+<p>Bob收到了来自Alice的加密邮件，但作为接收者的Bob也是无法直接阅读密文的，于是<br>
+Bob需要对密文进行解密（decrypt）之后再阅读。解密就是将密文恢复成明文的过程。</p>
+<br>
+<p><strong>密文解密之后就变成了原来的明文</strong></p>
+<br>
+<p><strong>将消息加密后发送, 窃听者只能得到密文</strong></p>
+<p>将消息加密后发送的话，即使消息被窃听，窃听者得到的也只是密文，而无法得知加密前的明文内容。</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-09_22-56-52.png" alt=""></p>
+<p>在上述场景中，Alice将邮件进行加密，而Bob则进行解密，这样做的目的，是为了不让窃听者Eve读取邮件的内容Alice和Bob通过运用密码(cryptography)技术，保证了邮件的机密性（confidentiality）。</p>
+<hr>
+<p><br><br><br></p>
+<h3 id="1-3-密钥">1.3 密钥</h3>
+<p><strong>密码算法</strong></p>
+<p>用于解决复杂问题的步骤，通常称为算法（algorithm）。从明文生成密文的步骤，也就是加密的步骤，称为“加密算法”，而解密的步骤则称为“解密算法”。加密、解密的算法合在一起统称为密码算法。</p>
+<br>
+<p><strong>密钥</strong></p>
+<p>密码算法中需要密钥（key）。现实世界中的“钥’’，是像 :key: 这样的形状微妙而复杂的小金属片。然而，密码算法中的密钥，则是像<code>203554728568477650354673080689430768</code> 这样的一串非常大的数字。</p>
+<br>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-09_23-04-37.png" alt=""></p>
+<p>无论是在加密时还是在解密时，都需要知道密钥。</p>
+<p>正如保险柜的钥匙可以保护保险柜中存放的贵重物品一样，密码中的密钥可以保护你的重要数据。即使保险箱再坚固，如果钥匙被盗, 里面的贵重物品也会被盗。同样地我们也必须注意不要让密码的密钥被他人窃取。</p>
+<hr>
+<p><br><br><br></p>
+<h3 id="1-4-凯撒密码">1.4 凯撒密码</h3>
+<p>恺撒密码（Caesar cipher）是一种相传尤利乌斯·恺撒曾使用过的密码。恺撒于公元前100年左右诞生于古罗马，是一位著名的军事统帅。</p>
+<p>恺撤密码是通过将明文中所使用的字母表按照一定的字数“平移”来进行加密的。比如在日语（例如平假名）或者汉语（例如汉语拼音）或者英文字母表中都可以用同样的思路来实现恺撒密码。</p>
+<p>为了讲解方便，我们用小写字母（a，b，c，…）来表小明文，用大写字母（A，B，C，…）来表示密文。</p>
+<p>现在我们将字母表平移3个字母，于是，明文中的a在加密后就变成了与其相隔3个字母的D，以此类推。b变成E，c变成F，d变成G……v变成Y，w变成Z，而x则会回到字母表的开头而变成A，相应地，y变成B，z变成C。通过下图我们可以很容易地理解“平移”的具体工作方式。</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-09_23-08-05.png" alt=""></p>
+<br>
+<p><strong>凯撒密码的加密</strong></p>
+<p>这里，我们假设要保密的信息为<code>monkey d luffy</code>这个男孩的名字。我们暂且不管这个名字到底代表一位真实的男性，还是只是一种暗号，只考虑将它在保密的状态下发送给接收者。</p>
+<p>此时，明文包含下列12个字母：<code>monkey d luffy</code>, 接下来我们对明文中的字母逐一加密:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">m	---&gt;	P				<br>o	---&gt;	R<br>n	---&gt;	Q<br>k	---&gt;	N<br>e	---&gt;	H<br>y	---&gt;	B<br>d	---&gt;	G<br>l	---&gt;	O<br>u	---&gt;	X<br>f	---&gt;	I<br>f	---&gt;	I<br>y	---&gt;	B<br></code></pre></td></tr></table></figure>
+<p>这样，明文 monkey d luffy 就被转换成了密文PRQNHB G OXIIB，monkey d luffy这个词我们能够看懂，但</p>
+<p>PRQNHB G OXIIB就看不懂了。</p>
+<p>恺撒密码中，将字母表中的字母平移这个操作就是密码的算法，而平移的字母数量则相当于密钥。在上面的例子中，密钥为3（如下图）。</p>
+<br>
+<p><strong>凯撒密码的解密</strong></p>
+<p>现在，假设接收者已经收到了密文<code>PRQNHB G OXIIB</code>，由于密文本身是看不懂的，因此必须将它解密成明文。</p>
+<p>恺撒密码的解密过程是使用与加密时相同的密钥进行反向的平移操作。用刚才的例子来说，只要反向平移3个字母就可以解密了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">P	---&gt;	m				<br>R	---&gt;	o<br>Q	---&gt;	n<br>N	---&gt;	k<br>H	---&gt;	e<br>B	---&gt;	y<br>G	---&gt;	d<br>O	---&gt;	l<br>X	---&gt;	u<br>I	---&gt;	f<br>I	---&gt;	f<br>B	---&gt;	y<br></code></pre></td></tr></table></figure>
+<p>这样我们就得到了明文<code>monkey d luffy</code>。</p>
+<p>在这个场景中， 秘钥<code>3</code>必须由发送者和接收者事先约定好。</p>
+<hr>
+<p><br><br><br></p>
+<h3 id="1-5-密码信息安全常识与威胁">1.5 密码信息安全常识与威胁</h3>
+<h4 id="1-5-1-密码信息安全常识">1.5.1 密码信息安全常识</h4>
+<p>在继续下面的内容之前，我们先来介绍一些关于密码的常识。刚刚开始学习密码的人常常会对以下这几条感到不可思议，因为它们有悖于我们的一般性常识。</p>
+<ul>
+<li>不要使用保密的密码算法</li>
+<li>使用低强度的密码比不进行任何加密更危险</li>
+<li>任何密码总有一天都会被破解</li>
+<li>密码只是信息安全的一部分</li>
+</ul>
+<br>
+<p><strong>不要使用保密的密码算法</strong></p>
+<p>很多企业都有下面这样的想法：</p>
+<p>“由公司自己开发一种密码算法，并将这种算法保密，这样就能保证安全。然而，这样的想法却是大错特错，使用保密的密码算法是无法获得高安全性的。我们不应该制作或使用任何保密的密码算法，而是应该使用那些已经公开的、被公认为强度较高的密码算法。</p>
+<p>这样做的原因主要有以下两点：</p>
+<ul>
+<li>
+<p>密码算法的秘密早晚会公诸于世</p>
+<p>从历史上看，密码算法的秘密最终无一例外地都会被暴露出来。例如: RSA公司开发的RC4密码算法曾经也是保密的，但最终还是有一位匿名人士开发并公开了与其等效的程序。</p>
+<p>一旦密码算法的详细信息被暴露，依靠对密码算法本身进行保密来确保机密性的密码系统也就土崩瓦解了。反之，那些公开的算法从一开始就没有设想过要保密，因此算法的暴露丝毫不会削弱它们的强度。</p>
+</li>
+<li>
+<p>开发高强度的密码算法是非常困难的</p>
+<ul>
+<li>要比较密码算法的强弱是极其困难的，因为密码算法的强度并不像数学那样可以进行严密的证明。密码算法的强度只能通过事实来证明，如果专业密码破译者经过数年的尝试仍然没有破解某个密码算法，则说明这种算法的强度较高。</li>
+<li>稍微聪明一点的程序员很容易就能够编写出“自己的密码系统”。这样的密码在外行看来貌似牢不可破，但在专业密码破译者的眼里，要破解这样的密码几乎是手到擒来。</li>
+<li>现在世界上公开的被认为强度较高的密码算法，几乎都是经过密码破译者长期尝试破解未果而存活下来的。因此，如果认为“公司自己开发的密码系统比那些公开的密码系统更强”，那只能说是过于高估自己公司的能力了。</li>
+<li>试图通过对密码算法本身进行保密来确保安全性的行为，一般称为隐蔽式安全性（securitybyobscurity），这种行为是危险且愚蠢的。</li>
+<li>反过来说，将密码算法的详细信息以及程序源代码全部交给专业密码破译者，并且为其提供大量的明文和密文样本，如果在这样的情况下破译一段新的密文依然需要花上相当长的时间，就说明这是高强度的密码。</li>
+</ul>
+</li>
+</ul>
+<br>
+<p><strong>使用低强度的密码比不进行任何加密更危险</strong></p>
+<p>一般人们会认为．就算密码的强度再低，也比完全不加密要强吧？其实这样的想法是非常危险的。</p>
+<p>正确的想法应该是：与其使用低强度的密码，还不如从一开始就不使用任何密码这主要是由于用户容易通过“密码”这个词获得一种“错误的安全感”。对于用户来说，安全感与密码的强度无关，而只是由“信息已经被加密了”这一事实产生的，而这通常会导致用户在处理一些机密信息的时候麻痹大意。</p>
+<br>
+<p><strong>任何密码总有一天会被破译</strong></p>
+<p>如果某种密码产品宣称“本产品使用了绝对不会被破解的密码算法”，那么你就要对这个产品的安全性打个问号了，这是因为绝对不会被破解的密码是不存在的。</p>
+<p>无论使用任何密码算法所生成的密文，只要将所有可能的密钥全部尝试一遍，就总有一天可以破译出来。因此，破译密文所需要花费的时间，与要保密的明文的价值之间的权衡就显得非常重要。</p>
+<br>
+<p><strong>密码只是信息安全的一部分</strong></p>
+<p>我们还是回到Alice给Bob发送加密邮件的例子。即便不去破解密码算法，也依然有很多方法能够知道Alice所发送的邮件内容, 例如:</p>
+<p>攻击者可以不去试图破译经过加密的邮件，而是转而攻击Alice的电脑以获取加密之前的邮件明文。</p>
+<p>上面提到的攻击手段，都与密码的强度毫无关系。要保证良好的安全性，就需要理解“系统”这一概念本身的性质复杂的系统就像一根由无数个环节相连组成的链条，如果用力拉，链条就会从其中最脆弱的环节处断开。因此，系统的强度取决于其中最脆弱的环节的强度。</p>
+<p>最脆弱的环节并不是密码，而是人类自己。</p>
+<hr>
+<p><br><br><br></p>
+<h4 id="1-5-2-密码信息威胁">1.5.2  密码信息威胁</h4>
+<p>我们将信息安全所面临的威胁与用来用对这些威胁的密码技术直接的关系用一张图标来表示出来。</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-09_23-53-22.png" alt=""></p>
+<hr>
+<p><br><br><br></p>
+<h2 id="二、对称加密">二、对称加密</h2>
+<blockquote>
+<p>“对称加密: 也称为对称密码, 是指在加密和解码时使用同一秘钥的加密方式”</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-10_15-02-10.png" alt=""></p>
+<p>现代的密码都是建立在计算机的基础之上的，这是因为现代的密码所处理的数据量非常大，而且密码算法也非常复杂，不借助计算机的力量就无法完成加密和解密的操作。</p>
+</blockquote>
+<h3 id="2-1-DES">2.1 DES</h3>
+<h4 id="2-1-1-什么是DES">2.1.1 什么是DES</h4>
+<p>DES（<strong>Data Encryption Standard</strong>）是1977年美国联邦信息处理标准（FIPS）中所采用的一种对称密码（FIPS46.3）。DES一直以来被美国以及其他国家的政府和银行等广泛使用。然而，随着计算机的进步，现在DES已经能够被暴力破解，强度大不如前了。</p>
+<br>
+<p>RSA公司举办过破泽DES密钥的比赛（DESChallenge），我们可以看一看RSA公司官方公布的比赛结果：</p>
+<p>1997年的DES Challenge1中用了96天破译密钥<br>
+1998年的DES ChallengeIl-I中用了41天破译密钥<br>
+1998年的DES ChallengeII-2中用了56小时破译密钥<br>
+1999年的DES ChallengeIll中只用了22小时15分钟破译密钥</p>
+<p>由于DES的密文可以在短时间内被破译，因此除了用它来解密以前的密文以外，现在我们不应该再使用DES了。</p>
+<hr>
+<p><br><br><br></p>
+<h4 id="2-1-2-加密和解密">2.1.2 加密和解密</h4>
+<hr>
+<p><br><br><br></p>
+<h4 id="2-1-3-Go中对DES的操作">2.1.3 Go中对DES的操作</h4>
+<hr>
+<p><br><br><br></p>
+<h3 id="2-2-三重DES">2.2 三重DES</h3>
+<h4 id="2-2-1-三重DES的加密">2.2.1 三重DES的加密</h4>
+<hr>
+<p><br><br><br></p>
+<h4 id="2-2-2-Go中对3DES的操作">2.2.2 Go中对3DES的操作</h4>
+<hr>
+<p><br><br><br></p>
+<h3 id="2-3-AES">2.3 AES</h3>
+<h4 id="2-3-1-什么是AES">2.3.1 什么是AES</h4>
+<p>AES（<strong>Advanced Encryption Standard</strong>）是取代其前任标准（DES）而成为新标准的一种对称密码算法。全世界的企业和密码学家提交了多个对称密码算法作为AES的候选，最终在2000年从这些候选算法中选出了一种名为 <strong>Rijndael</strong> 的对称密码算法，并将其确定为了AES。</p>
+<p>Rijndael是由比利时密码学家Joan Daemen和Vincent Rijmen设汁的分组密码算法，今后会有越来越多的密码软件支持这种算法。</p>
+<p><strong>Rijndael的分组长度为128比特</strong>，密钥长度可以以32比特为单位在128比特到256比特的范围内进行选择（<strong>不过在AES的规格中，密钥长度只有128、192和256比特三种</strong>）。</p>
+<p>128bit = 16字节</p>
+<p>192bit = 24字节</p>
+<p>256bit = 32字节</p>
+<p>在go提供的接口中，如果你提供的密钥长度不是 16、24 或 32 字节（例如 18 字节、20 字节等），Go 将会抛出错误。</p>
+<hr>
+<p><br><br><br></p>
+<h4 id="2-3-2-AES的加密和解密">2.3.2 AES的加密和解密</h4>
+<p>和DES—样，AES算法也是由多个轮所构成的，下图展示了每一轮的大致计算步骤。DES使用Feistel网络作为其基本结构，而AES没有使用Feistel网络，而是使用了SPN，Rijndael的输入分组为128比特，也就是16字节。首先，需要逐个字节地对16字节的输入数据进行SubBytes处理。所谓SubBytes，就是以每个字节的值（0～255中的任意值）为索引，从一张拥有256个值的替换表（S-Box）中查找出对应值的处理，也是说，将一个1字节的值替换成另一个1字节的值。</p>
+<p>SubBytes之后需要进行ShiftRows处理，即将SubBytes的输出以字节为单位进行打乱处理。从下图的线我们可以看出，这种打乱处理是有规律的。</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-10_11-54-29.png" alt=""></p>
+<ul>
+<li>SubBytes – 字节代换</li>
+<li>ShiftRows – 行移位代换</li>
+<li>MixColumns – 列混淆</li>
+<li>AddRoundKey – 轮密钥加</li>
+</ul>
+<p>ShiftRows之后需要进行MixColumns处理，即对一个4字节的值进行比特运算，将其变为另外一个4字节值。</p>
+<p>最后，需要将MixColumns的输出与轮密钥进行XOR，即进行AddRoundKey处理。到这里，AES的一轮就结東了。实际上，在AES中需要重复进行10 ~ 14轮计算。</p>
+<p>通过上面的结构我们可以发现输入的所有比特在一轮中都会被加密。和每一轮都只加密一半输人的比特的Feistel网络相比，这种方式的优势在于加密所需要的轮数更少。此外，这种方式还有一个优势，即SubBytes，ShiftRows和MixColumns可以分别按字节、行和列为单位进行并行计算。</p>
+<br>
+<p>下图展示了AES中一轮的解密过程。从图中我们可以看出，SubBytes、ShiftRows、MixColumns分别存在反向运算InvSubBytes、InvShiftRows、InvMixColumns，这是因为AES不像Feistel网络一样能够用同一种结构实现加密和解密。</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-10_11-58-57.png" alt=""></p>
+<ul>
+<li>InvSubBytes – 逆字节替代</li>
+<li>InvShiftRows – 逆行移位</li>
+<li>InvMixColumns – 逆列混淆</li>
+</ul>
+<hr>
+<p><br><br><br></p>
+<h4 id="2-3-3-Go中对AES的使用">2.3.3 Go中对AES的使用</h4>
+<p><strong>加解密实现思路</strong></p>
+<ul>
+<li>加密 - CBC分组模式
+<ol>
+<li>创建并返回一个使用AES算法的cipher.Block接口
+<ul>
+<li>秘钥长度为128bit, 即 128/8 = 16字节(byte)</li>
+</ul>
+</li>
+<li>对最后一个明文分组进行数据填充
+<ul>
+<li>AES是以128比特的明文（比特序列）为一个单位来进行加密的</li>
+<li>最后一组不够128bit, 则需要进行数据填充</li>
+</ul>
+</li>
+<li>创建一个密码分组为链接模式的, 底层使用AES加密的BlockMode接口</li>
+<li>加密连续的数据块</li>
+</ol>
+</li>
+<li>解密
+<ol>
+<li>创建并返回一个使用AES算法的cipher.Block接口</li>
+<li>创建一个密码分组为链接模式的, 底层使用AES解密的BlockMode接口</li>
+<li>数据块解密</li>
+<li>去掉最后一组的填充数据</li>
+</ol>
+</li>
+</ul>
+<br>
+<p><strong>加解密的代码实现</strong></p>
+<p>加密：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// AES加密</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">AESEncrypt</span><span class="hljs-params">(src, key []<span class="hljs-type">byte</span>)</span></span> []<span class="hljs-type">byte</span>&#123;<br>    <span class="hljs-comment">// 1. 创建一个使用AES加密的块对象</span><br>	  block, err := aes.NewCipher(key)<br>	  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span>&#123;<br>		    <span class="hljs-built_in">panic</span>(err)<br>	  &#125;<br>	  <span class="hljs-comment">// 2. 最后一个分组进行数据填充</span><br>	  src = PKCS5Padding(src, block.BlockSize())<br>	  <span class="hljs-comment">// 3. 创建一个分组为链接模式, 底层使用AES加密的块模型对象</span><br>	  blockMode := cipher.NewCBCEncrypter(block, key[:block.BlockSize()])<br>	  <span class="hljs-comment">// 4. 加密</span><br>	  dst := src<br>	  blockMode.CryptBlocks(dst, src)<br>	  <span class="hljs-keyword">return</span> dst<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>解密：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// AES解密</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">AESDecrypt</span><span class="hljs-params">(src, key []<span class="hljs-type">byte</span>)</span></span> []<span class="hljs-type">byte</span>&#123;<br>	<span class="hljs-comment">// 1. 创建一个使用AES解密的块对象</span><br>	block, err := aes.NewCipher(key)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span>&#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>	<span class="hljs-comment">// 2. 创建分组为链接模式, 底层使用AES的解密模型对象</span><br>	blockMode := cipher.NewCBCDecrypter(block, key[:block.BlockSize()])<br>	<span class="hljs-comment">// 3. 解密</span><br>	dst := src<br>	blockMode.CryptBlocks(dst, src)<br>	<span class="hljs-comment">// 4. 去掉尾部填充的字</span><br>	dst = PKCS5UnPadding(dst)<br>	<span class="hljs-keyword">return</span> dst<br>&#125;<br></code></pre></td></tr></table></figure>
+<br>
+<p><strong>重要的函数说明</strong></p>
+<ol>
+<li>生成一个底层使用AES加/解密的Block接口对象</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">函数对应的包: <span class="hljs-keyword">import</span> <span class="hljs-string">&quot;crypto/aes&quot;</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewCipher</span><span class="hljs-params">(key []<span class="hljs-type">byte</span>)</span></span> (cipher.Block, <span class="hljs-type">error</span>)<br>	- 参数 key: aes对称加密使用的密码, 密码长度为<span class="hljs-number">128</span>bit, 即<span class="hljs-number">16</span><span class="hljs-type">byte</span><br>	- 返回值 cipher.Block: 创建出的使用AES加/解密的Block接口对象<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>创建一个密码分组为CBC模式, 底层使用b加密的BlockMode接口对象</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">函数对应的包: <span class="hljs-keyword">import</span> <span class="hljs-string">&quot;crypto/cipher&quot;</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewCBCEncrypter</span><span class="hljs-params">(b Block, iv []<span class="hljs-type">byte</span>)</span></span> BlockMode<br>    - 参数 b: 使用aes.NewCipher函数创建出的Block接口对象<br>    - 参数 iv: 事先准备好的一个长度为一个分组长度的比特序列, 每个分组为<span class="hljs-number">64</span>bit, 即<span class="hljs-number">8</span><span class="hljs-type">byte</span><br>    - 返回值: 得到的BlockMode接口对象<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>使用cipher包的BlockMode接口对象对数据进行加/解密</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go">接口对应的包: <span class="hljs-keyword">import</span> <span class="hljs-string">&quot;crypto/cipher&quot;</span><br><span class="hljs-keyword">type</span> BlockMode <span class="hljs-keyword">interface</span> &#123;<br>    <span class="hljs-comment">// 返回加密字节块的大小</span><br>    BlockSize() <span class="hljs-type">int</span><br>    <span class="hljs-comment">// 加密或解密连续的数据块，src的尺寸必须是块大小的整数倍，src和dst可指向同一内存地址</span><br>    CryptBlocks(dst, src []<span class="hljs-type">byte</span>)<br>&#125;<br>接口中的 CryptBlocks(dst, src []<span class="hljs-type">byte</span>) 方法:<br>    - 参数 dst: 传出参数, 存储加密或解密运算之后的结果 <br>    - 参数 src: 传入参数, 需要进行加密或解密的数据切片(字符串)<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li>创建一个密码分组为CBC模式, 底层使用b解密的BlockMode接口对象</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">函数对应的包: <span class="hljs-keyword">import</span> <span class="hljs-string">&quot;crypto/cipher&quot;</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewCBCDecrypter</span><span class="hljs-params">(b Block, iv []<span class="hljs-type">byte</span>)</span></span> BlockMode<br>    - 参数 b: 使用des.NewCipher函数创建出的Block接口对象<br>    - 参数 iv: 事先准备好的一个长度为一个分组长度的比特序列, 每个分组为<span class="hljs-number">128</span>bit, 即<span class="hljs-number">16</span><span class="hljs-type">byte</span>, <br>               该序列的值需要和NewCBCEncrypter函数的第二个参数iv值相同<br>    - 返回值: 得到的BlockMode接口对象<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="2-5-应选择哪种对称加密">2.5 应选择哪种对称加密</h3>
+<p>前面我们介绍了DES、三重DES和AES等对称密码，那么我们到底应该使用哪一种对称密码算法呢？</p>
+<ol>
+<li>今后最好不要将DES用于新的用途，因为随着计算机技术的进步，现在用暴力破解法已经能够在现实的时间内完成对DES的破译。但是，在某些情况下也需要保持与旧版本软件的兼容性。</li>
+<li>出于兼容性的因素三重DES在今后还会使用一段时间，但会逐渐被AES所取代。</li>
+<li>今后大家应该使用的算法是AES（Rijndael），因为它安全、快速，而且能够在各种平台上工作。此外，由于全世界的密码学家都在对AES进行不断的验证，因此即便万一发现它有什么缺陷，也会立刻告知全世界并修复这些缺陷。</li>
+</ol>
+<p>一般来说，我们不应该使用任何自制的密码算法，而是应该使用AES。因为AES在其选定过程中，经过了全世界密码学家所进行的高品质的验证工作，而对于自制的密码算法则很难进行这样的验证。</p>
+<br>
+<p><strong>本章小结</strong></p>
+<p>本章中我们介绍了对称密码，以及DES、三重DES、AES和其他一些密码算法。</p>
+<p>使用一种密钥空间巨大，且在算法上没有弱点的对称密码，就可以通过密文来确保明文的机密性。巨大的密钥空间能够抵御暴力破解，算法上没有弱点可以抵御其他类型的攻击。</p>
+<p>然而，用对称密码进行通信时，还会出现密钥的配送问题，即如何将密钥安全地发送给接收者。为了解决密钥配送问题，我们需要非对称加密技术。非对称加密，我们将在第四章进行讲解。</p>
+<p>本章所介绍的几乎所有的密码算法，都只能将一个固定长度的分组进行加密当需要加密的明文长度超过分组长度时，就需要对密码算法进行迭代下一章我们将探讨对分组密码进行迭代的方法。</p>
+<hr>
+<p><br><br><br></p>
+<h2 id="三、分组密码的模式">三、分组密码的模式</h2>
+<hr>
+<p><br><br><br></p>
+<h2 id="四、非对称加密">四、非对称加密</h2>
+<blockquote>
+<p>“非对称加密也叫公钥密码: 使用公钥加密, 使用私钥解密”</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-10_15-01-15.png" alt=""></p>
+<p>在对称密码中，由于加密和解密的密钥是相同的，因此必须向接收者配送密钥。用于解密的密钥必须被配送给接收者，这一问题称为<strong>密钥配送问题</strong>。如果使用非对称加密也可以称为公钥密码，则无需向接收者配送用于解密的密钥，这样就解决了密钥配送问题。可以说非对称加密是密码学历史上最伟大的发明。</p>
+<p>非对称加密中，密钥分为加密密钥和解密密钥两种。发送者用加密密钥对消息进行加密，接收者用解密密钥对密文进行解密。要理解公钥密码，清楚地区分加密密钥和解密密钥是非常重要的。加密密钥是发送者加密时使用的，而解密密钥则是接收者解密时使用的。</p>
+<p>仔细思考一下加密密钥和解密密钥的区别，我们可以发现：</p>
+<ul>
+<li>发送者只需要加密密钥</li>
+<li>接收者只需要解密密钥</li>
+<li>解密密钥不可以被窃听者获取</li>
+<li>加密密钥被窃听者获取也没问题</li>
+</ul>
+<p>也就是说，解密密钥从一开始就是由接收者自己保管的，因此只要将加密密钥发给发送者就可以解决密钥配送问题了，而根本不需要配送解密密钥。</p>
+<p>非对称加密中，加密密钥一般是公开的。正是由于加密密钥可以任意公开，因此该密钥被称为<strong>公钥（publickey）</strong> 。公钥可以通过邮件直接发送给接收者，也可以刊登在报纸的广告栏上，做成看板放在街上，或者做成网页公开给世界上任何人，而完全不必担心被窃听者窃取。</p>
+<p>当然，我们也没有必要非要将公钥公开给全世界所有的人，但至少我们需要将公钥发送给需要使用公钥进行加密的通信对象（也就是给自己发送密文的发送者）。</p>
+<p>相对地，<strong>解密密钥是绝对不能公开的，这个密钥只能由你自己来使用，因此称为私钥（privatekey）</strong> 。私钥不可以被别人知道，也不可以将它发送给别人，甚至也不能发送给自己的通信对象。</p>
+<p>公钥和私钥是一一对应的，一对公钥和私钥统称为<strong>密钥对（keypair）</strong> 。由公钥进行加密的密文，必须使用与该公钥配对的私钥才能够解密。密钥对中的两个密钥之间具有非常密切的关系(数学上的关系)一一因此公钥和私钥是不能分别单独生成的。</p>
+<p>公钥密码的使用者需要生成一个包括公钥和私钥的密钥对，其中公钥会被发送给别人，而私钥则仅供自己使用。稍后我们将具体尝试生成一个密钥对。</p>
+</blockquote>
+<h3 id="4-1-非对称加密的通信流程">4.1 非对称加密的通信流程</h3>
+<p>下面我们来看一看使用公钥密码的通信流程。和以前一样、我们还是假设Alice要给Bob发送一条消息，Alice是发送者，Bob是接收者，而这一次窃听者Eve依然能够窃听到他们之间的通信内容。</p>
+<p>在非对称加密通信中，通信过程是由接收者Bob来启动的。</p>
+<ol>
+<li>
+<p>Bob生成一个包含公钥和私钥的密钥对。</p>
+<ul>
+<li>私钥由Bob自行妥善保管。</li>
+</ul>
+</li>
+<li>
+<p>Bob将自己的公钥发送给Alicea</p>
+<ul>
+<li>Bob的公钥被窃听者Eve截获也没关系。</li>
+<li>将公钥发送给Alice，表示Bob请Alice用这个公钥对消息进行加密并发送给他。</li>
+</ul>
+</li>
+<li>
+<p>Alice用Bob的公钥对消息进行加密。</p>
+<ul>
+<li>加密后的消息只有用Bob的私钥才能够解密。</li>
+<li>虽然Alice拥有Bob的公钥，但用Bob的公钥是无法对密文进行解密的。</li>
+</ul>
+</li>
+<li>
+<p>Alice将密文发送给Bobo</p>
+<ul>
+<li>密文被窃听者Eve截获也没关系。Eve可能拥有Bob的公钥，但是用Bob的公钥是无法进行解密的。</li>
+</ul>
+</li>
+<li>
+<p>Bob用自己的私钥对密文进行解密。</p>
+</li>
+</ol>
+<p>请参考下图, 看一看在Alice和Bob之间到底传输了哪些信息。其实它们之间所传输的信息只有两个：Bob的公钥以及用Bob的公钥加密的密文。由于Bob的私钥没有出现在通信内容中，因此窃听者Eve无法对密文进行解密。</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-10_15-11-14.png" alt=""></p>
+<p>窃听者Eve可能拥有Bob的公钥，但是Bob的公钥只是加密密钥，而不是解密密钥，因此窃听者Eve就无法完成解密操作。</p>
+<hr>
+<p><br><br><br></p>
+<h3 id="4-2-RSA">4.2 RSA</h3>
+<blockquote>
+<p>非对称加密的密钥分为加密密钥和解密密钥，但这到底是怎样做到的呢？本节中我们来讲解现在使用最广泛的公钥密码算法一一RSA。</p>
+<p>RSA是一种非对称加密算法，它的名字是由它的三位开发者，即RonRivest、AdiShamir和LeonardAdleman 的姓氏的首字母组成的（Rivest-Shamir-Leonard）。</p>
+<p>RSA可以被用于非对称加密和数字签名，关于数字签名我们将在后面章节进行讲解。</p>
+<p>1983年，RSA公司为RSA算法在美国取得了专利，但现在该专利已经过期。</p>
+</blockquote>
+<h4 id="4-2-1-RSA加密">4.2.1 RSA加密</h4>
+<p>下面我们终于可以讲一讲非对称加密的代表—RSA的加密过程了。在RSA中，明文、密钥和密文都是数字。RSA的加密过程可以用下列公式来表达，如下。</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-10_14-30-24.png" alt=""></p>
+<p>也就是说，RSA的密文是对代表明文的数字的E次方求 modN的结果。换句话说，就是将明文自己做E次乘法，然后将其结果除以N求余数，这个余数就是密文。</p>
+<p>咦，就这么简单？</p>
+<p>对，就这么简单。仅仅对明文进行乘方运算并求mod即可，这就是整个加密的过程。在对称密码中，出现了很多复杂的函数和操作，就像做炒鸡蛋一样将比特序列挪来挪去，还要进行XOR(按位异或)等运算才能完成，但RSA却不同，它非常简洁。</p>
+<p>对了，加密公式中出现的两个数一一一E和N，到底都是什么数呢？RSA的加密是求明文的E次方modN，因此只要知道E和N这两个数，任何人都可以完成加密的运算。所以说，<strong>E和N是RSA加密的密钥，也就是说，E和N的组合就是公钥</strong>。</p>
+<p>不过，E和N并不是随便什么数都可以的，它们是经过严密计算得出的。顺便说一句，<strong>E是加密（Encryption）的首字母，N是数字（Number)的首字母</strong>。</p>
+<p>有一个很容易引起误解的地方需要大家注意一一E和N这两个数并不是密钥对（公钥和私钥的密钥对）。E和N两个数才组成了一个公钥，因此我们一般会写成 “公钥是(E，N)” 或者 “公钥是{E, N}” 这样的形式，将E和N用括号括起来。</p>
+<p>现在大家应该已经知道，<strong>RSA的加密就是 “求E次方的modN”</strong> ，接下来我们来看看RSA的解密。</p>
+<hr>
+<p><br><br><br></p>
+<h4 id="4-2-2-RSA解密">4.2.2 RSA解密</h4>
+<p>RSA的解密和加密一样简单，可以用下面的公式来表达：</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-10_14-34-48.png" alt=""></p>
+<p>也就是说，对表示密文的数字的D次方求modN就可以得到明文。换句话说，将密文自己做D次乘法，再对其结果除以N求余数，就可以得到明文。</p>
+<p>这里所使用的数字N和加密时使用的数字N是相同的。<strong>数D和数N组合起来就是RSA的解密密钥，因此D和N的组合就是私钥</strong>。只有知道D和N两个数的人才能够完成解密的运算。</p>
+<p>大家应该已经注意到，<strong>在RSA中，加密和解密的形式是相同的。加密是求 “E次方的mod N”，而解密则是求 “D次方的modN”</strong> 。</p>
+<p>当然，D也并不是随便什么数都可以的，作为解密密钥的D，和数字E有着相当紧密的联系。否则，用E加密的结果可以用D来解密这样的机制是无法实现的。</p>
+<p>顺便说一句，<strong>D是解密〈Decryption）的首字母，N是数字（Number）的首字母</strong>。</p>
+<p>我们将上面讲过的内容整理一下，如下表所示。</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-10_14-41-02.png" alt=""></p>
+<hr>
+<p><br><br><br></p>
+<h4 id="4-2-3-Go中生成公钥和私钥">4.2.3 Go中生成公钥和私钥</h4>
+<p>需要引入的包</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;crypto/rsa&quot;</span><br>	<span class="hljs-string">&quot;crypto/rand&quot;</span><br>	<span class="hljs-string">&quot;crypto/x509&quot;</span><br>	<span class="hljs-string">&quot;encoding/pem&quot;</span><br>	<span class="hljs-string">&quot;os&quot;</span><br>)<br></code></pre></td></tr></table></figure>
+<br>
+<p>生成私钥操作流程概述</p>
+<ol>
+<li>使用rsa中的GenerateKey方法生成私钥</li>
+<li>通过x509标准将得到的ras私钥序列化为ASN.1 的 DER编码字符串</li>
+<li>将私钥字符串设置到pem格式块中</li>
+<li>通过pem将设置好的数据进行编码, 并写入磁盘文件中</li>
+</ol>
+<br>
+<p>生成公钥操作流程</p>
+<ol>
+<li>从得到的私钥对象中将公钥信息取出</li>
+<li>通过x509标准将得到的rsa公钥序列化为字符串</li>
+<li>将公钥字符串设置到pem格式块中</li>
+<li>通过pem将设置好的数据进行编码, 并写入磁盘文件</li>
+</ol>
+<br>
+<p>生成公钥和私钥的源代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 参数bits: 指定生成的秘钥的长度, 单位: bit</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">RsaGenKey</span><span class="hljs-params">(bits <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">error</span>&#123;<br>    <span class="hljs-comment">// 1. 生成私钥文件</span><br>    <span class="hljs-comment">// GenerateKey函数使用随机数据生成器random生成一对具有指定字位数的RSA密钥</span><br>    <span class="hljs-comment">// 参数1: Reader是一个全局、共享的密码用强随机数生成器</span><br>    <span class="hljs-comment">// 参数2: 秘钥的位数 - bit</span><br>    privateKey, err := rsa.GenerateKey(rand.Reader, bits)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span>&#123;<br>        <span class="hljs-keyword">return</span> err<br>    &#125;<br>    <span class="hljs-comment">// 2. MarshalPKCS1PrivateKey将rsa私钥序列化为ASN.1 PKCS#1 DER编码</span><br>    derStream := x509.MarshalPKCS1PrivateKey(privateKey)<br>    <span class="hljs-comment">// 3. Block代表PEM编码的结构, 对其进行设置</span><br>    block := pem.Block&#123;<br>        Type: <span class="hljs-string">&quot;RSA PRIVATE KEY&quot;</span>,<span class="hljs-comment">//&quot;RSA PRIVATE KEY&quot;,</span><br>        Bytes: derStream,<br>    &#125;<br>    <span class="hljs-comment">// 4. 创建文件</span><br>    privFile, err := os.Create(<span class="hljs-string">&quot;private.pem&quot;</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span>&#123;<br>        <span class="hljs-keyword">return</span> err<br>    &#125;<br>    <span class="hljs-comment">// 5. 使用pem编码, 并将数据写入文件中</span><br>    err = pem.Encode(privFile, &amp;block)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span>&#123;<br>        <span class="hljs-keyword">return</span> err<br>    &#125;<br>    <span class="hljs-comment">// 6. 最后的时候关闭文件</span><br>    <span class="hljs-keyword">defer</span> privFile.Close()<br><br>    <span class="hljs-comment">// 7. 生成公钥文件</span><br>    publicKey := privateKey.PublicKey<br>    derPkix, err := x509.MarshalPKIXPublicKey(&amp;publicKey)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span>&#123;<br>        <span class="hljs-keyword">return</span> err<br>    &#125;<br>    block = pem.Block&#123;<br>        Type: <span class="hljs-string">&quot;RSA PUBLIC KEY&quot;</span>,<span class="hljs-comment">//&quot;PUBLIC KEY&quot;,</span><br>        Bytes: derPkix,<br>    &#125;<br>    pubFile, err := os.Create(<span class="hljs-string">&quot;public.pem&quot;</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span>&#123;<br>        <span class="hljs-keyword">return</span> err<br>    &#125;<br>    <span class="hljs-comment">// 8. 编码公钥, 写入文件</span><br>    err = pem.Encode(pubFile, &amp;block)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span>&#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>        <span class="hljs-keyword">return</span> err<br>    &#125;<br>    <span class="hljs-keyword">defer</span> pubFile.Close()<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+<br>
+<p>重要的函数介绍:</p>
+<ol>
+<li>GenerateKey函数使用随机数据生成器random生成一对具有指定字位数的RSA密钥。</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-string">&quot;crypto/rsa&quot;</span> 包中的函数<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">GenerateKey</span><span class="hljs-params">(random io.Reader, bits <span class="hljs-type">int</span>)</span></span> (priv *PrivateKey, err <span class="hljs-type">error</span>)<br>    - 参数<span class="hljs-number">1</span>: io.Reader: 赋值为: rand.Reader<br>        -- rand包实现了用于加解密的更安全的随机数生成器。<br>        -- <span class="hljs-keyword">var</span> Reader io.Reader (rand包中的变量)<br>    - 参数<span class="hljs-number">2</span>: bits: 秘钥长度<br>    - 返回值<span class="hljs-number">1</span>: 代表一个RSA私钥。<br>    - 返回值<span class="hljs-number">2</span>: 错误信息<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>通过x509 将rsa私钥序列化为ASN.1 PKCS#1 DER编码</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-string">&quot;crypto/x509&quot;</span> 包中的函数 (x509包解析X<span class="hljs-number">.509</span>编码的证书和密钥)。<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">MarshalPKCS1PrivateKey</span><span class="hljs-params">(key *rsa.PrivateKey)</span></span> []<span class="hljs-type">byte</span><br>    - 参数<span class="hljs-number">1</span>: 通过rsa.GenerateKey得到的私钥<br>    - 返回值: 将私钥通过ASN<span class="hljs-number">.1</span>序列化之后得到的私钥编码数据<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>设置Pem编码结构</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">Block代表PEM编码的结构。<br><span class="hljs-keyword">type</span> Block <span class="hljs-keyword">struct</span> &#123;<br>    Type    <span class="hljs-type">string</span>            <span class="hljs-comment">// 得自前言的类型（如&quot;RSA PRIVATE KEY&quot;）</span><br>    Headers <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span> <span class="hljs-comment">// 可选的头项，Headers是可为空的多行键值对。</span><br>    Bytes   []<span class="hljs-type">byte</span>            <span class="hljs-comment">// 内容解码后的数据，一般是DER编码的ASN.1结构</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li>将得到的Pem格式私钥通过文件指针写入磁盘中</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-string">&quot;encoding/pem&quot;</span> 包中的函数<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Encode</span><span class="hljs-params">(out io.Writer, b *Block)</span></span> <span class="hljs-type">error</span><br>    - 参数<span class="hljs-number">1</span>: 可进行写操作的IO对象, 此处需要指定一个文件指针<br>    - 参数<span class="hljs-number">2</span>: 初始化完成的Pem块对象, 即Block对象<br></code></pre></td></tr></table></figure>
+<ol start="5">
+<li>通过RSA私钥得到公钥</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 私钥</span><br><span class="hljs-keyword">type</span> PrivateKey <span class="hljs-keyword">struct</span> &#123;<br>    PublicKey            <span class="hljs-comment">// 公钥</span><br>    D         *big.Int   <span class="hljs-comment">// 私有的指数</span><br>    Primes    []*big.Int <span class="hljs-comment">// N的素因子，至少有两个</span><br>    <span class="hljs-comment">// 包含预先计算好的值，可在某些情况下加速私钥的操作</span><br>    Precomputed PrecomputedValues<br>&#125;<br><span class="hljs-comment">// 公钥</span><br><span class="hljs-keyword">type</span> PublicKey <span class="hljs-keyword">struct</span> &#123;<br>    N   *big.Int <span class="hljs-comment">// 模</span><br>    E   <span class="hljs-type">int</span>      <span class="hljs-comment">// 公开的指数</span><br>&#125;<br>通过私钥获取公钥<br>publicKey := privateKey.PublicKey <span class="hljs-comment">// privateKey为私钥对象</span><br></code></pre></td></tr></table></figure>
+<ol start="6">
+<li>通过x509将公钥序列化为PKIX格式DER编码。</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-string">&quot;crypto/x509&quot;</span> 包中的函数<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">MarshalPKIXPublicKey</span><span class="hljs-params">(pub <span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> ([]<span class="hljs-type">byte</span>, <span class="hljs-type">error</span>)<br>    - 参数<span class="hljs-number">1</span>: 通过私钥对象得到的公钥<br>    - 返回值<span class="hljs-number">1</span>：将公钥通过ASN<span class="hljs-number">.1</span>序列化之后得到的编码数据<br>    - 返回值<span class="hljs-number">2</span>: 错误信息<br></code></pre></td></tr></table></figure>
+<ol start="7">
+<li>
+<p>将公钥编码之后的数据格式化为Pem结构, 参考私钥的操作</p>
+</li>
+<li>
+<p>将得到的Pem格式公钥通过文件指针写入磁盘中</p>
+</li>
+<li>
+<p>生成的私钥和公钥文件数据</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">// 私钥文件数据<br>-----BEGIN RSA PRIVATE KEY-----<br>MIICXgIBAAKBgQC5bm0DCEV+EFeiLUqSshziqhSB30jXy5BWbPV5SlMq4aWiEknM<br>i+Mw1aXic4bEsM3YyT73eWsifqZNSc/4fRaV4qz5OL8IIe9AZoGDSLX/Ar9AQMJf<br>OHbAtdIlCGQ4d80KjpDpPs2wZkTqllWCg31d7U3DVEm5kqTGtSYIu9e7JQIDAQAB<br>AoGARGdn72ZtvENrEHiEufjajwMO7Zng1TpS1I79PvEcHQWAhHkaoEo6VRl7SD41<br>yPkv9njGsaQo0WDHGFvSTGhYm/EWGrBWRPc5xXbSBg7ty9Iza9B1ekAj8VfWryen<br>Wje3xDOCVCDUiCcYdaSfPiJPYuWMSnNMNa+0cR921zBQg0ECQQDpCMljuH7LrpbC<br>NDF5q+LbUWMAE2KLDPX4WmDSdZdIO3mPux3MdwOUEfrcvSBGZNB7gyaEG7goZL8G<br>BqL22MJHAkEAy7SqbVPoPbMPHuLI52VQ2FDp6xxSWLhjmv1ePCHGo28MDCaHeVzZ<br>QaxyuIbnY8A6NHfu/QGwz/eB941IjYNBMwJBAI9XEEl+mr++zIz4fdZRnGE7VqId<br>SmgtuL7jGNtb6YpMyyFV/6ZdLp5N0PkmfEvQh0zyBycLxeNS1Q1n16Xu/tECQQCZ<br>dF42wdDgOfWYFMu31VETw9CTtuApya3vYhMNRXx4Pf1bYeMIf/OCT8CUVbwWHwc5<br>42d73TwvTorvy9TuFgSVAkEA6F69THlTn5oIP8IWHcHuqS01fIR/vGfEwQ4cFZGR<br>ketfieyeeF8rjn4qzwT/ugwRNjkhfKmoILnIC8UhEEJdjA==<br>-----END RSA PRIVATE KEY-----<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">// 公钥文件数据<br>-----BEGIN RSA PUBLIC KEY-----<br>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5bm0DCEV+EFeiLUqSshziqhSB<br>30jXy5BWbPV5SlMq4aWiEknMi+Mw1aXic4bEsM3YyT73eWsifqZNSc/4fRaV4qz5<br>OL8IIe9AZoGDSLX/Ar9AQMJfOHbAtdIlCGQ4d80KjpDpPs2wZkTqllWCg31d7U3D<br>VEm5kqTGtSYIu9e7JQIDAQAB<br>-----END RSA PUBLIC KEY-----<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h4 id="4-2-4-Go中使用RSA">4.2.4 Go中使用RSA</h4>
+<p>操作步骤</p>
+<ul>
+<li>
+<p>使用公钥加密</p>
+<ol>
+<li>将公钥文件中的公钥读出, 得到使用pem编码的字符串</li>
+<li>将得到的字符串解码</li>
+<li>使用x509将编码之后的公钥解析出来</li>
+<li>使用得到的公钥通过rsa进行数据加密</li>
+</ol>
+</li>
+<li>
+<p>使用私钥解密</p>
+<ol>
+<li>将私钥文件中的私钥读出, 得到使用pem编码的字符串</li>
+<li>将得到的字符串解码</li>
+<li>使用x509将编码之后的私钥解析出来</li>
+<li>使用得到的私钥通过rsa进行数据解密</li>
+</ol>
+</li>
+</ul>
+<br>
+<p>代码实现</p>
+<p>src是需要加密的明文，filename是密钥文件</p>
+<ul>
+<li>RSA公钥加密</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">RSAEncrypt</span><span class="hljs-params">(src, filename []<span class="hljs-type">byte</span>)</span></span> []<span class="hljs-type">byte</span> &#123;<br>    <span class="hljs-comment">// 1. 根据文件名将文件内容从文件中读出</span><br>    file, err := os.Open(<span class="hljs-type">string</span>(filename))<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>    &#125;<br>    <span class="hljs-comment">// 2. 读文件</span><br>    info, _ := file.Stat()<br>    allText := <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, info.Size())<br>    file.Read(allText)<br>    <span class="hljs-comment">// 3. 关闭文件</span><br>    file.Close()<br><br>    <span class="hljs-comment">// 4. 从数据中查找到下一个PEM格式的块</span><br>    block, _ := pem.Decode(allText)<br>    <span class="hljs-keyword">if</span> block == <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>    &#125;<br>    <span class="hljs-comment">// 5. 解析一个DER编码的公钥</span><br>    pubInterface, err := x509.ParsePKIXPublicKey(block.Bytes)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>    &#125;<br>    pubKey := pubInterface.(*rsa.PublicKey)<br><br>    <span class="hljs-comment">// 6. 公钥加密</span><br>    result, _ := rsa.EncryptPKCS1v15(rand.Reader, pubKey, src)<br>    <span class="hljs-keyword">return</span> result<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>RSA私钥解密</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">RSADecrypt</span><span class="hljs-params">(src, filename []<span class="hljs-type">byte</span>)</span></span> []<span class="hljs-type">byte</span> &#123;<br>    <span class="hljs-comment">// 1. 根据文件名将文件内容从文件中读出</span><br>    file, err := os.Open(<span class="hljs-type">string</span>(filename))<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>    &#125;<br>    <span class="hljs-comment">// 2. 读文件</span><br>    info, _ := file.Stat()<br>    allText := <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, info.Size())<br>    file.Read(allText)<br>    <span class="hljs-comment">// 3. 关闭文件</span><br>    file.Close()<br>    <span class="hljs-comment">// 4. 从数据中查找到下一个PEM格式的块</span><br>    block, _ := pem.Decode(allText)<br>    <span class="hljs-comment">// 5. 解析一个pem格式的私钥</span><br>    privateKey , err := x509.ParsePKCS1PrivateKey(block.Bytes)<br>    <span class="hljs-comment">// 6. 私钥解密</span><br>    result, _ := rsa.DecryptPKCS1v15(rand.Reader, privateKey, src)<br><br>    <span class="hljs-keyword">return</span> result<br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="4-3-ECC椭圆曲线">4.3 ECC椭圆曲线</h3>
+<p><strong>概念</strong></p>
+<p>椭圆曲线密码学（英语：Elliptic curve cryptography，缩写为 ECC），一种建立公开密钥加密的算法，基于椭圆曲线数学。椭圆曲线在密码学中的使用是在1985年由Neal Koblitz和Victor Miller分别独立提出的。</p>
+<p>ECC的主要优势是在某些情况下它比其他的方法使用更小的密钥——比如RSA加密算法——提供相当的或更高等级的安全。</p>
+<p>椭圆曲线密码学的许多形式有稍微的不同，所有的都依赖于被广泛承认的解决椭圆曲线离散对数问题的困难性上。与传统的基于大质数因子分解困难性的加密方法不同，ECC通过椭圆曲线方程式的性质产生密钥。</p>
+<p>ECC 164位的密钥产生的一个安全级相当于RSA 1024位密钥提供的保密强度，而且计算量较小，处理速度更快，存储空间和传输带宽占用较少。目前我国居民二代身份证正在使用 256 位的椭圆曲线密码，虚拟货币比特币也选择ECC作为加密算法。</p>
+<p>具体算法详解参考：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Kalafinaian/p/7392505.html">https://www.cnblogs.com/Kalafinaian/p/7392505.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/taifei/article/details/73277247">https://blog.csdn.net/taifei/article/details/73277247</a></p>
+<br>
+<p><strong>数学原理</strong></p>
+<p>不管是RSA还是ECC或者其它，公钥加密算法都是依赖于某个正向计算很简单（多项式时间复杂度），而逆向计算很难（指数级时间复杂度）的数学问题。</p>
+<p>椭圆曲线依赖的数学难题是:</p>
+<p>k为正整数，P是椭圆曲线上的点（称为基点）, k*P=Q , 已知Q和P，很难计算出k</p>
+<hr>
+<p><br><br><br></p>
+<h3 id="4-4-非对称加密解惑">4.4 非对称加密解惑</h3>
+<ul>
+<li>非对称加密比对称加密机密性更高吗?</li>
+</ul>
+<p>这个问题无法回答, 以为机密性高低是根据秘钥长度而变化的</p>
+<br>
+<ul>
+<li>采用1024bit 秘钥长度的非对称加密, 和采用128bit秘钥长度的对称加密中, 是秘钥更长的非对称加密更安全吗?</li>
+</ul>
+<p>不是。非对称加密的密钥长度不能与对称加密的密钥长度进行直接比较。下表是一张密钥长度的比较表（本表摘自《应用密码学》），根据这张表我们可以看出，1024比特的公钥密码与128比特的对称密码相比，反而是128比特的对称密码抵御暴力破解的能力更强。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">对称加密密钥长度</th>
+<th style="text-align:center">非对称加密密钥长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">128 比特</td>
+<td style="text-align:center">2304 比特</td>
+</tr>
+<tr>
+<td style="text-align:center">112 比特</td>
+<td style="text-align:center">1792 比特</td>
+</tr>
+<tr>
+<td style="text-align:center">80 比特</td>
+<td style="text-align:center">768 比特</td>
+</tr>
+<tr>
+<td style="text-align:center">64 比特</td>
+<td style="text-align:center">512 比特</td>
+</tr>
+<tr>
+<td style="text-align:center">56 比特</td>
+<td style="text-align:center">384 比特</td>
+</tr>
+</tbody>
+</table>
+<br>
+<ul>
+<li>有了非对称加密， 以后对称加密会被替代吗？</li>
+</ul>
+<p>不会。一般来说，在采用具备同等机密性的密钥长度的情况下，非对称加密的处理速度只有对称加密的几百分之一。因此，非对称加密并不适合用来对很长的消息内容进行加密。根据目的的不同，还可能会配合使用对称加密和非对称加密，例如，混合密码系统就是将这两种密码组合而成的。</p>
+<hr>
+<p><br><br><br></p>
+<h2 id="五、单向散列函数">五、单向散列函数</h2>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://gxblogs.com">ggw &amp; xpl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://gxblogs.com/posts/27860/">https://gxblogs.com/posts/27860/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gxblogs.com" target="_blank">GXBLOGS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a></div><div class="post_share"><div class="social-share" data-image="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/202409091733981.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/47447/"><img class="next-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-16_19-43-49.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Prometheus</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/43295/" title="Gin"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-40-40.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">Gin</div></div></a></div><div><a href="/posts/62589/" title="go包管理"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-12_18-15-14.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-18</div><div class="title">go包管理</div></div></a></div><div><a href="/posts/14787/" title="Go‘s 数据结构"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-52-01.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">Go‘s 数据结构</div></div></a></div><div><a href="/posts/47700/" title="leetcode hot 100 刷题（go语言版）"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_01-05-47.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-05</div><div class="title">leetcode hot 100 刷题（go语言版）</div></div></a></div><div><a href="/posts/47447/" title="Prometheus"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-16_19-43-49.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-18</div><div class="title">Prometheus</div></div></a></div><div><a href="/posts/6156/" title="SQLBoiler"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-27-26.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">SQLBoiler</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AF%86%E7%A0%81"><span class="toc-text">一、密码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%8F%91%E9%80%81%E8%80%85%E3%80%81%E6%8E%A5%E6%94%B6%E8%80%85%E5%92%8C%E7%AA%83%E5%90%AC%E8%80%85"><span class="toc-text">1.1 发送者、接收者和窃听者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8A%A0%E5%AF%86%E5%92%8C%E8%A7%A3%E5%AF%86"><span class="toc-text">1.2 加密和解密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%AF%86%E9%92%A5"><span class="toc-text">1.3 密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%87%AF%E6%92%92%E5%AF%86%E7%A0%81"><span class="toc-text">1.4 凯撒密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E5%AF%86%E7%A0%81%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B8%B8%E8%AF%86%E4%B8%8E%E5%A8%81%E8%83%81"><span class="toc-text">1.5 密码信息安全常识与威胁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-1-%E5%AF%86%E7%A0%81%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B8%B8%E8%AF%86"><span class="toc-text">1.5.1 密码信息安全常识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-2-%E5%AF%86%E7%A0%81%E4%BF%A1%E6%81%AF%E5%A8%81%E8%83%81"><span class="toc-text">1.5.2  密码信息威胁</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-text">二、对称加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-DES"><span class="toc-text">2.1 DES</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-%E4%BB%80%E4%B9%88%E6%98%AFDES"><span class="toc-text">2.1.1 什么是DES</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-%E5%8A%A0%E5%AF%86%E5%92%8C%E8%A7%A3%E5%AF%86"><span class="toc-text">2.1.2 加密和解密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-Go%E4%B8%AD%E5%AF%B9DES%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-text">2.1.3 Go中对DES的操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%B8%89%E9%87%8DDES"><span class="toc-text">2.2 三重DES</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E4%B8%89%E9%87%8DDES%E7%9A%84%E5%8A%A0%E5%AF%86"><span class="toc-text">2.2.1 三重DES的加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-Go%E4%B8%AD%E5%AF%B93DES%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-text">2.2.2 Go中对3DES的操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-AES"><span class="toc-text">2.3 AES</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E4%BB%80%E4%B9%88%E6%98%AFAES"><span class="toc-text">2.3.1 什么是AES</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-AES%E7%9A%84%E5%8A%A0%E5%AF%86%E5%92%8C%E8%A7%A3%E5%AF%86"><span class="toc-text">2.3.2 AES的加密和解密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-Go%E4%B8%AD%E5%AF%B9AES%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">2.3.3 Go中对AES的使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%BA%94%E9%80%89%E6%8B%A9%E5%93%AA%E7%A7%8D%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-text">2.5 应选择哪种对称加密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E7%9A%84%E6%A8%A1%E5%BC%8F"><span class="toc-text">三、分组密码的模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-text">四、非对称加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%9A%84%E9%80%9A%E4%BF%A1%E6%B5%81%E7%A8%8B"><span class="toc-text">4.1 非对称加密的通信流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-RSA"><span class="toc-text">4.2 RSA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-RSA%E5%8A%A0%E5%AF%86"><span class="toc-text">4.2.1 RSA加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-RSA%E8%A7%A3%E5%AF%86"><span class="toc-text">4.2.2 RSA解密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-3-Go%E4%B8%AD%E7%94%9F%E6%88%90%E5%85%AC%E9%92%A5%E5%92%8C%E7%A7%81%E9%92%A5"><span class="toc-text">4.2.3 Go中生成公钥和私钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-4-Go%E4%B8%AD%E4%BD%BF%E7%94%A8RSA"><span class="toc-text">4.2.4 Go中使用RSA</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-ECC%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF"><span class="toc-text">4.3 ECC椭圆曲线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E8%A7%A3%E6%83%91"><span class="toc-text">4.4 非对称加密解惑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8D%95%E5%90%91%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0"><span class="toc-text">五、单向散列函数</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'QvVqZWBQWj9Aq2xrw4Z8z8Pz-gzGzoHsz',
+      appKey: 'COANudzj20V6IrCfAsD1Ufya',
+      avatar: 'robohash',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="/js/ggwsettings.js"></script><script>(function(d, w, c) {
+    w.ChatraID = 'dKkRxvMac7f9AeKhu';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
