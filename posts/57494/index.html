@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>golang注意事项 | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="笔记和解决的问题">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>golang注意事项 | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="channel  如果channel关闭后，再操作会怎么样？  查看解析 当一个 channel 被关闭后，再从中取值会有特定的行为。下面是关闭 channel 后的行为总结：  1、关闭后的读取行为   从已关闭的 channel 读取数据：  如果 channel 中还有未取出的数据，可以继续读取这些数据。 一旦 channel 中的数据被取完，再次读取时，将返回该类型的零值，并且读取操作不会">
 <meta property="og:type" content="article">
 <meta property="og:title" content="golang注意事项">
 <meta property="og:url" content="https://gxblogs.com/posts/57494/index.html">
 <meta property="og:site_name" content="GXBLOGS">
-<meta property="og:description" content="笔记和解决的问题">
+<meta property="og:description" content="channel  如果channel关闭后，再操作会怎么样？  查看解析 当一个 channel 被关闭后，再从中取值会有特定的行为。下面是关闭 channel 后的行为总结：  1、关闭后的读取行为   从已关闭的 channel 读取数据：  如果 channel 中还有未取出的数据，可以继续读取这些数据。 一旦 channel 中的数据被取完，再次读取时，将返回该类型的零值，并且读取操作不会">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png">
 <meta property="article:published_time" content="2024-09-22T13:50:44.982Z">
-<meta property="article:modified_time" content="2024-09-22T13:50:44.982Z">
+<meta property="article:modified_time" content="2024-10-08T07:30:34.221Z">
 <meta property="article:author" content="ggw &amp; xpl">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary">
@@ -52,8 +52,8 @@
   isPost: true,
   isHome: false,
   isHighlightShrink: false,
-  isToc: false,
-  postUpdate: '2024-09-22 21:50:44'
+  isToc: true,
+  postUpdate: '2024-10-08 15:30:34'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,7 +142,617 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="/css/else/echarts.min.js"></script><script src="/css/else/wow.min.js"></script><script type="text/javascript" src="/css/else/echarts-gl.min.js"></script><script src="/css/else/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">golang注意事项</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-22T13:50:44.982Z" title="发表于 2024-09-22 21:50:44">2024-09-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-22T13:50:44.982Z" title="更新于 2024-09-22 21:50:44">2024-09-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">0</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/57494/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/57494/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://gxblogs.com">ggw &amp; xpl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://gxblogs.com/posts/57494/">https://gxblogs.com/posts/57494/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gxblogs.com" target="_blank">GXBLOGS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a></div><div class="post_share"><div class="social-share" data-image="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/27860/"><img class="next-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/202409091733981.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">golang密码学</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/43295/" title="Gin"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-40-40.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">Gin</div></div></a></div><div><a href="/posts/62589/" title="go包管理"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-12_18-15-14.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-18</div><div class="title">go包管理</div></div></a></div><div><a href="/posts/14787/" title="Go‘s 数据结构"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-52-01.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">Go‘s 数据结构</div></div></a></div><div><a href="/posts/47700/" title="leetcode hot 100 刷题（go语言版）"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_01-05-47.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-05</div><div class="title">leetcode hot 100 刷题（go语言版）</div></div></a></div><div><a href="/posts/47447/" title="Prometheus"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-16_19-43-49.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-18</div><div class="title">Prometheus</div></div></a></div><div><a href="/posts/6156/" title="SQLBoiler"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-27-26.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">SQLBoiler</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/static/imgs/loading.gif" data-original="/static/imgs/touxiang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ggw &amp; xpl</div><div class="author-info__description">笔记和解决的问题</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ggw2021"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/380394750" target="_blank" title=""><i class="fa-brands fa-bilibili"></i></a><a class="social-icon" href="https://blog.csdn.net/qq_53131850?spm=1000.2115.3001.5343" target="_blank" title=""><i class="fa-sharp fa-solid fa-copyright"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">个人博客网站，多数为自用笔记，仅供参考。</div></div><div class="card-widget" id="ggwCountdown"><div class="item-headline"><i class="fas fa-rocket"></i><span>记录</span></div><div class="item-content"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" /> <div id="ggw_countdown" class="wow animate__animated animate__heartBeat"></div> <script> new WOW().init(); </script> </div></div><div class="sticky_layout"></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="/css/else/echarts.min.js"></script><script src="/css/else/wow.min.js"></script><script type="text/javascript" src="/css/else/echarts-gl.min.js"></script><script src="/css/else/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">golang注意事项</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-22T13:50:44.982Z" title="发表于 2024-09-22 21:50:44">2024-09-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-08T07:30:34.221Z" title="更新于 2024-10-08 15:30:34">2024-10-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">8.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>28分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/57494/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/57494/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="channel">channel</h2>
+<ol>
+<li><strong>如果channel关闭后，再操作会怎么样？</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>当一个 channel 被关闭后，再从中取值会有特定的行为。下面是关闭 <code>channel</code> 后的行为总结：</p>
+<br>
+<p>1、<strong>关闭后的读取行为</strong></p>
+<ul>
+<li>
+<p><strong>从已关闭的 channel 读取数据</strong>：</p>
+<ul>
+<li>如果 <code>channel</code> 中还有未取出的数据，可以继续读取这些数据。</li>
+<li>一旦 <code>channel</code> 中的数据被取完，再次读取时，将返回该类型的<strong>零值</strong>，并且读取操作<strong>不会阻塞</strong>。</li>
+</ul>
+<p>例如，如果 <code>channel</code> 类型是 <code>int</code>，则会返回 <code>0</code>；如果是 <code>string</code>，则返回 <code>&quot;&quot;</code>（空字符串）。</p>
+</li>
+<li>
+<p><strong>检测 channel 是否已关闭</strong>：</p>
+<ul>
+<li>在接收值时，可以通过<strong>第二个返回值</strong>来判断 <code>channel</code> 是否已关闭。当 <code>channel</code> 被关闭并且所有数据已经取完时，第二个返回值为 <code>false</code>。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">v, ok := &lt;-ch<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>v</code> 是接收到的值。</li>
+<li><code>ok</code> 是一个布尔值，当 <code>ok == false</code> 时，表示 <code>channel</code> 已经关闭且没有更多的数据可接收。</li>
+</ul>
+</li>
+</ul>
+<br>
+<p>2、<strong>关闭后的发送行为</strong></p>
+<ul>
+<li>
+<p><strong>向已关闭的 channel 发送数据</strong>：</p>
+<ul>
+<li>如果你尝试向一个已关闭的 channel 发送数据，程序会触发<strong>运行时 panic</strong>，从而导致程序崩溃。因此，在关闭 <code>channel</code> 后，必须确保不会再向该 <code>channel</code> 发送数据。</li>
+</ul>
+<p>关闭 channel 的场景通常发生在发送者一方，发送者负责关闭 channel，而接收者则可以依赖接收到的零值和 <code>ok</code> 来判断何时结束。</p>
+</li>
+</ul>
+<br>
+<p>3、 <strong>示例代码：</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>, <span class="hljs-number">3</span>)<br>    ch &lt;- <span class="hljs-number">1</span><br>    ch &lt;- <span class="hljs-number">2</span><br>    ch &lt;- <span class="hljs-number">3</span><br>    <span class="hljs-built_in">close</span>(ch)<br><br>    <span class="hljs-comment">// 继续从已关闭的 channel 中读取数据</span><br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++ &#123;<br>        v, ok := &lt;-ch<br>        fmt.Printf(<span class="hljs-string">&quot;value: %d, ok: %v\n&quot;</span>, v, ok)<br>    &#125;<br><br>    <span class="hljs-comment">// 尝试向已关闭的 channel 发送数据会导致 panic</span><br>    <span class="hljs-comment">// ch &lt;- 4 // 取消这行注释会导致 panic</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">value: 1, ok: true<br>value: 2, ok: true<br>value: 3, ok: true<br>value: 0, ok: false<br></code></pre></td></tr></table></figure>
+<p>在上面的例子中，<code>ch</code> 是一个带缓冲的 channel，存储了 3 个元素。即使 <code>channel</code> 被关闭，前 3 次读取仍然会得到存储的值。但第 4 次读取时，<code>channel</code> 已经没有值了，因此返回了零值 <code>0</code> 和 <code>ok == false</code>，表示 <code>channel</code> 已经关闭并且没有更多值可接收。</p>
+<br>
+<p>4、<strong>总结要点</strong>：</p>
+<ul>
+<li>关闭 <code>channel</code> 后，<strong>接收操作不会阻塞</strong>，可以继续接收已缓冲的值。</li>
+<li>取尽 <code>channel</code> 中的数据后，继续接收将返回该类型的<strong>零值</strong>。</li>
+<li>可以通过 <code>ok</code> 来判断 <code>channel</code> 是否已关闭：如果 <code>ok == false</code>，表示 <code>channel</code> 已经关闭。</li>
+<li><strong>向已关闭的 channel 发送数据会导致 panic</strong>，因此关闭 <code>channel</code> 后应避免再发送数据。</li>
+</ul>
+<br>
+<p>5、<strong>最佳实践</strong>：</p>
+<ul>
+<li><strong>谁发送，谁关闭</strong>：通常由发送方负责关闭 channel，接收方只负责读取数据。接收方不应该尝试关闭 channel，因为它不知道是否还有其他数据未发送。</li>
+<li><strong>不必频繁关闭 channel</strong>：关闭 channel 的目的是通知接收方不再有数据到来，而不是释放资源。只有当确实需要通知接收者时，才需要关闭 channel。</li>
+</ul>
+</div></details> 
+<br>
+<ol start="2">
+<li><strong>Channel的缓冲</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>在 Go 中，<code>channel</code> 可以分为<strong>无缓冲区的 channel</strong>（unbuffered channel）和<strong>有缓冲区的 channel</strong>（buffered channel）。两者的主要区别在于它们如何处理数据的发送和接收操作。理解这两种 channel 的行为差异非常重要，尤其是在处理并发编程时。</p>
+<br>
+<ol>
+<li><strong>无缓冲区的 channel</strong></li>
+</ol>
+<p>无缓冲区的 channel（即没有设置缓冲大小，或者缓冲大小为 0）要求<strong>发送和接收操作必须同步</strong>，即发送和接收必须在同一时间点发生。如果没有接收方在等待，发送操作会阻塞，直到有接收者准备接收数据。反之亦然。</p>
+<p>关键点：</p>
+<ul>
+<li><strong>同步</strong>：发送和接收操作必须同时发生。</li>
+<li><strong>阻塞行为</strong>：
+<ul>
+<li>当发送方试图发送数据到无缓冲 channel 时，如果没有接收方在接收，它会阻塞，直到接收者开始接收。</li>
+<li>同样，当接收方试图从无缓冲 channel 接收数据时，如果没有发送方发送数据，它也会阻塞，直到发送者发送数据。</li>
+</ul>
+</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>) <span class="hljs-comment">// 无缓冲的 channel</span><br><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        ch &lt;- <span class="hljs-number">1</span> <span class="hljs-comment">// 发送操作会阻塞，直到有接收方接收</span><br>        fmt.Println(<span class="hljs-string">&quot;数据已发送&quot;</span>)<br>    &#125;()<br><br>    fmt.Println(&lt;-ch) <span class="hljs-comment">// 接收数据</span><br>    fmt.Println(<span class="hljs-string">&quot;数据已接收&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1<br>数据已发送<br>数据已接收<br></code></pre></td></tr></table></figure>
+<p>在这个例子中：</p>
+<ul>
+<li><code>ch &lt;- 1</code> 这行代码会阻塞，直到 <code>fmt.Println(&lt;-ch)</code> 执行，接收数据之后发送操作才会继续执行。</li>
+<li>无缓冲的 channel 强制了发送方和接收方的同步。</li>
+</ul>
+<ol start="2">
+<li><strong>有缓冲区的 channel</strong></li>
+</ol>
+<p>有缓冲区的 channel（即创建 channel 时设置了缓冲区大小）允许<strong>异步发送</strong>。发送操作不会立即阻塞，除非缓冲区已满；接收操作也不会立即阻塞，除非缓冲区为空。</p>
+<p>关键点：</p>
+<ul>
+<li><strong>异步</strong>：有缓冲区的 channel 允许发送方发送多个数据，而不必等待接收方接收，只要缓冲区还未满。</li>
+<li><strong>阻塞行为</strong>：
+<ul>
+<li>如果缓冲区满了，发送操作会阻塞，直到有数据被接收以腾出空间。</li>
+<li>如果缓冲区空了，接收操作会阻塞，直到有数据被发送到 channel 中。</li>
+</ul>
+</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>, <span class="hljs-number">2</span>) <span class="hljs-comment">// 有缓冲的 channel，缓冲区大小为 2</span><br><br>    ch &lt;- <span class="hljs-number">1</span> <span class="hljs-comment">// 发送不会阻塞，因为缓冲区还有空间</span><br>    ch &lt;- <span class="hljs-number">2</span> <span class="hljs-comment">// 发送不会阻塞，缓冲区满了</span><br>    fmt.Println(<span class="hljs-string">&quot;数据已发送到缓冲区&quot;</span>)<br><br>    fmt.Println(&lt;-ch) <span class="hljs-comment">// 接收数据</span><br>    fmt.Println(&lt;-ch) <span class="hljs-comment">// 接收数据</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">数据已发送到缓冲区<br>1<br>2<br></code></pre></td></tr></table></figure>
+<p>在这个例子中：</p>
+<ul>
+<li><code>ch &lt;- 1</code> 和 <code>ch &lt;- 2</code> 都不会阻塞，因为缓冲区有足够的空间来存储它们。</li>
+<li>只有当缓冲区满时，发送操作才会阻塞；而当缓冲区为空时，接收操作会阻塞。</li>
+</ul>
+<br>
+<ol start="3">
+<li><strong>无缓冲与有缓冲的详细对比</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>无缓冲区 channel</th>
+<th>有缓冲区 channel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发送操作</strong></td>
+<td>发送方阻塞，直到接收方开始接收数据</td>
+<td>发送方只在缓冲区满时阻塞，否则立即返回</td>
+</tr>
+<tr>
+<td><strong>接收操作</strong></td>
+<td>接收方阻塞，直到发送方发送数据</td>
+<td>接收方只在缓冲区为空时阻塞，否则立即接收</td>
+</tr>
+<tr>
+<td><strong>同步性</strong></td>
+<td>发送和接收操作必须同步</td>
+<td>发送和接收可以异步进行，直到缓冲区满或空</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>适合需要严格同步的场景，如信号同步</td>
+<td>适合允许异步通信或数据缓冲的场景</td>
+</tr>
+</tbody>
+</table>
+<br>
+<ol start="4">
+<li><strong>适用场景</strong></li>
+</ol>
+<p>无缓冲区的 channel 适用场景：</p>
+<ul>
+<li><strong>同步任务</strong>：需要发送方和接收方在同一时间点进行交互。典型的用法是在两个 goroutine 之间传递信号，确保它们在某个操作后相互同步。</li>
+<li><strong>信号传递</strong>：用于通知某个任务完成或触发事件。</li>
+</ul>
+<p>有缓冲区的 channel 适用场景：</p>
+<ul>
+<li><strong>异步任务</strong>：适合生产者-消费者模式，允许生产者和消费者的速度不匹配。例如，生产者可以先放入缓冲区，消费者可以稍后处理。</li>
+<li><strong>批量处理</strong>：当需要缓冲一部分数据，或者需要异步处理一批数据时，有缓冲的 channel 是理想选择。</li>
+</ul>
+<br>
+<ol start="5">
+<li><strong>示例对比</strong></li>
+</ol>
+<p>无缓冲的 channel：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>) <span class="hljs-comment">// 无缓冲 channel</span><br><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;发送数据：1&quot;</span>)<br>        ch &lt;- <span class="hljs-number">1</span><br>        fmt.Println(<span class="hljs-string">&quot;发送完成&quot;</span>)<br>    &#125;()<br><br>    fmt.Println(<span class="hljs-string">&quot;接收数据：&quot;</span>, &lt;-ch)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">发送数据：1<br>接收数据：1<br>发送完成<br></code></pre></td></tr></table></figure>
+<ul>
+<li>在无缓冲的 <code>channel</code> 中，发送操作会阻塞，直到接收方开始接收。</li>
+</ul>
+<p>有缓冲的 channel：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>, <span class="hljs-number">2</span>) <span class="hljs-comment">// 缓冲区大小为 2</span><br><br>    ch &lt;- <span class="hljs-number">1</span><br>    ch &lt;- <span class="hljs-number">2</span><br>    fmt.Println(<span class="hljs-string">&quot;缓冲区中的数据发送完成&quot;</span>)<br><br>    fmt.Println(<span class="hljs-string">&quot;接收数据：&quot;</span>, &lt;-ch)<br>    fmt.Println(<span class="hljs-string">&quot;接收数据：&quot;</span>, &lt;-ch)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">缓冲区中的数据发送完成<br>接收数据： 1<br>接收数据： 2<br></code></pre></td></tr></table></figure>
+<ul>
+<li>在有缓冲的 <code>channel</code> 中，发送方可以在缓冲区未满时连续发送，接收方稍后再接收数据。</li>
+</ul>
+<br>
+<p><strong>总结</strong></p>
+<ul>
+<li><strong>无缓冲的 channel</strong> 强制发送和接收操作同步进行，适合需要强制同步的场景。</li>
+<li><strong>有缓冲的 channel</strong> 允许发送方和接收方异步操作，直到缓冲区满或空，适合生产者-消费者模式等异步通信的场景。</li>
+<li>使用无缓冲的 channel 更加简单明确，但有时会限制并发的灵活性；有缓冲的 channel 提供了更多灵活性，但需要合理设置缓冲区大小来防止性能问题或死锁。</li>
+</ul>
+<p>根据你的并发任务的需求选择适合的 <code>channel</code> 类型，并合理设计程序的并发模式，才能最大化地利用 Go 的并发优势。</p>
+</div></details> 
+<br>
+<ol start="3">
+<li><strong>select</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>在 Go 语言中，<code>select</code> 语句用于在多个 <code>channel</code> 操作中进行选择。它的作用类似于 <code>switch</code>，但它专门用于处理多个 <code>channel</code> 的发送和接收操作。<code>select</code> 允许 Go 程序在多个 <code>channel</code> 上等待，并且只执行一个已经准备好的 <code>channel</code> 操作。</p>
+<br>
+<p><strong><code>select</code> 的基本使用</strong></p>
+<p><code>select</code> 语句的结构如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">select</span> &#123;<br><span class="hljs-keyword">case</span> &lt;-channel1:<br>    <span class="hljs-comment">// 当 channel1 有数据可接收时执行此操作</span><br><span class="hljs-keyword">case</span> channel2 &lt;- value:<br>    <span class="hljs-comment">// 当 channel2 可以发送数据时执行此操作</span><br><span class="hljs-keyword">default</span>:<br>    <span class="hljs-comment">// 如果上面都没有准备好，执行此操作（可选）</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>每个 <code>case</code> 语句都必须是一个 <code>channel</code> 操作：接收（<code>&lt;-channel</code>）或发送（<code>channel &lt;- value</code>）。</li>
+<li><code>select</code> 会等待其中的某个 <code>channel</code> 准备好（可以接收或发送），一旦某个 <code>channel</code> 操作完成，对应的 <code>case</code> 会被执行。</li>
+<li>如果有多个 <code>channel</code> 都可以操作，则随机选择一个执行。</li>
+<li>如果没有 <code>channel</code> 准备好，并且 <code>select</code> 中没有 <code>default</code> 分支，<code>select</code> 语句会阻塞，直到有 <code>channel</code> 准备好。</li>
+</ul>
+<br>
+<p><strong><code>select</code> 的应用场景</strong></p>
+<ol>
+<li><strong>同时监听多个 <code>channel</code></strong>：<code>select</code> 可以让你同时监听多个 <code>channel</code>，并根据哪个 <code>channel</code> 准备好来执行相应的操作。这非常适用于网络通信、并发任务管理等场景。</li>
+<li><strong>超时机制</strong>：<code>select</code> 可以配合 <code>time.After</code> 实现超时功能。</li>
+<li><strong>阻塞等待多个任务完成</strong>：通过 <code>select</code> 可以等待多个 <code>goroutine</code> 的任务完成。</li>
+</ol>
+<br>
+<p><strong><code>select</code> 语句的行为</strong></p>
+<ul>
+<li><strong>当一个 <code>case</code> 准备好时</strong>，<code>select</code> 会执行该 <code>case</code> 的语句。</li>
+<li><strong>当多个 <code>case</code> 同时准备好时</strong>，<code>select</code> 会随机选择一个执行。</li>
+<li><strong>如果所有 <code>case</code> 都没有准备好</strong>，<code>select</code> 会阻塞，直到有一个 <code>case</code> 可以执行。</li>
+<li><strong>如果包含 <code>default</code> 语句</strong>，当没有 <code>channel</code> 准备好时，<code>default</code> 分支会被立即执行，不会阻塞。</li>
+</ul>
+<br>
+<ol>
+<li><strong>示例：基本 <code>select</code> 用法</strong></li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>)<br>    ch2 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>)<br><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        time.Sleep(<span class="hljs-number">1</span> * time.Second)<br>        ch1 &lt;- <span class="hljs-string">&quot;来自 ch1 的消息&quot;</span><br>    &#125;()<br><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        time.Sleep(<span class="hljs-number">2</span> * time.Second)<br>        ch2 &lt;- <span class="hljs-string">&quot;来自 ch2 的消息&quot;</span><br>    &#125;()<br><br>    <span class="hljs-keyword">select</span> &#123;<br>    <span class="hljs-keyword">case</span> msg1 := &lt;-ch1:<br>        fmt.Println(msg1)<br>    <span class="hljs-keyword">case</span> msg2 := &lt;-ch2:<br>        fmt.Println(msg2)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出结果（由于 select 随机性，可能会不同）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">来自 ch1 的消息<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，两个 <code>goroutine</code> 分别在不同的时间向 <code>ch1</code> 和 <code>ch2</code> 发送数据。<code>select</code> 会等待其中一个 <code>channel</code> 准备好，并执行相应的操作。在上面的代码中，<code>ch1</code> 先准备好，因此 <code>case msg1 := &lt;-ch1</code> 先执行，打印出 <code>ch1</code> 的消息。</p>
+<br>
+<ol start="2">
+<li><strong>示例：超时处理</strong></li>
+</ol>
+<p>通过 <code>select</code> 和 <code>time.After</code>，可以实现超时机制。如果超过指定时间还没有 <code>channel</code> 准备好，可以通过 <code>time.After</code> 提供的 channel 来超时处理。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>)<br><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        time.Sleep(<span class="hljs-number">2</span> * time.Second)<br>        ch &lt;- <span class="hljs-string">&quot;Hello from channel!&quot;</span><br>    &#125;()<br><br>    <span class="hljs-keyword">select</span> &#123;<br>    <span class="hljs-keyword">case</span> msg := &lt;-ch:<br>        fmt.Println(<span class="hljs-string">&quot;接收到消息：&quot;</span>, msg)<br>    <span class="hljs-keyword">case</span> &lt;-time.After(<span class="hljs-number">1</span> * time.Second):<br>        fmt.Println(<span class="hljs-string">&quot;超时！没有接收到消息&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">超时！没有接收到消息<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，<code>time.After(1 * time.Second)</code> 创建了一个定时器，在 1 秒后向返回的 <code>channel</code> 发送数据。如果超过 1 秒，程序就会执行 <code>超时</code> 的分支。</p>
+<br>
+<ol start="3">
+<li><strong>示例：阻塞直到多个任务完成</strong></li>
+</ol>
+<p>通过 <code>select</code> 可以处理多个 <code>goroutine</code> 的任务完成，下面是等待两个并发任务的例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">task1</span><span class="hljs-params">(done <span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>)</span></span> &#123;<br>    time.Sleep(<span class="hljs-number">1</span> * time.Second)<br>    fmt.Println(<span class="hljs-string">&quot;任务 1 完成&quot;</span>)<br>    done &lt;- <span class="hljs-literal">true</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">task2</span><span class="hljs-params">(done <span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>)</span></span> &#123;<br>    time.Sleep(<span class="hljs-number">2</span> * time.Second)<br>    fmt.Println(<span class="hljs-string">&quot;任务 2 完成&quot;</span>)<br>    done &lt;- <span class="hljs-literal">true</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    done := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>)<br><br>    <span class="hljs-keyword">go</span> task1(done)<br>    <span class="hljs-keyword">go</span> task2(done)<br><br>    <span class="hljs-comment">// 等待两个任务完成</span><br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span>; i++ &#123;<br>        <span class="hljs-keyword">select</span> &#123;<br>        <span class="hljs-keyword">case</span> &lt;-done:<br>            fmt.Println(<span class="hljs-string">&quot;任务完成通知&quot;</span>)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">任务 1 完成<br>任务完成通知<br>任务 2 完成<br>任务完成通知<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，两个并发任务 <code>task1</code> 和 <code>task2</code> 被执行，<code>main</code> 函数通过 <code>select</code> 语句等待两个任务的完成信号。</p>
+<br>
+<ol start="4">
+<li><strong>示例：<code>default</code> 分支</strong></li>
+</ol>
+<p><code>select</code> 可以包含 <code>default</code> 分支，当所有 <code>channel</code> 都没有准备好时，<code>select</code> 会执行 <code>default</code> 分支，避免阻塞。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>)<br><br>    <span class="hljs-keyword">select</span> &#123;<br>    <span class="hljs-keyword">case</span> msg := &lt;-ch:<br>        fmt.Println(<span class="hljs-string">&quot;接收到消息：&quot;</span>, msg)<br>    <span class="hljs-keyword">default</span>:<br>        fmt.Println(<span class="hljs-string">&quot;没有任何 channel 就绪&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">没有任何 channel 就绪<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，由于 <code>ch</code> 没有数据发送，<code>select</code> 会直接执行 <code>default</code> 分支，避免阻塞。</p>
+<br>
+<ol start="5">
+<li><strong>示例：多路选择</strong></li>
+</ol>
+<p>当你有多个 <code>channel</code> 需要同时监听时，<code>select</code> 非常适合用于多路选择：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>)<br>    ch2 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>)<br><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        time.Sleep(<span class="hljs-number">1</span> * time.Second)<br>        ch1 &lt;- <span class="hljs-string">&quot;消息来自 ch1&quot;</span><br>    &#125;()<br><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        time.Sleep(<span class="hljs-number">2</span> * time.Second)<br>        ch2 &lt;- <span class="hljs-string">&quot;消息来自 ch2&quot;</span><br>    &#125;()<br><br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span>; i++ &#123;<br>        <span class="hljs-keyword">select</span> &#123;<br>        <span class="hljs-keyword">case</span> msg1 := &lt;-ch1:<br>            fmt.Println(msg1)<br>        <span class="hljs-keyword">case</span> msg2 := &lt;-ch2:<br>            fmt.Println(msg2)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">消息来自 ch1<br>消息来自 ch2<br></code></pre></td></tr></table></figure>
+<p>这里 <code>select</code> 语句会连续两次从两个 <code>channel</code> 中接收数据，确保每个 <code>channel</code> 都可以被处理。</p>
+<br>
+<ol start="6">
+<li><strong><code>select</code> 的特性</strong></li>
+</ol>
+<ul>
+<li><strong>阻塞等待</strong>：如果没有 <code>default</code>，<code>select</code> 会阻塞，直到其中一个 <code>channel</code> 可以进行操作。</li>
+<li><strong>随机性</strong>：如果有多个 <code>channel</code> 同时就绪，<code>select</code> 会随机选择一个执行。</li>
+<li><strong>避免死锁</strong>：<code>select</code> 可以帮助你管理多个 goroutine 之间的通信，避免由于等待 <code>channel</code> 而导致的死锁。</li>
+</ul>
+<br>
+<p><strong>总结</strong></p>
+<ul>
+<li><strong><code>select</code> 是 Go 中处理多个 <code>channel</code> 并发操作的关键工具</strong>。它允许你同时监听多个 <code>channel</code>，并根据其中哪个准备好执行相应的逻辑。</li>
+<li><strong>主要应用场景</strong>：多路复用、超时控制、阻塞等待多个任务完成等。</li>
+<li><strong>常见结构</strong>：<code>select</code> 语句包含若干 <code>case</code>，每个 <code>case</code> 中都有一个 <code>channel</code> 操作，当某个 <code>channel</code> 准备好时，相应的 <code>case</code> 会被执行。</li>
+</ul>
+<p><code>select</code> 为 Go 的并发编程提供了强大且灵活的控制流机制，结合 <code>goroutines</code>，它使得 Go 语言能够高效地处理并发任务和通信。</p>
+</div></details> 
+<br>
+<hr>
+<p><br><br><br></p>
+<h2 id="string">string</h2>
+<ol>
+<li><strong>string参数传递性能考虑</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>总结如下：</p>
+<p><strong>Go 中字符串传参的性能考虑</strong></p>
+<ol>
+<li>
+<p><strong>Go 的字符串是不可变的引用类型</strong>：</p>
+<ul>
+<li>在 Go 中，<u><strong>字符串是不可变的</strong></u>，底层是一个包含指向字节数组的<strong>指针</strong>和<strong>长度</strong>的结构体。</li>
+<li>按值传递字符串时，Go 只拷贝指针和长度，而不会拷贝字符串的内容，因此传递的性能开销是非常小的，和字符串本身的大小无关。</li>
+</ul>
+</li>
+<li>
+<p><strong>按值传递字符串的性能开销很小</strong>：</p>
+<ul>
+<li>即使字符串很大，Go 语言在按值传递时只会拷贝 16 字节（在 64 位系统上是 8 字节的指针 + 8 字节的长度）。</li>
+<li>这使得在大多数情况下，按值传递字符串是非常高效的，不需要担心额外的性能损耗。</li>
+</ul>
+</li>
+<li>
+<p><strong>传递指针 <code>*string</code> 并不会显著提升性能</strong>：</p>
+<ul>
+<li>因为按值传递本身的开销已经非常小了，所以在大多数情况下，使用 <code>*string</code>（传递指针）来避免拷贝几乎没有实际的性能收益。</li>
+<li>传递指针反而可能导致更多复杂性（如需要额外处理指针的引用、逃逸到堆等问题）。</li>
+</ul>
+</li>
+<li>
+<p><strong>字符串操作（如拼接、切片）才是性能瓶颈</strong>：</p>
+<ul>
+<li>影响性能的往往不是字符串传参，而是对字符串的操作。由于 Go 字符串是不可变的，每次操作（如拼接、切片）都会创建新的字符串对象，导致内存分配和内容拷贝。</li>
+<li>如果在函数内频繁对字符串进行操作，比如拼接大字符串，才会带来明显的性能开销，这与传参方式无关。</li>
+</ul>
+</li>
+</ol>
+<br>
+<p><strong>什么时候可能使用指针 <code>*string</code>？</strong></p>
+<ul>
+<li><strong>极少数情况下</strong>，如果函数需要修改字符串的指针或修改原始字符串引用的值（例如在结构体中持有多个大字符串的引用），可以考虑传递 <code>*string</code>。</li>
+<li>但这种场景非常少见，通常更适合按值传递字符串。</li>
+</ul>
+<br>
+<p><strong>什么时候直接按值传递</strong>？</p>
+<ul>
+<li>在大多数情况下，<strong>直接按值传递字符串是最好的选择</strong>。这种方式性能足够高效，且代码简洁易读，不需要额外处理指针的复杂性。</li>
+<li>即使在高并发、大规模字符串传递场景下，Go 的编译器优化已经足够使按值传递的开销微乎其微。</li>
+</ul>
+<br>
+<p><strong>结论</strong></p>
+<ul>
+<li><strong>字符串大小与传参性能无关</strong>：无论字符串多大，Go 按值传递时的开销都很小，传递的是指针和长度而非内容。</li>
+<li><strong>传递指针通常没有必要</strong>：传递 <code>*string</code> 指针的优化效果微乎其微，除非涉及修改字符串的引用。</li>
+<li><strong>性能优化应关注字符串操作</strong>：与其优化传参方式，不如优化字符串操作的方式，比如避免频繁的拼接或创建新字符串。</li>
+</ul>
+<p>总的来说，<strong>在 Go 中，按值传递字符串几乎总是性能友好的</strong>，除非你有非常特殊的需求，否则不需要使用指针传递。</p>
+</div></details> 
+<br>
+<hr>
+<p><br><br><br></p>
+<h2 id="defer">defer</h2>
+<ol>
+<li><strong>defer的性能考虑</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>在 Go 1.14 之前，<code>defer</code> 语句的性能一直被认为是有些开销的，尤其是在高频调用的场景下。而从 Go 1.14 开始，Go 编译器对 <code>defer</code> 语句进行了显著的优化，使其在常见情况下的开销大幅度降低，变得几乎可以忽略不计。以下是 Go 语言新旧版 <code>defer</code> 的性能及实现差异的总结。</p>
+<br>
+<p>1、<strong>旧版 <code>defer</code>（Go 1.14 之前）</strong></p>
+<p>实现方式：</p>
+<ul>
+<li>每次调用 <code>defer</code> 时，Go 编译器都会生成一个 <code>defer</code> 对象，并将其加入到一个链表（defer chain）中。这个链表在函数返回时被遍历，执行其中的所有 <code>defer</code> 操作。</li>
+<li><code>defer</code> 对象保存了需要在函数退出时调用的函数信息、参数和上下文。这些 <code>defer</code> 对象的创建和管理增加了运行时的开销。</li>
+<li>如果一个函数多次使用 <code>defer</code>，就需要生成多个 <code>defer</code> 对象，每次都要将它们加到链表中。这在高频率调用 <code>defer</code> 的情况下，性能可能会受到一定影响。</li>
+</ul>
+<p>性能开销：</p>
+<ul>
+<li><strong>显著的开销</strong>：每次调用 <code>defer</code> 都会创建和管理一个对象，特别是在频繁调用 <code>defer</code> 的场景（如紧密的循环或高并发的代码中），性能开销较为明显。</li>
+<li><strong>无法优化</strong>：由于 <code>defer</code> 在旧版本中每次调用都会生成一个新的 <code>defer</code> 对象，编译器无法优化掉这些操作，导致性能瓶颈。</li>
+</ul>
+<p>典型场景中的影响：</p>
+<ul>
+<li>在需要频繁执行 <code>defer</code> 的场景下，旧版的 <code>defer</code> 可能导致性能下降。比如在一个循环中多次使用 <code>defer</code> 进行资源管理时，旧版本的 Go 由于创建大量的 <code>defer</code> 对象，开销显著。</li>
+</ul>
+<br>
+<p>2、<strong>新版 <code>defer</code>（Go 1.14 及之后）</strong></p>
+<p>实现方式：</p>
+<ul>
+<li><strong>内联优化</strong>：在 Go 1.14 中，编译器对简单的 <code>defer</code> 操作进行了内联优化。在某些常见情况下（例如 <code>defer</code> 调用一个无参的内联函数），编译器会将 <code>defer</code> 直接展开为普通函数调用，避免创建 <code>defer</code> 对象和维护链表。</li>
+<li><strong>去除不必要的开销</strong>：新版 <code>defer</code> 在编译期做了一些优化，使得在函数退出时不再需要遍历 <code>defer</code> 链表，从而减少运行时的开销。简单的 <code>defer</code> 调用可能会被直接展开成对被 <code>defer</code> 函数的直接调用。</li>
+<li><strong>优化策略</strong>：如果 <code>defer</code> 调用的函数是可以内联的，并且没有复杂的参数处理，编译器会将 <code>defer</code> 转换为更高效的代码。</li>
+</ul>
+<p>性能开销：</p>
+<ul>
+<li><strong>几乎可以忽略不计</strong>：在大多数简单的场景下，<code>defer</code> 的性能开销被优化到几乎和手动调用解锁（或其他资源释放函数）一样快。</li>
+<li><strong>局部优化</strong>：对于较为复杂的 <code>defer</code> 场景，比如带有复杂参数或闭包的函数，<code>defer</code> 仍然会有一些开销，但整体性能已大幅改善。</li>
+</ul>
+<p>典型场景中的影响：</p>
+<ul>
+<li>在新版的 Go 中，开发者可以放心地在高频率的场景中使用 <code>defer</code>（如循环中反复加锁、解锁），因为其性能开销几乎不会带来负面影响。</li>
+<li>由于编译器的优化，开发者不再需要为性能问题而在代码中避免使用 <code>defer</code>，可以安全、简洁地使用 <code>defer</code> 来管理资源释放。</li>
+</ul>
+<br>
+<p>3、<strong>新版 <code>defer</code> 优化的常见场景</strong></p>
+<ul>
+<li>
+<p><strong>锁的管理</strong>：在新版 Go 中，<code>defer</code> 的开销几乎与直接调用 <code>Unlock()</code> 相同。因此，在 <code>Lock()</code> 后直接使用 <code>defer Unlock()</code> 是推荐的最佳实践，不再有显著的性能开销。</p>
+</li>
+<li>
+<p><strong>文件关闭</strong>：处理文件、数据库连接等资源时，<code>defer</code> <code>Close()</code> 也可以放心使用，不需要担心其性能影响。</p>
+</li>
+<li>
+<p><strong>高频调用场景</strong>：例如在一个循环内频繁调用 <code>defer</code> 管理资源，Go 1.14 及之后的优化使得这种模式成为一种高效、优雅的代码写法。</p>
+</li>
+</ul>
+<br>
+<p>4、<strong>总结对比</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>旧版 <code>defer</code>（Go 1.14 之前）</th>
+<th>新版 <code>defer</code>（Go 1.14 及之后）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>实现方式</strong></td>
+<td>生成 <code>defer</code> 对象，加入链表</td>
+<td>编译器内联优化，减少对象创建</td>
+</tr>
+<tr>
+<td><strong>性能开销</strong></td>
+<td>显著，特别是高频调用时影响较大</td>
+<td>几乎可以忽略不计，性能优化显著</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>需要避免频繁使用 <code>defer</code></td>
+<td>可以放心在任何场景使用 <code>defer</code></td>
+</tr>
+<tr>
+<td><strong>复杂情况</strong></td>
+<td>复杂函数可能增加更多开销</td>
+<td>编译器针对简单 <code>defer</code> 优化</td>
+</tr>
+<tr>
+<td><strong>推荐写法</strong></td>
+<td>尽量避免高频使用 <code>defer</code></td>
+<td>推荐使用 <code>defer</code> 简化代码</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>5、<strong>实际使用建议</strong></p>
+<ul>
+<li>
+<p><strong>Go 1.14 之前</strong>：在旧版本中，开发者需要谨慎使用 <code>defer</code>，特别是在性能敏感的场景中（如紧密的循环内），需要手动管理资源以避免不必要的性能开销。</p>
+</li>
+<li>
+<p><strong>Go 1.14 及之后</strong>：现在的 <code>defer</code> 几乎没有性能瓶颈，开发者可以放心地在代码中广泛使用 <code>defer</code> 来管理资源释放。这不仅提高了代码的可读性，还减少了人为错误的可能性。</p>
+</li>
+</ul>
+<p>新版的 <code>defer</code> 优化使得它成为管理资源释放（如锁、文件、网络连接等）的一种简单且高效的方式，在编写并发和高性能代码时不必再因为性能问题去避免使用 <code>defer</code>。</p>
+</div></details> 
+<br>
+<ol start="2">
+<li><strong>defer和return的顺序</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p><strong><code>return</code> 语句先执行</strong>，但它并不会立即返回控制权，而是：</p>
+<ul>
+<li>先计算并保存 <code>return</code> 语句的返回值（如果有返回值）。</li>
+<li>然后执行所有的 <code>defer</code> 语句。</li>
+<li>最后才真正返回控制权给调用者。</li>
+</ul>
+<p><strong><code>defer</code> 语句在函数返回之前执行</strong>，而且是<strong>按照逆序</strong>执行。如果在函数中有多个 <code>defer</code> 语句，它们会以<strong>后进先出</strong>的顺序执行（即最晚的 <code>defer</code> 最先执行）。</p>
+<br>
+<p>例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">demo</span><span class="hljs-params">()</span></span> (res <span class="hljs-type">int</span>) &#123;<br>	res = <span class="hljs-number">1</span><br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;defer1: res=%v\n&quot;</span>, res) <span class="hljs-comment">// 直接访问 res</span><br>	&#125;()<br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;defer2: res=%v\n&quot;</span>, res) <span class="hljs-comment">// 直接访问 res</span><br>	&#125;()<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">10</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	demo()<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">defer2: res=10<br>defer1: res=10<br></code></pre></td></tr></table></figure>
+</div></details> 
+<br>
+<ol start="3">
+<li>defer捕获变量</li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>在 Go 中，<code>defer</code> 和 <strong>匿名函数</strong>（闭包）对于变量的捕获有重要的差异。理解它们的变量捕获机制是编写正确 Go 代码的关键。以下是关于 <code>defer</code> 和匿名函数变量捕获的总结：</p>
+<br>
+<p>1、<strong><code>defer</code> 语句的变量捕获</strong></p>
+<ul>
+<li><strong><code>defer</code> 语句会在注册时捕获当时的变量值</strong>，而不是在 <code>defer</code> 执行时重新计算变量的值。</li>
+<li>在函数执行过程中，<code>defer</code> 语句被遇到时，Go 会将 <code>defer</code> 的函数调用注册到一个队列中，当函数返回时按<strong>后进先出</strong>（LIFO）的顺序执行这些 <code>defer</code> 调用。</li>
+<li><strong>变量的值是在 <code>defer</code> 注册时确定的</strong>，并不会因为之后的代码修改该变量而更新捕获的值。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">demo</span><span class="hljs-params">()</span></span> (res <span class="hljs-type">int</span>) &#123;<br>    res = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">defer</span> fmt.Println(<span class="hljs-string">&quot;defer1:&quot;</span>, res) <span class="hljs-comment">// 捕获 res=1</span><br>    res = <span class="hljs-number">2</span><br>    <span class="hljs-keyword">defer</span> fmt.Println(<span class="hljs-string">&quot;defer2:&quot;</span>, res) <span class="hljs-comment">// 捕获 res=2</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">10</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    demo()<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">defer2: 2<br>defer1: 1<br></code></pre></td></tr></table></figure>
+<p>解释：</p>
+<ul>
+<li>在 <code>defer</code> 注册时，<code>res</code> 的值被捕获，因此第一个 <code>defer</code> 捕获了 <code>res=1</code>，第二个捕获了 <code>res=2</code>。即使 <code>return</code> 修改了 <code>res</code> 的值，<code>defer</code> 捕获的值保持不变。</li>
+</ul>
+<br>
+<p>2、<strong>匿名函数的变量捕获（闭包）</strong></p>
+<ul>
+<li><strong>匿名函数（闭包）在执行时使用的是变量的当前值</strong>，而不是注册时的值。闭包会引用其外部作用域中的变量，即捕获它们的地址，而不是复制值。</li>
+<li>这意味着当 <code>defer</code> 结合匿名函数时，匿名函数在执行时会读取变量的最新值，而不是注册时的值。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">demo</span><span class="hljs-params">()</span></span> (res <span class="hljs-type">int</span>) &#123;<br>    res = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;defer1:&quot;</span>, res) <span class="hljs-comment">// 执行时 res 的值</span><br>    &#125;()<br>    res = <span class="hljs-number">2</span><br>    <span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;defer2:&quot;</span>, res) <span class="hljs-comment">// 执行时 res 的值</span><br>    &#125;()<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">10</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    demo()<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">defer2: 10<br>defer1: 10<br></code></pre></td></tr></table></figure>
+<p>解释：</p>
+<ul>
+<li>在这个例子中，匿名函数会在函数结束时执行，它们会访问 <code>res</code> 的最新值。由于 <code>return</code> 修改了 <code>res</code> 的值（<code>res = 10</code>），所以两个 <code>defer</code> 都打印了 <code>res=10</code>。</li>
+</ul>
+<br>
+<p>3、<strong>总结：<code>defer</code> 和匿名函数的变量捕获差异</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>defer</code> 直接调用</th>
+<th><code>defer</code> 结合匿名函数（闭包）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>捕获时机</strong></td>
+<td>注册时捕获变量的值</td>
+<td>执行时访问变量的当前值</td>
+</tr>
+<tr>
+<td><strong>执行顺序</strong></td>
+<td>后进先出（LIFO）顺序执行</td>
+<td>后进先出（LIFO）顺序执行</td>
+</tr>
+<tr>
+<td><strong>值的更新</strong></td>
+<td><code>defer</code> 注册时的变量值不会被更新</td>
+<td>匿名函数执行时访问变量的最新值</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>适用于简单的操作，如打印当前状态</td>
+<td>适用于复杂的操作，尤其需要动态获取变量的场景</td>
+</tr>
+<tr>
+<td><strong>捕获方式</strong></td>
+<td>捕获当前的值（值拷贝）</td>
+<td>捕获变量的引用（地址）</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>4、<strong>最佳实践和使用建议</strong></p>
+<ul>
+<li><strong>普通 <code>defer</code></strong>：适用于处理简单场景，如资源释放（关闭文件、释放锁等），因为 <code>defer</code> 在注册时捕获的值不会受到后续代码修改的影响。</li>
+<li><strong>匿名函数的 <code>defer</code></strong>：适用于在 <code>defer</code> 中需要访问动态变量的场景，例如函数返回之后的变量状态。匿名函数可以确保执行时捕获变量的最新值。</li>
+</ul>
+<br>
+<p>5、<strong>示例对比</strong></p>
+<p>普通 <code>defer</code> 捕获值：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">example</span><span class="hljs-params">()</span></span> (x <span class="hljs-type">int</span>) &#123;<br>    x = <span class="hljs-number">5</span><br>    <span class="hljs-keyword">defer</span> fmt.Println(<span class="hljs-string">&quot;defer:&quot;</span>, x) <span class="hljs-comment">// 捕获 x = 5</span><br>    x = <span class="hljs-number">10</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">15</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">defer: 5<br></code></pre></td></tr></table></figure>
+<p><code>defer</code> 结合匿名函数捕获引用：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">example</span><span class="hljs-params">()</span></span> (x <span class="hljs-type">int</span>) &#123;<br>    x = <span class="hljs-number">5</span><br>    <span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;defer:&quot;</span>, x) <span class="hljs-comment">// 执行时 x 的值</span><br>    &#125;()<br>    x = <span class="hljs-number">10</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">15</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">defer: 15<br></code></pre></td></tr></table></figure>
+<br>
+<p>6、<strong>总结</strong>：</p>
+<ul>
+<li><strong>普通 <code>defer</code></strong>：在注册时捕获变量的值（值拷贝），适用于处理简单的资源释放场景。<code>defer</code> 会在函数返回前执行，按<strong>后进先出</strong>顺序执行。</li>
+<li><strong>匿名函数（闭包）与 <code>defer</code></strong>：在函数执行结束时动态获取变量的最新值（捕获引用），适用于需要在 <code>defer</code> 中访问最终状态的场景。</li>
+</ul>
+<p>使用时应根据需要选择合适的模式，确保正确的变量捕获行为。</p>
+</div></details> 
+<br>
+<hr>
+<p><br><br><br></p>
+<h2 id="Json">Json</h2>
+<ol>
+<li><strong>序列化忽略某些字段</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>在 Go 中，如果你需要在序列化（例如，使用 <code>encoding/json</code> 包将结构体转换为 JSON）时忽略某些字段，可以通过以下几种方式实现：</p>
+<br>
+<p>1、<strong>使用结构体标签 <code>json:&quot;-&quot;</code></strong></p>
+<p>Go 提供了结构体标签（struct tags）机制，在序列化时可以通过 <code>json:&quot;-&quot;</code> 来忽略特定字段。这个标签告诉 <code>encoding/json</code> 包在序列化或反序列化时跳过该字段。</p>
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;<br>    Name     <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;name&quot;`</span><br>    Age      <span class="hljs-type">int</span>    <span class="hljs-string">`json:&quot;age&quot;`</span><br>    Password <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;-&quot;`</span> <span class="hljs-comment">// 忽略该字段</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    p := Person&#123;<br>        Name:     <span class="hljs-string">&quot;John&quot;</span>,<br>        Age:      <span class="hljs-number">30</span>,<br>        Password: <span class="hljs-string">&quot;supersecret&quot;</span>,<br>    &#125;<br><br>    jsonData, _ := json.Marshal(p)<br>    fmt.Println(<span class="hljs-type">string</span>(jsonData)) <span class="hljs-comment">// 输出：&#123;&quot;name&quot;:&quot;John&quot;,&quot;age&quot;:30&#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>解释：</p>
+<ul>
+<li><code>Password</code> 字段加了标签 <code>json:&quot;-&quot;</code>，因此在 JSON 序列化时被忽略，不会出现在输出中。</li>
+</ul>
+<br>
+<p>2、<strong>使用指针或 <code>omitempty</code> 标签</strong></p>
+<p>如果你希望在字段的值为<strong>空</strong>或<strong>零值</strong>时（如 <code>0</code>, <code>&quot;&quot;</code>, <code>nil</code>）自动忽略该字段，可以使用 <code>json:&quot;omitempty&quot;</code> 标签。这个标签表示只有当字段有非零值时才会被序列化，零值字段会被忽略。</p>
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;<br>    Name     <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;name&quot;`</span><br>    Age      <span class="hljs-type">int</span>    <span class="hljs-string">`json:&quot;age,omitempty&quot;`</span>      <span class="hljs-comment">// 如果 Age 为 0，忽略该字段</span><br>    Address  <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;address,omitempty&quot;`</span>  <span class="hljs-comment">// 如果 Address 为空，忽略该字段</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    p := Person&#123;<br>        Name: <span class="hljs-string">&quot;John&quot;</span>,<br>        Age:  <span class="hljs-number">0</span>, <span class="hljs-comment">// Age 为 0，属于零值</span><br>    &#125;<br><br>    jsonData, _ := json.Marshal(p)<br>    fmt.Println(<span class="hljs-type">string</span>(jsonData)) <span class="hljs-comment">// 输出：&#123;&quot;name&quot;:&quot;John&quot;&#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>解释：</p>
+<ul>
+<li><code>Age</code> 和 <code>Address</code> 使用了 <code>omitempty</code> 标签，因此如果它们的值为零值（如 <code>0</code>, <code>&quot;&quot;</code>, <code>nil</code>），就会被忽略，不会出现在序列化结果中。</li>
+</ul>
+<br>
+<p>3、<strong>动态控制字段序列化</strong></p>
+<p>如果你希望根据具体的条件动态决定是否序列化某个字段，可以使用自定义的序列化逻辑。通过实现 <code>MarshalJSON</code> 接口，可以手动控制字段序列化。</p>
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;<br>    Name     <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;name&quot;`</span><br>    Age      <span class="hljs-type">int</span>    <span class="hljs-string">`json:&quot;age&quot;`</span><br>    Password <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;-&quot;`</span> <span class="hljs-comment">// 默认忽略 Password</span><br>&#125;<br><br><span class="hljs-comment">// 自定义序列化逻辑</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p Person)</span></span> MarshalJSON() ([]<span class="hljs-type">byte</span>, <span class="hljs-type">error</span>) &#123;<br>    <span class="hljs-keyword">type</span> Alias Person<br>    <span class="hljs-keyword">return</span> json.Marshal(&amp;<span class="hljs-keyword">struct</span> &#123;<br>        Alias<br>        Password <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;password,omitempty&quot;`</span> <span class="hljs-comment">// 动态控制 Password 是否序列化</span><br>    &#125;&#123;<br>        Alias:    (Alias)(p),<br>        Password: p.Password,<br>    &#125;)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    p := Person&#123;<br>        Name:     <span class="hljs-string">&quot;John&quot;</span>,<br>        Age:      <span class="hljs-number">30</span>,<br>        Password: <span class="hljs-string">&quot;supersecret&quot;</span>,<br>    &#125;<br><br>    jsonData, _ := json.Marshal(p)<br>    fmt.Println(<span class="hljs-type">string</span>(jsonData)) <span class="hljs-comment">// 输出：&#123;&quot;name&quot;:&quot;John&quot;,&quot;age&quot;:30,&quot;password&quot;:&quot;supersecret&quot;&#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>解释：</p>
+<ul>
+<li>在这个示例中，通过实现 <code>MarshalJSON</code>，可以动态决定是否包含 <code>Password</code> 字段。在示例中，虽然 <code>Password</code> 在结构体定义中被标记为忽略（<code>json:&quot;-&quot;</code>），但我们在 <code>MarshalJSON</code> 方法中添加了自定义逻辑，使其可以根据需要序列化 <code>Password</code>。</li>
+</ul>
+<br>
+<p>4、<strong>通过组合方式忽略字段</strong></p>
+<p>通过结构体组合，你可以有选择性地只序列化组合中的某些字段，而忽略其他字段。</p>
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Credentials <span class="hljs-keyword">struct</span> &#123;<br>    Password <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;password&quot;`</span><br>&#125;<br><br><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;<br>    Name <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;name&quot;`</span><br>    Age  <span class="hljs-type">int</span>    <span class="hljs-string">`json:&quot;age&quot;`</span><br>    Credentials <span class="hljs-comment">// Password 会被自动序列化</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    p := Person&#123;<br>        Name: <span class="hljs-string">&quot;John&quot;</span>,<br>        Age:  <span class="hljs-number">30</span>,<br>        Credentials: Credentials&#123;<br>            Password: <span class="hljs-string">&quot;supersecret&quot;</span>,<br>        &#125;,<br>    &#125;<br><br>    jsonData, _ := json.Marshal(p)<br>    fmt.Println(<span class="hljs-type">string</span>(jsonData)) <span class="hljs-comment">// 输出：&#123;&quot;name&quot;:&quot;John&quot;,&quot;age&quot;:30,&quot;password&quot;:&quot;supersecret&quot;&#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果你想要<strong>组合结构体中的某些字段不被序列化</strong>，可以给这些字段添加 <code>json:&quot;-&quot;</code> 标签，或者使用自定义序列化逻辑。</p>
+<br>
+<p><strong>结论</strong></p>
+<p>在 Go 中，序列化时忽略字段的方式包括：</p>
+<ol>
+<li><strong>使用 <code>json:&quot;-&quot;</code> 标签</strong>：明确指定字段在序列化时被忽略。</li>
+<li><strong>使用 <code>omitempty</code> 标签</strong>：根据字段的值是否为零，自动忽略字段。</li>
+<li><strong>自定义序列化逻辑</strong>：通过实现 <code>MarshalJSON</code> 方法动态控制哪些字段被序列化。</li>
+<li><strong>组合方式</strong>：利用结构体嵌入，灵活控制序列化行为。</li>
+</ol>
+<p>根据你的具体需求选择适合的方式，灵活处理字段的序列化和忽略。</p>
+</div></details> </article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://gxblogs.com">ggw &amp; xpl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://gxblogs.com/posts/57494/">https://gxblogs.com/posts/57494/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gxblogs.com" target="_blank">GXBLOGS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a></div><div class="post_share"><div class="social-share" data-image="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/1808/"><img class="prev-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-30_16-11-15.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">golang并发编程</div></div></a></div><div class="next-post pull-right"><a href="/posts/27860/"><img class="next-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/202409091733981.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">golang密码学</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/43295/" title="Gin"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-40-40.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">Gin</div></div></a></div><div><a href="/posts/62589/" title="go包管理"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-12_18-15-14.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-18</div><div class="title">go包管理</div></div></a></div><div><a href="/posts/1808/" title="golang并发编程"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-30_16-11-15.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-08</div><div class="title">golang并发编程</div></div></a></div><div><a href="/posts/14787/" title="Go‘s 数据结构"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-52-01.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">Go‘s 数据结构</div></div></a></div><div><a href="/posts/47700/" title="leetcode hot 100 刷题（go语言版）"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_01-05-47.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-05</div><div class="title">leetcode hot 100 刷题（go语言版）</div></div></a></div><div><a href="/posts/47447/" title="Prometheus"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-16_19-43-49.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-18</div><div class="title">Prometheus</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#channel"><span class="toc-text">channel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#string"><span class="toc-text">string</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#defer"><span class="toc-text">defer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Json"><span class="toc-text">Json</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
   function initValine () {
     const valine = new Valine(Object.assign({
       el: '#vcomment',
@@ -195,7 +805,7 @@ if (true) {
       Chatra('show')
     }
   }
-}</script></div>
+}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script>
         <style>
             [bg-lazy] {
                 background-image: none !important;
@@ -208,4 +818,4 @@ if (true) {
                 preloadRatio: 1,
                 processImages: null,
             };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
