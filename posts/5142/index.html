@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>consul | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="摘抄：https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1444664  一、什么是服务发现 微服务的框架体系中，服务发现是不能不提的一个模块。我相信了解或者熟悉微服务的童鞋应该都知道它的重要性。这里我只是简单的提一下，毕竟这不是我们的重点。我们看下面的一幅图片：  图中，客户端的一个接口，需要调用服务A, B, …, N。客户端必须要知道所有服务的网络位置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="consul">
+<meta property="og:url" content="https://gxblogs.com/posts/5142/index.html">
+<meta property="og:site_name" content="GXBLOGS">
+<meta property="og:description" content="摘抄：https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1444664  一、什么是服务发现 微服务的框架体系中，服务发现是不能不提的一个模块。我相信了解或者熟悉微服务的童鞋应该都知道它的重要性。这里我只是简单的提一下，毕竟这不是我们的重点。我们看下面的一幅图片：  图中，客户端的一个接口，需要调用服务A, B, …, N。客户端必须要知道所有服务的网络位置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-18_18-53-01.png">
+<meta property="article:published_time" content="2025-03-18T17:27:49.736Z">
+<meta property="article:modified_time" content="2025-03-18T17:27:49.737Z">
+<meta property="article:author" content="ggw &amp; xpl">
+<meta property="article:tag" content="microservice">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-18_18-53-01.png"><link rel="shortcut icon" href="/static/imgs/paipai.ico"><link rel="canonical" href="https://gxblogs.com/posts/5142/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: ggw & xpl","link":"链接: ","source":"来源: GXBLOGS","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'consul',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-19 01:27:49'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="/css/else/echarts.min.js"></script><script src="/css/else/wow.min.js"></script><script type="text/javascript" src="/css/else/echarts-gl.min.js"></script><script src="/css/else/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">69</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-18_18-53-01.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">consul</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-18T17:27:49.736Z" title="发表于 2025-03-19 01:27:49">2025-03-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-18T17:27:49.737Z" title="更新于 2025-03-19 01:27:49">2025-03-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/5142/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/5142/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>摘抄：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1444664">https://cloud.tencent.com/developer/article/1444664</a></p>
+</blockquote>
+<h2 id="一、什么是服务发现">一、什么是服务发现</h2>
+<p>微服务的框架体系中，服务发现是不能不提的一个模块。我相信了解或者熟悉微服务的童鞋应该都知道它的重要性。这里我只是简单的提一下，毕竟这不是我们的重点。我们看下面的一幅图片：</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-18_19-00-18.png" alt=""></p>
+<p>图中，客户端的一个接口，需要调用服务A, B, …, N。客户端必须要知道所有服务的网络位置的，以往的做法是配置是配置文件中，或者有些配置在数据库中。这里就带出几个问题：</p>
+<ul>
+<li>需要配置N个服务的网络位置，加大配置的复杂性</li>
+<li>服务的网络位置变化，都需要改变每个调用者的配置</li>
+<li>集群的情况下，难以做负载（反向代理的方式除外）</li>
+</ul>
+<p><strong>总结起来一句话：服务多了，配置很麻烦，问题多多</strong></p>
+<p>既然有这些问题，那么服务发现就是解决这些问题的。话说，怎么解决呢？我们再看一张图</p>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-18_19-01-43.png" alt=""></p>
+<p>与之前一张不同的是，加了个服务发现模块。图比较简单，这边文字描述下。服务A, B, …, N把当前自己的网络位置注册到服务发现模块（这里注册的意思就是告诉），服务发现就以K-V的方式记录下，K一般是服务名，V就是IP:PORT。服务发现模块定时的轮询查看这些服务能不能访问的了（这就是健康检查）。客户端在调用服务A, B, …, N的时候，就跑去服务发现模块问下它们的网络位置，然后再调用它们的服务。这样的方式是不是就可以解决上面的问题了呢？客户端完全不需要记录这些服务网络位置，客户端和服务端完全解耦！</p>
+<p>图中的服务发现模块基本上就是中服务发现的作用了。</p>
+<hr>
+<p><br><br><br></p>
+<h2 id="二、consul-简介">二、consul 简介</h2>
+<p>做服务发现的框架常用的有</p>
+<ul>
+<li>zookeeper</li>
+<li>eureka</li>
+<li>etcd</li>
+<li>consul</li>
+</ul>
+<p>这里就不比较哪个好哪个差了，需要的童鞋自己谷歌百度。</p>
+<p>那么consul是啥？consul就是提供服务发现的工具。然后下面是简单的介绍：</p>
+<p>consul是分布式的、高可用、横向扩展的。</p>
+<p>consul提供的一些关键特性:</p>
+<ul>
+<li>service discovery：consul通过DNS或者HTTP接口使服务注册和服务发现变的很容易，一些外部服务，例如saas提供的也可以一样注册。</li>
+<li>health checking：健康检测使consul可以快速的告警在集群中的操作。和服务发现的集成，可以防止服务转发到故障的服务上面。</li>
+<li>key/value storage：一个用来存储动态配置的系统。提供简单的HTTP接口，可以在任何地方操作。</li>
+<li>multi-datacenter：无需复杂的配置，即可支持任意数量的区域。 我们这里会介绍服务发现，健康检查，还有一些基本KV存储。多数据中心有机会另一篇文章再说。</li>
+</ul>
+<p>总结：只要知道它是解决我上一部分提出的问题就行，其它的东西慢慢理解</p>
+<hr>
+<p><br><br><br></p>
+<h2 id="三、consul的几个概念">三、consul的几个概念</h2>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/1kkz7n27zd.png" alt=""></p>
+<p>上图来自于consul官方文档</p>
+<p>我们只看数据中心1，可以看出consul的集群是由N个SERVER，加上M个CLIENT组成的。而不管是SERVER还是CLIENT，都是consul的一个节点，所有的服务都可以注册到这些节点上，正是通过这些节点实现服务注册信息的共享。除了这两个，还有一些小细节，一一简单介绍。</p>
+<ul>
+<li>CLIENT: CLIENT表示consul的client模式，就是客户端模式。是consul节点的一种模式，这种模式下，所有注册到当前节点的服务会被转发到SERVER，本身是不持久化这些信息。</li>
+<li>SERVER: SERVER表示consul的server模式，表明这个consul是个server，这种模式下，功能和CLIENT都一样，唯一不同的是，它会把所有的信息持久化的本地，这样遇到故障，信息是可以被保留的。</li>
+<li>SERVER-LEADER: 中间那个SERVER下面有LEADER的字眼，表明这个SERVER是它们的老大，它和其它SERVER不一样的一点是，它需要负责同步注册的信息给其它的SERVER，同时也要负责各个节点的健康监测。</li>
+</ul>
+<p>其它信息其它信息包括它们之间的通信方式，还有一些协议信息，算法。它们是用于保证节点之间的数据同步，实时性要求等等一系列集群问题的解决。这些有兴趣的自己看看<a target="_blank" rel="noopener" href="https://developer.hashicorp.com/consul/docs/internals">官方文档</a>。</p>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">AI解读 </summary><div class="toggle-content"><p><strong>一、数据中心内部（以 Datacenter 1 为例）</strong></p>
+<ol>
+<li><strong>节点角色与通信</strong>
+<ul>
+<li>Server 节点分为<code>LEADER</code>（领导者）和<code>FOLLOWER</code>（跟随者）。
+<ul>
+<li><strong>Leader Forwarding</strong>：非 Leader 的 Server（如 Follower）收到客户端请求后，通过 <code>LEADER FORWARDING</code> 将请求转发给 Leader 处理，确保操作的集中协调。</li>
+<li><strong>Replication</strong>：Leader 处理完数据变更（如写操作）后，通过 <code>REPLICATION</code>（复制）将数据同步给同数据中心内的 Follower，保证数据一致性，使用 <code>TCP/8300</code> 端口。</li>
+</ul>
+</li>
+<li><strong>Client 节点</strong>：通过 <code>RPC（TCP/8300）</code> 与 Server 通信，发送服务发现、配置查询等请求。</li>
+</ul>
+</li>
+<li><strong>LAN Gossip 机制</strong>
+<ul>
+<li>同一数据中心内的节点（Client 和 Server）通过 <code>LAN GOSSIP（TCP/UDP/8301）</code> 通信，实现成员发现、状态同步（如节点存活检测），确保集群感知内部节点变化。</li>
+</ul>
+</li>
+</ol>
+<br>
+<p><strong>二、跨数据中心（Datacenter 1 与 Datacenter 2）</strong></p>
+<ol>
+<li><strong>WAN Gossip 通信</strong>
+<ul>
+<li>不同数据中心的 Server 借助 <code>WAN GOSSIP（TCP/UDP/8302）</code> 跨网络（通过 Internet）通信，用于跨数据中心的成员发现和状态同步，支持多数据中心架构。</li>
+</ul>
+</li>
+<li><strong>跨数据中心请求处理</strong>
+<ul>
+<li><strong>Remote DC Forwarding</strong>：若本地数据中心无法处理请求（如跨数据中心的服务发现），通过 <code>REMOTE DC FORWARDING（TCP/8300）</code> 将请求转发到目标数据中心的 Server 处理，实现跨数据中心的协作。</li>
+</ul>
+</li>
+</ol>
+<br>
+<p><strong>三、整体协作逻辑</strong></p>
+<ul>
+<li><strong>请求处理</strong>：客户端请求优先由本地数据中心的 Server 处理，非 Leader 节点通过 Leader Forwarding 集中到 Leader；跨数据中心请求通过 WAN Gossip 和 Remote DC Forwarding 协作。</li>
+<li><strong>数据一致性</strong>：通过 Replication 在数据中心内同步数据，通过多数据中心的通信机制保证全局状态感知，最终实现分布式环境下的服务发现、配置管理等高可用功能。</li>
+</ul>
+</div></details>
+<hr>
+<p><br><br><br></p>
+<h2 id="四、安装-Consul">四、安装 Consul</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">brew install consul<br></code></pre></td></tr></table></figure>
+<p>检查 consul 是否可用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">~ ··················································································································································································································································································· 42s 00:04:18<br>❯ consul<br>Usage: consul [--version] [--help] &lt;command&gt; [&lt;args&gt;]<br><br>Available commands are:<br>    acl             Interact with Consul&#x27;s ACLs<br>    agent           Runs a Consul agent<br>    catalog         Interact with the catalog<br>    config          Interact with Consul&#x27;s Centralized Configurations<br>    connect         Interact with Consul Connect<br>    debug           Records a debugging archive for operators<br>    event           Fire a new event<br>    exec            Executes a command on Consul nodes<br>    force-leave     Forces a member of the cluster to enter the &quot;left&quot; state<br>    info            Provides debugging information for operators.<br>    intention       Interact with Connect service intentions<br>    join            Tell Consul agent to join cluster<br>    keygen          Generates a new encryption key<br>    keyring         Manages gossip layer encryption keys<br>    kv              Interact with the key-value store<br>    leave           Gracefully leaves the Consul cluster and shuts down<br>    lock            Execute a command holding a lock<br>    login           Login to Consul using an auth method<br>    logout          Destroy a Consul token created with login<br>    maint           Controls node or service maintenance mode<br>    members         Lists the members of a Consul cluster<br>    monitor         Stream logs from a Consul agent<br>    operator        Provides cluster-level tools for Consul operators<br>    peering         Create and manage peering connections between Consul clusters<br>    reload          Triggers the agent to reload configuration files<br>    resource        Interact with Consul&#x27;s resources<br>    rtt             Estimates network round trip time between nodes<br>    services        Interact with services<br>    snapshot        Saves, restores and inspects snapshots of Consul server state<br>    tls             Builtin helpers for creating CAs and certificates<br>    troubleshoot    CLI tools for troubleshooting Consul service mesh<br>    validate        Validate config files/directories<br>    version         Prints the Consul version<br>    watch           Watch for changes in Consul<br></code></pre></td></tr></table></figure>
+<p>如果出现上面这样代表<code>consul</code>是没问题的。</p>
+<hr>
+<p><br><br><br></p>
+<h2 id="五、运行-Consul-Agent">五、运行 Consul Agent</h2>
+<p>Consul安装之后，Agent必须运行。 Agent可以在服务器或客户端模式下运行。 每个数据中心都必须至少有一台服务器，但推荐使用3台或5台服务器。 一个单一的服务器部署是非常不推荐的，因为在故障情况下数据丢失是不可避免的。</p>
+<p>所有其他代理以客户端模式运行。 客户端是一个非常轻量级的进程，它注册服务，运行健康检查，并将查询转发给服务器。 代理程序必须在集群中的每个节点上运行。</p>
+<p>为了简单起见，我们现在将以开发模式启动Consul代理。 这种模式对于快速简单地启动单节点Consul环境非常有用。 它并不打算在生产中使用，因为它不会持续任何状态。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">~ ······················································································································································································································································································· 00:19:22<br>❯ consul agent -dev<br>==&gt; Starting Consul agent...<br>               Version: &#x27;1.20.5&#x27;<br>            Build Date: &#x27;2025-03-11 10:16:18 +0000 UTC&#x27;<br>               Node ID: &#x27;270aaffe-66cf-67ce-80a9-d3e1985cd60e&#x27;<br>             Node name: &#x27;GJVXWHGXQ1&#x27;<br>            Datacenter: &#x27;dc1&#x27; (Segment: &#x27;&lt;all&gt;&#x27;)<br>                Server: true (Bootstrap: false)<br>           Client Addr: [127.0.0.1] (HTTP: 8500, HTTPS: -1, gRPC: 8502, gRPC-TLS: 8503, DNS: 8600)<br>          Cluster Addr: 127.0.0.1 (LAN: 8301, WAN: 8302)<br>     Gossip Encryption: false<br>      Auto-Encrypt-TLS: false<br>           ACL Enabled: false<br>     Reporting Enabled: false<br>    ACL Default Policy: allow<br>             HTTPS TLS: Verify Incoming: false, Verify Outgoing: false, Min Version: TLSv1_2<br>              gRPC TLS: Verify Incoming: false, Min Version: TLSv1_2<br>      Internal RPC TLS: Verify Incoming: false, Verify Outgoing: false (Verify Hostname: false), Min Version: TLSv1_2<br><br>==&gt; Log data will now stream in as it occurs:<br><br>2025-03-19T00:19:25.846+0800 [DEBUG] agent.grpc.balancer: switching server: target=consul://dc1.270aaffe-66cf-67ce-80a9-d3e1985cd60e/server.dc1 from=&lt;none&gt; to=&lt;none&gt;<br>2025-03-19T00:19:25.857+0800 [INFO]  agent.server.raft: initial configuration: index=1 servers=&quot;[&#123;Suffrage:Voter ID:270aaffe-66cf-67ce-80a9-d3e1985cd60e Address:127.0.0.1:8300&#125;]&quot;<br>2025-03-19T00:19:25.857+0800 [INFO]  agent.server.raft: entering follower state: follower=&quot;Node at 127.0.0.1:8300 [Follower]&quot; leader-address= leader-id=<br>2025-03-19T00:19:25.859+0800 [INFO]  agent.server.serf.wan: serf: EventMemberJoin: GJVXWHGXQ1.dc1 127.0.0.1<br>2025-03-19T00:19:25.859+0800 [INFO]  agent.server.serf.lan: serf: EventMemberJoin: GJVXWHGXQ1 127.0.0.1<br>2025-03-19T00:19:25.859+0800 [INFO]  agent.router: Initializing LAN area manager<br>2025-03-19T00:19:25.860+0800 [DEBUG] agent.grpc.balancer: switching server: target=consul://dc1.270aaffe-66cf-67ce-80a9-d3e1985cd60e/server.dc1 from=&lt;none&gt; to=dc1-127.0.0.1:8300<br>2025-03-19T00:19:25.860+0800 [INFO]  agent.server: Adding LAN server: server=&quot;GJVXWHGXQ1 (Addr: tcp/127.0.0.1:8300) (DC: dc1)&quot;<br>2025-03-19T00:19:25.860+0800 [INFO]  agent.server: Handled event for server in area: event=member-join server=GJVXWHGXQ1.dc1 area=wan<br>2025-03-19T00:19:25.861+0800 [INFO]  agent.server.autopilot: reconciliation now disabled<br>2025-03-19T00:19:25.863+0800 [DEBUG] agent.server.autopilot: autopilot is now running<br>...(省略)<br></code></pre></td></tr></table></figure>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">默认端口 </summary><div class="toggle-content"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">~ ······················································································································································································································································································· 01:10:44<br>❯ lsof -i :8500<br>COMMAND   PID        USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME<br>consul  84416 guowei.gong   17u  IPv4 0x8f4e9332d460a11b      0t0  TCP localhost:fmtp (LISTEN)<br></code></pre></td></tr></table></figure>
+<p>Consul 的 agent 启动后，默认端口通常是 8500 ，这是其 HTTP API 和 Web 界面的默认端口。通过浏览器访问<code>http://localhost:8500</code> ，在正常启动且端口未被占用的情况下，能看到 Consul 的管理界面。</p>
+<p>不过，端口也可以在启动时通过配置参数修改，例如在命令中使用 <code>-http-port</code> 参数指定其他端口 ，像<code>consul agent -dev -http-port=8600</code>，这样启动后访问端口就变为 8600 。 此外，Consul 还有用于其他功能的默认端口，如用于 LAN Gossip 协议的 8301 端口、用于 WAN Gossip 协议的 8302 端口等。</p>
+</div></details>
+<hr>
+<p><br><br><br></p>
+<h2 id="六、集群成员">六、集群成员</h2>
+<p>在另一个终端运行<code>consul members</code>，可以看到Consul集群的成员。 应该只看到一个成员（你自己）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">~ ······················································································································································································································································································· 00:38:34<br>❯ consul members<br>Node        Address         Status  Type    Build   Protocol  DC   Partition  Segment<br>GJVXWHGXQ1  127.0.0.1:8301  alive   server  1.20.5  2         dc1  default    &lt;all&gt;<br></code></pre></td></tr></table></figure>
+<p>输出显示了我们自己的节点，它正在运行的地址，运行状况，在集群中的角色以及一些版本信息。 额外的元数据可以通过提供<code>-detailed</code>标志来查看。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">~ ······················································································································································································································································································· 00:44:04<br>❯ consul members -detailed<br>Node        Address         Status  Tags<br>GJVXWHGXQ1  127.0.0.1:8301  alive   acls=0,ap=default,build=1.20.5:74efe419,dc=dc1,ft_fs=1,ft_si=1,grpc_port=8502,grpc_tls_port=8503,id=270aaffe-66cf-67ce-80a9-d3e1985cd60e,port=8300,raft_vsn=3,role=consul,segment=&lt;all&gt;,vsn=2,vsn_max=3,vsn_min=2,wan_join_port=8302<br></code></pre></td></tr></table></figure>
+<p><code>members</code>命令的输出基于gossip协议，并最终一致。 也就是说，在任何时候，当地代理所看到的可能与服务器上的状态不完全一致。 要获得完全一致，请使用HTTP API再将HTTP请求转发给Consul服务器：</p>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">为什么不一致？ </summary><div class="toggle-content"><p>Consul 中 <code>members</code> 命令输出基于 Gossip 协议出现不一致，主要源于 Gossip 协议的异步特性与 Consul 服务器（Server）的强一致性机制差异，具体原因如下：</p>
+<p><strong>1. Gossip 协议的异步传播特性</strong></p>
+<ul>
+<li><strong>非实时同步</strong>：Gossip 协议通过节点间随机、异步的消息传播同步状态。本地代理（Agent）通过 Gossip 收集成员信息时，消息在集群中扩散需要时间。例如，新节点加入或旧节点故障时，状态变更消息可能因网络延迟、传播路径等因素，无法立即同步到所有节点。</li>
+<li><strong>最终一致性</strong>：Gossip 仅保证 “最终一致性”，而非强一致性。在传播完成前，不同节点（包括本地代理）看到的成员列表可能是旧状态，导致本地 <code>members</code> 命令输出与集群真实状态存在短暂偏差。</li>
+</ul>
+<p><strong>2. Consul 服务器的强一致性保障</strong></p>
+<ul>
+<li><strong>Raft 协议主导</strong>：Consul 服务器（尤其是 Leader 节点）通过 Raft 共识算法维护强一致性。所有关键状态（如成员列表、服务注册数据）的写操作都由 Leader 处理，并通过 Raft 日志复制到其他服务器，确保服务器集群状态实时一致。</li>
+<li><strong>HTTP API 的权威获取</strong>：当通过 HTTP API 将请求转发给 Consul 服务器时，本质是直接查询由 Raft 保证强一致性的权威数据源。服务器会返回当前集群的最新、一致状态，跳过 Gossip 协议的异步传播延迟。</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>Gossip 协议的设计目标是去中心化、高容错的成员发现，牺牲了实时性；而 Consul 服务器借助 Raft 实现强一致性。因此，依赖 Gossip 的 <code>members</code> 命令可能因异步传播延迟看到旧状态，而 HTTP API 直接查询服务器（Raft 强一致存储）能获取最新一致结果。</p>
+</div></details>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">~ ······················································································································································································································································································· 00:46:14<br>❯ curl localhost:8500/v1/catalog/nodes<br>[<br>    &#123;<br>        &quot;ID&quot;: &quot;270aaffe-66cf-67ce-80a9-d3e1985cd60e&quot;,<br>        &quot;Node&quot;: &quot;GJVXWHGXQ1&quot;,<br>        &quot;Address&quot;: &quot;127.0.0.1&quot;,<br>        &quot;Datacenter&quot;: &quot;dc1&quot;,<br>        &quot;TaggedAddresses&quot;: &#123;<br>            &quot;lan&quot;: &quot;127.0.0.1&quot;,<br>            &quot;lan_ipv4&quot;: &quot;127.0.0.1&quot;,<br>            &quot;wan&quot;: &quot;127.0.0.1&quot;,<br>            &quot;wan_ipv4&quot;: &quot;127.0.0.1&quot;<br>        &#125;,<br>        &quot;Meta&quot;: &#123;<br>            &quot;consul-network-segment&quot;: &quot;&quot;,<br>            &quot;consul-version&quot;: &quot;1.20.5&quot;<br>        &#125;,<br>        &quot;CreateIndex&quot;: 13,<br>        &quot;ModifyIndex&quot;: 14<br>    &#125;<br>]%<br></code></pre></td></tr></table></figure>
+<p>除了HTTP API之外，还可以使用DNS接口查询节点。 请注意，必须确保将DNS查找默认情况下指向在端口8600上运行的Consul代理的DNS服务器。 DNS条目的格式（如“Armons-MacBook-Air.node.consul”）将在后面详细介绍。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">❯ dig @127.0.0.1 -p 8600 localhost.localdomain.node.consul<br><br>; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 localhost.localdomain.node.consul<br>; (1 server found)<br>;; global options: +cmd<br>;; Got answer:<br>;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NXDOMAIN, id: 29138<br>;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1<br>;; WARNING: recursion requested but not available<br><br>;; OPT PSEUDOSECTION:<br>; EDNS: version: 0, flags:; udp: 4096<br>;; QUESTION SECTION:<br>;localhost.localdomain.node.consul. IN	A<br><br>;; AUTHORITY SECTION:<br>consul.			0	IN	SOA	ns.consul. hostmaster.consul. 1742318020 3600 600 86400 0<br><br>;; Query time: 7 msec<br>;; SERVER: 127.0.0.1#8600(127.0.0.1)<br>;; WHEN: Wed Mar 19 01:13:40 CST 2025<br>;; MSG SIZE  rcvd: 112<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h2 id="七、停止-Agent">七、停止 Agent</h2>
+<p><strong>Consul Agent 的两种停止方式及影响</strong></p>
+<ol>
+<li><strong>优雅停止（使用 Ctrl-C）</strong>
+<ul>
+<li><strong>操作本质</strong>：通过发送中断信号（Ctrl-C）告知 Agent 停止运行。</li>
+<li><strong>集群交互</strong>：Agent 会主动通知集群内其他成员 “自己即将离开”。</li>
+<li>后续处理：
+<ul>
+<li>该节点的服务注册信息、健康检查记录会从 Consul 目录中<strong>直接删除</strong>，相当于向集群明确宣告 “该节点不再参与服务”。</li>
+<li>对集群其他成员的影响较小，属于 “友好退出”，其他节点能正常更新集群成员状态。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>强行终止（直接杀死进程）</strong>
+<ul>
+<li><strong>操作本质</strong>：未经通知直接结束 Agent 进程（如 <code>kill -9</code>）。</li>
+<li><strong>集群交互</strong>：集群其他成员无法收到节点离开的通知，只能通过心跳检测等机制发现该节点 “故障”。</li>
+<li>后续处理：
+<ul>
+<li>该节点的服务健康状态会被标记为 “关键（Critical）”，但服务注册信息<strong>不会从目录中删除</strong>。</li>
+<li>Consul 会持续尝试重新连接这个 “故障节点”，期待它从网络波动等临时问题中恢复。若节点实际已退出，这种重试会浪费资源，且集群无法及时感知真实状态。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<br>
+<p><strong>服务器角色的特殊注意事项</strong></p>
+<p>当 Agent 以服务器（Server）角色运行时，优雅停止尤为重要：</p>
+<ul>
+<li><strong>一致性协议影响</strong>：Consul 服务器通过 Raft 等协议维护集群数据一致性。若服务器被强行终止，可能导致 Raft 协议的日志同步、领导者选举等流程中断，引发集群可用性问题（如短暂无法处理写请求）。</li>
+<li><strong>安全操作要求</strong>：为避免破坏集群一致性，添加或删除服务器节点需遵循官方指南的规范流程（如先优雅退出，再执行删除操作），确保集群在节点变更过程中仍能稳定运行。</li>
+</ul>
+<hr>
+<p><br><br><br></p>
+<h2 id="八、注册服务">八、注册服务</h2>
+<h3 id="8-1-服务定义">8.1 服务定义</h3>
+<p>服务可以通过提供服务定义或通过对HTTP API进行适当的调用来注册。</p>
+<p>服务定义是注册服务最常用的方式，所以我们将在这一步中使用这种方法。 我们将建立在上一步中介绍的代理配置。</p>
+<p>首先，为Consul配置创建一个目录。 Consul将所有配置文件加载到配置目录中，因此Unix系统上的一个通用约定是将目录命名为/etc/consul.d（.d后缀意味着“该目录包含一组配置文件”）。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://gxblogs.com">ggw &amp; xpl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://gxblogs.com/posts/5142/">https://gxblogs.com/posts/5142/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gxblogs.com" target="_blank">GXBLOGS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/microservice/">microservice</a></div><div class="post_share"><div class="social-share" data-image="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-18_18-53-01.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/49468/"><img class="next-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-05_11-02-36.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">mysql使用笔记</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0"><span class="toc-text">一、什么是服务发现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81consul-%E7%AE%80%E4%BB%8B"><span class="toc-text">二、consul 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81consul%E7%9A%84%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="toc-text">三、consul的几个概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85-Consul"><span class="toc-text">四、安装 Consul</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BF%90%E8%A1%8C-Consul-Agent"><span class="toc-text">五、运行 Consul Agent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%9B%86%E7%BE%A4%E6%88%90%E5%91%98"><span class="toc-text">六、集群成员</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%81%9C%E6%AD%A2-Agent"><span class="toc-text">七、停止 Agent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1"><span class="toc-text">八、注册服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E6%9C%8D%E5%8A%A1%E5%AE%9A%E4%B9%89"><span class="toc-text">8.1 服务定义</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'QvVqZWBQWj9Aq2xrw4Z8z8Pz-gzGzoHsz',
+      appKey: 'COANudzj20V6IrCfAsD1Ufya',
+      avatar: 'robohash',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('/pluginsSrc/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="/js/ggwsettings.js"></script><script>(function(d, w, c) {
+    w.ChatraID = 'dKkRxvMac7f9AeKhu';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
