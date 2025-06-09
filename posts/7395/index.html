@@ -1,0 +1,859 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>golang日志库 —— zap | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="摘抄自：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;jiujuan&#x2F;p&#x2F;17304844.html  一、介绍 zap的特性  高性能：zap 对日志输出进行了多项优化以提高它的性能 日志分级：有 Debug，Info，Warn，Error，DPanic，Panic，Fatal 等 日志记录结构化：日志内容记录是结构化的，比如 json 格式输出 自定义格式：用户可以自定义输出的日志格式 自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang日志库 —— zap">
+<meta property="og:url" content="https://gxblogs.com/posts/7395/index.html">
+<meta property="og:site_name" content="GXBLOGS">
+<meta property="og:description" content="摘抄自：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;jiujuan&#x2F;p&#x2F;17304844.html  一、介绍 zap的特性  高性能：zap 对日志输出进行了多项优化以提高它的性能 日志分级：有 Debug，Info，Warn，Error，DPanic，Panic，Fatal 等 日志记录结构化：日志内容记录是结构化的，比如 json 格式输出 自定义格式：用户可以自定义输出的日志格式 自">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-06-08_19-23-54.png">
+<meta property="article:published_time" content="2025-06-09T17:21:45.922Z">
+<meta property="article:modified_time" content="2025-06-09T17:21:45.922Z">
+<meta property="article:author" content="ggw &amp; xpl">
+<meta property="article:tag" content="Golang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-06-08_19-23-54.png"><link rel="shortcut icon" href="/static/imgs/paipai.ico"><link rel="canonical" href="https://gxblogs.com/posts/7395/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: ggw & xpl","link":"链接: ","source":"来源: GXBLOGS","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'golang日志库 —— zap',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-06-10 01:21:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="/css/else/echarts.min.js"></script><script src="/css/else/wow.min.js"></script><script type="text/javascript" src="/css/else/echarts-gl.min.js"></script><script src="/css/else/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">77</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-06-08_19-23-54.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">golang日志库 —— zap</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-09T17:21:45.922Z" title="发表于 2025-06-10 01:21:45">2025-06-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-09T17:21:45.922Z" title="更新于 2025-06-10 01:21:45">2025-06-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">10.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>45分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/7395/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/7395/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>摘抄自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/jiujuan/p/17304844.html">https://www.cnblogs.com/jiujuan/p/17304844.html</a></p>
+</blockquote>
+<h2 id="一、介绍">一、介绍</h2>
+<p><strong>zap的特性</strong></p>
+<ul>
+<li>高性能：zap 对日志输出进行了多项优化以提高它的性能</li>
+<li>日志分级：有 Debug，Info，Warn，Error，DPanic，Panic，Fatal 等</li>
+<li>日志记录结构化：日志内容记录是结构化的，比如 json 格式输出</li>
+<li>自定义格式：用户可以自定义输出的日志格式</li>
+<li>自定义公共字段：用户可以自定义公共字段，大家输出的日志内容就共同拥有了这些字段</li>
+<li>调试：可以打印文件名、函数名、行号、日志时间等，便于调试程序</li>
+<li>自定义调用栈级别：可以根据日志级别输出它的调用栈信息</li>
+<li>Namespace：日志命名空间。定义命名空间后，所有日志内容就在这个命名空间下。命名空间相当于一个文件夹</li>
+<li>支持 hook 操作</li>
+</ul>
+<br>
+<p><strong>做了哪些优化</strong></p>
+<p>基于反射的序列化和字符串格式化，它们都是 CPU 密集型计算且分配很多小的内存。具体到 Go 语言中，使用 encoding/json 和 fmt.Fprintf 格式化 interface{} 会使程序性能降低。</p>
+<p>Zap 咋解决呢？Zap 使用一个无反射、零分配的 JSON 编码器，基础 Logger（完全无反射） 尽可能避免序列化开销和内存分配开销。在此基础上，zap 还构建了更高级的 SuggaredLogger（有反射）。</p>
+<br>
+<p><strong>安装</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">go get go.uber.org/zap<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h2 id="二、日志记录器logger使用">二、日志记录器logger使用</h2>
+<h3 id="2-1-两种日志记录器">2.1 两种日志记录器</h3>
+<p>zap 提供了 2 种日志记录器：<code>SugaredLogger</code> 和 <code>Logger</code>。</p>
+<p>在需要性能但不是很重要的情况下，使用 SugaredLogger 较合适。它比其它结构化日志包快 4-10 倍，包括 结构化日志和 printf 风格的 API。看下面使用 SugaredLogger 例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go">logger, _ := zap.NewProduction()<br><span class="hljs-keyword">defer</span> logger.Sync() <span class="hljs-comment">// zap底层有缓冲。在任何情况下执行 defer logger.Sync() 是一个很好的习惯</span><br>sugar := logger.Sugar()<br>sugar.Infow(<span class="hljs-string">&quot;failed to fetch URL&quot;</span>,<br>    <span class="hljs-comment">// 字段是松散类型，不是强类型</span><br>    <span class="hljs-string">&quot;url&quot;</span>, url,<br>    <span class="hljs-string">&quot;attempt&quot;</span>, <span class="hljs-number">3</span>,<br>    <span class="hljs-string">&quot;backoff&quot;</span>, time.Second,<br>)<br>sugar.Infof(<span class="hljs-string">&quot;Failed to fetch URL: %s&quot;</span>, url)<br></code></pre></td></tr></table></figure>
+<p>当性能和类型安全很重要时，请使用 Logger。它比 SugaredLogger 更快，分配的资源更少，但它只支持结构化日志和强类型字段。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">logger, _ := zap.NewProduction()<br><span class="hljs-keyword">defer</span> logger.Sync()<br>logger.Info(<span class="hljs-string">&quot;failed to fetch URL&quot;</span>,<br>    <span class="hljs-comment">// 字段是强类型，不是松散类型</span><br>    zap.String(<span class="hljs-string">&quot;url&quot;</span>, url),<br>    zap.Int(<span class="hljs-string">&quot;attempt&quot;</span>, <span class="hljs-number">3</span>),<br>    zap.Duration(<span class="hljs-string">&quot;backoff&quot;</span>, time.Second),<br>)<br></code></pre></td></tr></table></figure>
+<br>
+<p>sugared logger：</p>
+<ol>
+<li>它有很好的性能，比一般日志包快 4-10 倍。</li>
+<li>支持结构化的日志。</li>
+<li>支持 printf 风格的日志。</li>
+<li>日志字段不需要定义类型</li>
+</ol>
+<p>logger(没有sugar)</p>
+<ol>
+<li>
+<p><strong>它的性能比 sugared logger 还要快</strong>。</p>
+</li>
+<li>
+<p>它只支持强类型的结构化日志。</p>
+</li>
+<li>
+<p>它应用在对性能更加敏感日志记录中，它的内存分配次数更少。比如如果每一次内存分配都很重要的话可以使用这个。对类型安全有严格要求也可以使用这个。</p>
+</li>
+</ol>
+<br>
+<p>logger 和 sugaredlogger 相互转换：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 创建 logger</span><br>logger := zap.NewExample()<br><span class="hljs-keyword">defer</span> logger.Sync()<br><br><span class="hljs-comment">// 转换 SugaredLogger</span><br>sugar := logger.Sugar()<br><br><span class="hljs-comment">// 转换 logger</span><br>plain := sugar.Desugar()<br></code></pre></td></tr></table></figure>
+<br>
+<p>怎么选择：</p>
+<ul>
+<li>需要不错的性能但不是很重要的情况下，可以选择 sugaredlogger。它支持结构化日志和 printf 风格的日志记录。sugaredlogger 的日志记录是松散类型的，不是强类型，能接受可变数量的键值对。如果你要用强类型字段记录，可以使用 SugaredLogger.With 方法。</li>
+<li>如果是每次或每微秒记录日志都很重要情况下，可以使用 logger，它比 sugaredlogger 每次分配内存更少，性能更高。但它仅支持强类型的结构化日志记录。</li>
+</ul>
+<hr>
+<p><br><br><br></p>
+<h3 id="2-2-怎么打印结构体">2.2 怎么打印结构体</h3>
+<p>在 Zap 中打印结构体有多种方式，可根据性能需求和开发场景选择合适的方案。以下是详细的实现方法及示例：</p>
+<p><strong>一、使用 <code>zap.Reflect</code>（简单但有反射开销）</strong></p>
+<p><code>zap.Reflect</code> 会通过反射递归序列化结构体，包含所有可导出字段名和值，类似 <code>fmt.Printf(&quot;%+v&quot;, struct)</code> 的效果。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;log&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>    <span class="hljs-string">&quot;go.uber.org/zap/zapcore&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>    ID        <span class="hljs-type">string</span>    <span class="hljs-string">`json:&quot;user_id&quot;`</span><br>    Name      <span class="hljs-type">string</span>    <span class="hljs-string">`json:&quot;user_name&quot;`</span><br>    Age       <span class="hljs-type">int</span>       <span class="hljs-string">`json:&quot;age&quot;`</span><br>    CreatedAt time.Time <span class="hljs-string">`json:&quot;created_at&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger, err := zap.NewProduction()<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        log.Fatalf(<span class="hljs-string">&quot;failed to create logger: %v&quot;</span>, err)<br>    &#125;<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    user := User&#123;<br>        ID:        <span class="hljs-string">&quot;u123&quot;</span>,<br>        Name:      <span class="hljs-string">&quot;Bob&quot;</span>,<br>        Age:       <span class="hljs-number">25</span>,<br>        CreatedAt: time.Now(),<br>    &#125;<br><br>    <span class="hljs-comment">// 使用 zap.Reflect 打印结构体</span><br>    logger.Info(<span class="hljs-string">&quot;用户信息&quot;</span>, zap.Reflect(<span class="hljs-string">&quot;user&quot;</span>, user))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;level&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;info&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;msg&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;用户信息&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;user&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;user_id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;u123&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;user_name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Bob&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;age&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">25</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;created_at&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2025-06-08T12:00:00+08:00&quot;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li><strong>反射开销</strong>：每次调用 <code>zap.Reflect</code> 都会触发反射，频繁使用会影响性能（尤其在高并发场景）。</li>
+<li><strong>字段名</strong>：使用结构体字段的 <code>json</code> 标签（若无则用字段名）。</li>
+<li><strong>适用场景</strong>：开发调试、非性能敏感的日志记录。</li>
+</ul>
+<br>
+<p><strong>二、实现 <code>zapcore.ObjectMarshaler</code> 接口（高性能方案）</strong></p>
+<p>通过自定义结构体的序列化逻辑，避免反射开销，性能与直接调用 <code>zap.String</code> 等方法相当。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;log&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>    <span class="hljs-string">&quot;go.uber.org/zap/zapcore&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>    ID        <span class="hljs-type">string</span>    <span class="hljs-string">`json:&quot;user_id&quot;`</span><br>    Name      <span class="hljs-type">string</span>    <span class="hljs-string">`json:&quot;user_name&quot;`</span><br>    Age       <span class="hljs-type">int</span>       <span class="hljs-string">`json:&quot;age&quot;`</span><br>    CreatedAt time.Time <span class="hljs-string">`json:&quot;created_at&quot;`</span><br>&#125;<br><br><span class="hljs-comment">// 实现 zapcore.ObjectMarshaler 接口</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u User)</span></span> MarshalLogObject(enc zapcore.ObjectEncoder) <span class="hljs-type">error</span> &#123;<br>    enc.AddString(<span class="hljs-string">&quot;ID&quot;</span>, u.ID)<br>    enc.AddString(<span class="hljs-string">&quot;Name&quot;</span>, u.Name)<br>    enc.AddInt(<span class="hljs-string">&quot;Age&quot;</span>, u.Age)<br>    enc.AddString(<span class="hljs-string">&quot;CreatedAt&quot;</span>, u.CreatedAt.Format(<span class="hljs-string">&quot;2006-01-02 15:04:05&quot;</span>))<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger, err := zap.NewProduction()<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        log.Fatalf(<span class="hljs-string">&quot;failed to create logger: %v&quot;</span>, err)<br>    &#125;<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    user := User&#123;<br>        ID:        <span class="hljs-string">&quot;u123&quot;</span>,<br>        Name:      <span class="hljs-string">&quot;Bob&quot;</span>,<br>        Age:       <span class="hljs-number">25</span>,<br>        CreatedAt: time.Now(),<br>    &#125;<br><br>    <span class="hljs-comment">// 使用 zap.Object 打印结构体（自动调用 MarshalLogObject）</span><br>    logger.Info(<span class="hljs-string">&quot;用户信息&quot;</span>, zap.Object(<span class="hljs-string">&quot;user&quot;</span>, user))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>输出结果</strong>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;level&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;info&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;msg&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;用户信息&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;user&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;ID&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;u123&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;Name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Bob&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;Age&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">25</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;CreatedAt&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2025-06-08 12:00:00&quot;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p><strong>优点</strong>：</p>
+<ul>
+<li><strong>无反射开销</strong>：手动定义序列化逻辑，性能最优。</li>
+<li><strong>灵活控制</strong>：可自定义字段名、格式（如时间格式化）。</li>
+<li><strong>支持嵌套</strong>：结构体中的嵌套类型也可通过实现接口优化。</li>
+</ul>
+<p><strong>适用场景</strong>：生产环境、高性能要求的日志记录。</p>
+<br>
+<p><strong>三、使用 <code>zap.Any</code>（折中方案）</strong></p>
+<p><code>zap.Any</code> 会根据类型自动选择序列化方式：</p>
+<ul>
+<li>若类型实现了 <code>zapcore.ObjectMarshaler</code> 或 <code>json.Marshaler</code>，则使用接口序列化（无反射）。</li>
+<li>否则，退化为 <code>zap.Reflect</code>（反射序列化）。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">logger.Info(<span class="hljs-string">&quot;用户信息&quot;</span>, zap.Any(<span class="hljs-string">&quot;user&quot;</span>, user))<br></code></pre></td></tr></table></figure>
+<p><strong>使用场景</strong>：</p>
+<ul>
+<li>当结构体可能实现接口时，优先使用 <code>zap.Any</code>，避免重复代码。</li>
+<li>开发中不确定类型是否需要优化时，作为过渡方案。</li>
+</ul>
+<br>
+<p><strong>四、自定义编码器（高级场景）</strong></p>
+<p>若需完全控制序列化（如包含未导出字段、特殊格式），可自定义编码器：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;log&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>    <span class="hljs-string">&quot;go.uber.org/zap/zapcore&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>    id        <span class="hljs-type">string</span>    <span class="hljs-comment">// 未导出字段</span><br>    name      <span class="hljs-type">string</span>    <span class="hljs-comment">// 未导出字段</span><br>    age       <span class="hljs-type">int</span>       <span class="hljs-comment">// 未导出字段</span><br>    createdAt time.Time <span class="hljs-comment">// 未导出字段</span><br>&#125;<br><br><span class="hljs-comment">// 自定义编码器类型</span><br><span class="hljs-keyword">type</span> UserEncoder User<br><br><span class="hljs-comment">// 实现序列化逻辑（可访问未导出字段）</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u UserEncoder)</span></span> MarshalLogObject(enc zapcore.ObjectEncoder) <span class="hljs-type">error</span> &#123;<br>    enc.AddString(<span class="hljs-string">&quot;id&quot;</span>, u.id)<br>    enc.AddString(<span class="hljs-string">&quot;name&quot;</span>, u.name)<br>    enc.AddInt(<span class="hljs-string">&quot;age&quot;</span>, u.age)<br>    enc.AddString(<span class="hljs-string">&quot;created_at&quot;</span>, u.createdAt.Format(<span class="hljs-string">&quot;2006-01-02&quot;</span>))<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger, err := zap.NewProduction()<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        log.Fatalf(<span class="hljs-string">&quot;failed to create logger: %v&quot;</span>, err)<br>    &#125;<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    user := User&#123;<br>        id:        <span class="hljs-string">&quot;u123&quot;</span>,<br>        name:      <span class="hljs-string">&quot;Bob&quot;</span>,<br>        age:       <span class="hljs-number">25</span>,<br>        createdAt: time.Now(),<br>    &#125;<br><br>    <span class="hljs-comment">// 转换为自定义编码器类型后打印</span><br>    logger.Info(<span class="hljs-string">&quot;用户信息&quot;</span>, zap.Object(<span class="hljs-string">&quot;user&quot;</span>, UserEncoder(user)))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>输出结果</strong>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;level&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;info&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;msg&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;用户信息&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;user&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;u123&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Bob&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;age&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">25</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;created_at&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2025-06-08&quot;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<br>
+<p><strong>五、SugaredLogger 中的结构体打印</strong></p>
+<p>SugaredLogger（<code>logger.Sugar()</code>）不直接支持结构体格式化，但可通过 <code>With</code> 方法结合上述方案：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">sugar := logger.Sugar()<br>sugar.With(<span class="hljs-string">&quot;user&quot;</span>, zap.Reflect(<span class="hljs-string">&quot;user&quot;</span>, user)).Info(<span class="hljs-string">&quot;用户信息&quot;</span>)<br><span class="hljs-comment">// 或</span><br>sugar.With(<span class="hljs-string">&quot;user&quot;</span>, user).Info(<span class="hljs-string">&quot;用户信息&quot;</span>) <span class="hljs-comment">// 等价于 zap.Any</span><br></code></pre></td></tr></table></figure>
+<br>
+<p><strong>性能与场景总结</strong></p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>反射开销</th>
+<th>性能（高→低）</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zap.Object</code> + 接口</td>
+<td>无</td>
+<td>最高</td>
+<td>生产环境、高频日志记录</td>
+</tr>
+<tr>
+<td><code>zap.Any</code></td>
+<td>部分有</td>
+<td>中</td>
+<td>代码简洁性与性能的平衡</td>
+</tr>
+<tr>
+<td><code>zap.Reflect</code></td>
+<td>有</td>
+<td>最低</td>
+<td>开发调试、低频日志记录</td>
+</tr>
+</tbody>
+</table>
+<p><strong>建议</strong>：</p>
+<ul>
+<li>生产环境中，对高频日志的结构体实现 <code>zapcore.ObjectMarshaler</code> 接口。</li>
+<li>开发调试时，使用 <code>zap.Reflect</code> 快速验证日志格式。</li>
+<li>对偶尔记录的结构体，使用 <code>zap.Any</code> 简化代码。</li>
+</ul>
+<hr>
+<p><br><br><br></p>
+<h2 id="三、logger创建">三、logger创建</h2>
+<p>zap 为我们提供了三种快速创建 logger 的方法: <code>zap.NewProduction()</code>，<code>zap.NewDevelopment()</code>，<code>zap.NewExample()</code>。</p>
+<p>见名思义，Example 一般用在测试代码中，Development 用在开发环境中，Production 用在生成环境中。这三种方法都预先设置好了配置信息。</p>
+<h3 id="3-1-NewExample-使用">3.1 NewExample()使用</h3>
+<p>NewExample 构建一个 logger，专门为在 zap 的测试示例使用。它将 DebugLevel 及以上日志用 JSON 格式标准输出，但它省略了时间戳和调用函数，以保持示例输出的简短和确定性。</p>
+<p>为什么说 <code>zap.NewExample()</code> 是 zap 为我们提供快速创建 logger 的方法呢？</p>
+<p>因为在这个方法里，zap 已经定义好了日志配置项部分默认值。来看它的代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// https://github.com/uber-go/zap/blob/v1.24.0/logger.go#L127</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewExample</span><span class="hljs-params">(options ...Option)</span></span> *Logger &#123;<br>    encoderCfg := zapcore.EncoderConfig&#123;<br>        MessageKey:     <span class="hljs-string">&quot;msg&quot;</span>,  <span class="hljs-comment">// 日志内容key:val， 前面的key设为msg</span><br>        LevelKey:       <span class="hljs-string">&quot;level&quot;</span>, <span class="hljs-comment">// 日志级别的key设为level</span><br>        NameKey:        <span class="hljs-string">&quot;logger&quot;</span>, <span class="hljs-comment">// 日志名</span><br>        EncodeLevel:    zapcore.LowercaseLevelEncoder, <span class="hljs-comment">//日志级别，默认小写</span><br>        EncodeTime:     zapcore.ISO8601TimeEncoder, <span class="hljs-comment">// 日志时间</span><br>        EncodeDuration: zapcore.StringDurationEncoder,<br>    &#125;<br>    core := zapcore.NewCore(zapcore.NewJSONEncoder(encoderCfg), os.Stdout, DebugLevel)<br>    <span class="hljs-keyword">return</span> New(core).WithOptions(options...)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>使用例子：</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger := zap.NewExample()<br>    logger.Debug(<span class="hljs-string">&quot;this is debug message&quot;</span>)<br>    logger.Info(<span class="hljs-string">&quot;this is info message&quot;</span>)<br>    logger.Info(<span class="hljs-string">&quot;this is info message with fileds&quot;</span>,<br>        zap.Int(<span class="hljs-string">&quot;age&quot;</span>, <span class="hljs-number">37</span>), <br>        zap.String(<span class="hljs-string">&quot;agender&quot;</span>, <span class="hljs-string">&quot;man&quot;</span>),<br>    )<br>    logger.Warn(<span class="hljs-string">&quot;this is warn message&quot;</span>)<br>    logger.Error(<span class="hljs-string">&quot;this is error message&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;&quot;level&quot;:&quot;debug&quot;,&quot;msg&quot;:&quot;this is debug message&quot;&#125;<br>&#123;&quot;level&quot;:&quot;info&quot;,&quot;msg&quot;:&quot;this is info message&quot;&#125;<br>&#123;&quot;level&quot;:&quot;info&quot;,&quot;msg&quot;:&quot;this is info message with fileds&quot;,&quot;age&quot;:37,&quot;agender&quot;:&quot;man&quot;&#125;<br>&#123;&quot;level&quot;:&quot;warn&quot;,&quot;msg&quot;:&quot;this is warn message&quot;&#125;<br>&#123;&quot;level&quot;:&quot;error&quot;,&quot;msg&quot;:&quot;this is error message&quot;&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="3-2-NewDevelopment-使用">3.2 NewDevelopment()使用</h3>
+<p>NewDevelopment() 构建一个开发使用的 Logger，它以人性化的格式将 DebugLevel 及以上日志信息输出。它的底层使用</p>
+<p><code>NewDevelopmentConfig().Build(...Option)</code> 构建。它的日志格式各种设置在函数 <a target="_blank" rel="noopener" href="https://github.com/uber-go/zap/blob/v1.24.0/config.go#L137">NewDevelopmentEncoderConfig()</a> 里，想查看详情设置，请点进去查看。</p>
+<p><strong>使用例子：</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;time&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger, _ := zap.NewDevelopment()<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    logger.Info(<span class="hljs-string">&quot;failed to fetch url&quot;</span>,<br>        <span class="hljs-comment">// 强类型字段</span><br>        zap.String(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-string">&quot;http://example.com&quot;</span>),<br>        zap.Int(<span class="hljs-string">&quot;attempt&quot;</span>, <span class="hljs-number">3</span>),<br>        zap.Duration(<span class="hljs-string">&quot;duration&quot;</span>, time.Second),<br>    )<br><br>    logger.With(<br>        <span class="hljs-comment">// 强类型字段</span><br>        zap.String(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-string">&quot;http://development.com&quot;</span>),<br>        zap.Int(<span class="hljs-string">&quot;attempt&quot;</span>, <span class="hljs-number">4</span>),<br>        zap.Duration(<span class="hljs-string">&quot;duration&quot;</span>, time.Second*<span class="hljs-number">5</span>),<br>    ).Info(<span class="hljs-string">&quot;[With] failed to fetch url&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出（下面日志输出了文件名和行号，NewExample() 没有）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2023-03-22T16:02:45.760+0800    INFO    zapdemos/newdevelopment1.go:13  failed to fetch url     &#123;&quot;url&quot;: &quot;http://example.com&quot;, &quot;attempt&quot;: 3, &quot;duration&quot;: &quot;1s&quot;&#125;<br>2023-03-22T16:02:45.786+0800    INFO    zapdemos/newdevelopment1.go:25  [With] failed to fetch url      &#123;&quot;url&quot;: &quot;http://development.com&quot;, &quot;attempt&quot;: 4, &quot;duration&quot;: &quot;5s&quot;&#125;<br></code></pre></td></tr></table></figure>
+<p>Example 和 Production 是 json 格式输出，Development 是普通一行格式输出，如果后面带有字段输出话用json格式。</p>
+<hr>
+<p><br><br><br></p>
+<h3 id="3-3-NewProduction-使用">3.3 NewProduction()使用</h3>
+<p>NewProduction() 构建了一个合理的 Prouction 日志记录器，它将 info 及以上的日志内容以 JSON 格式记写入标准错误里。</p>
+<p>它的底层使用 <code>NewProductionConfig().Build(...Option)</code> 构建。它的日志格式设置在函数 <a target="_blank" rel="noopener" href="https://github.com/uber-go/zap/blob/v1.24.0/config.go#L124">NewProductionEncoderConfig</a> 里。</p>
+<p><strong>使用例子</strong>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;time&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger, _ := zap.NewProduction()<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    url := <span class="hljs-string">&quot;http://zap.uber.io&quot;</span><br>    sugar := logger.Sugar()<br>    sugar.Infow(<span class="hljs-string">&quot;failed to fetch URL&quot;</span>,<br>        <span class="hljs-string">&quot;url&quot;</span>, url,<br>        <span class="hljs-string">&quot;attempt&quot;</span>, <span class="hljs-number">3</span>,<br>        <span class="hljs-string">&quot;time&quot;</span>, time.Second,<br>    )<br><br>    sugar.Infof(<span class="hljs-string">&quot;Failed to fetch URL: %s&quot;</span>, url)<br><br>    <span class="hljs-comment">// 或更简洁 Sugar() 使用</span><br>    <span class="hljs-comment">// sugar := zap.NewProduction().Sugar()</span><br>    <span class="hljs-comment">// defer sugar.Sync()</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1679472893.2944522,&quot;caller&quot;:&quot;zapdemos/newproduction1.go:16&quot;,&quot;msg&quot;:&quot;failed to fetch URL&quot;,&quot;url&quot;:&quot;http://zap.uber.io&quot;,&quot;attempt&quot;:3,&quot;time&quot;:1&#125;<br>&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1679472893.294975,&quot;caller&quot;:&quot;zapdemos/newproduction1.go:22&quot;,&quot;msg&quot;:&quot;Failed to fetch URL: http://zap.uber.io&quot;&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>上面日志输出了文件名和行号，NewExample() 没有</p>
+</blockquote>
+<blockquote>
+<p>直接使用 NewProduction() 就好了，反正都是要打印到文件中的</p>
+</blockquote>
+<hr>
+<p><br><br><br></p>
+<h3 id="3-4-使用配置">3.4 使用配置</h3>
+<p>在这 3 个函数中，可以传入一些配置项。为什么能传入配置项？我们来看看 <a target="_blank" rel="noopener" href="https://github.com/uber-go/zap/blob/v1.24.0/logger.go#L127">NewExample()</a> 函数定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">func NewExample(options ...Option) *Logger<br></code></pre></td></tr></table></figure>
+<p>它的函数传参有一个 <code>...Option</code> 选项，是一个 interface 类型，它关联的是 Logger struct。只要返回 Option 就可以传进 NewExample() 里。在 <a target="_blank" rel="noopener" href="https://github.com/uber-go/zap/blob/v1.24.0/options.go">zap/options.go</a> 文件中可以看到很多返回 Option 的函数，也就是说这些函数都可以传入 NewExample 函数里。这里用到了 Go 里面的一个编码技巧，函数选项模式。</p>
+<br>
+<p><a target="_blank" rel="noopener" href="https://github.com/uber-go/zap/blob/v1.24.0/options.go#L62">zap.Fields()</a> 添加字段到 Logger 中：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger, _ := zap.NewProduction(zap.Fields(<br>        zap.String(<span class="hljs-string">&quot;log_name&quot;</span>, <span class="hljs-string">&quot;testlog&quot;</span>),<br>        zap.String(<span class="hljs-string">&quot;log_author&quot;</span>, <span class="hljs-string">&quot;prometheus&quot;</span>),<br>    ))<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    logger.Info(<span class="hljs-string">&quot;test fields output&quot;</span>)<br><br>    logger.Warn(<span class="hljs-string">&quot;warn info&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1679477929.842166,&quot;caller&quot;:&quot;zapdemos/fields.go:14&quot;,&quot;msg&quot;:&quot;test fields output&quot;,&quot;log_name&quot;:&quot;testlog&quot;,&quot;log_author&quot;:&quot;prometheus&quot;&#125;<br>&#123;&quot;level&quot;:&quot;warn&quot;,&quot;ts&quot;:1679477929.842166,&quot;caller&quot;:&quot;zapdemos/fields.go:16&quot;,&quot;msg&quot;:&quot;warn info&quot;,&quot;log_name&quot;:&quot;testlog&quot;,&quot;log_author&quot;:&quot;prometheus&quot;&#125;<br></code></pre></td></tr></table></figure>
+<br>
+<p><a target="_blank" rel="noopener" href="https://github.com/uber-go/zap/blob/v1.24.0/options.go#L55">zap.Hook()</a> 添加回调函数：</p>
+<p>Hook (钩子函数)回调函数为用户提供一种简单方法，在每次日志内容记录后运行这个回调函数，执行用户需要的操作。也就是说记录完日志后你还想做其它事情就可以调用这个函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>    <span class="hljs-string">&quot;go.uber.org/zap/zapcore&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger := zap.NewExample(zap.Hooks(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(entry zapcore.Entry)</span></span> <span class="hljs-type">error</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;[zap.Hooks]test Hooks&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>    &#125;))<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    logger.Info(<span class="hljs-string">&quot;test output&quot;</span>)<br><br>    logger.Warn(<span class="hljs-string">&quot;warn info&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;&quot;level&quot;:&quot;info&quot;,&quot;msg&quot;:&quot;test output&quot;&#125;<br>[zap.Hooks]test Hooks<br>&#123;&quot;level&quot;:&quot;warn&quot;,&quot;msg&quot;:&quot;warn info&quot;&#125;<br>[zap.Hooks]test Hooks<br></code></pre></td></tr></table></figure>
+<br>
+<p><a target="_blank" rel="noopener" href="https://github.com/uber-go/zap/blob/v1.24.0/field.go#L334">zap.Namespace()</a>:</p>
+<p>创建一个命名空间，后面的字段都在这名字空间中。Namespace 就像一个文件夹，后面文件都放在这个文件夹里。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger := zap.NewExample()<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    logger.Info(<span class="hljs-string">&quot;some message&quot;</span>,<br>        zap.Namespace(<span class="hljs-string">&quot;shop&quot;</span>),<br>        zap.String(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;LiLei&quot;</span>),<br>        zap.String(<span class="hljs-string">&quot;grade&quot;</span>, <span class="hljs-string">&quot;No2&quot;</span>),<br>    )<br><br>    logger.Error(<span class="hljs-string">&quot;some error message&quot;</span>,<br>        zap.Namespace(<span class="hljs-string">&quot;shop&quot;</span>),<br>        zap.String(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;LiLei&quot;</span>),<br>        zap.String(<span class="hljs-string">&quot;grade&quot;</span>, <span class="hljs-string">&quot;No3&quot;</span>),<br>    )<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">&#123;<span class="hljs-string">&quot;level&quot;</span>:<span class="hljs-string">&quot;info&quot;</span>,<span class="hljs-string">&quot;msg&quot;</span>:<span class="hljs-string">&quot;some message&quot;</span>,<span class="hljs-string">&quot;shop&quot;</span>:&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;LiLei&quot;</span>,<span class="hljs-string">&quot;grade&quot;</span>:<span class="hljs-string">&quot;No2&quot;</span>&#125;&#125;<br>&#123;<span class="hljs-string">&quot;level&quot;</span>:<span class="hljs-string">&quot;error&quot;</span>,<span class="hljs-string">&quot;msg&quot;</span>:<span class="hljs-string">&quot;some error message&quot;</span>,<span class="hljs-string">&quot;shop&quot;</span>:&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;LiLei&quot;</span>,<span class="hljs-string">&quot;grade&quot;</span>:<span class="hljs-string">&quot;No3&quot;</span>&#125;&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h2 id="四、自定义配置">四、自定义配置</h2>
+<p>快速构建 logger 日志记录器最简单的方法就是用 zap 预定义了配置的方法：<code>NewExample(), NewProduction()</code> 和<code>NewDevelopment()</code>，这 3 个方法通过单个函数调用就可以构建一个日志计记录器，也可以简单配置。</p>
+<p>但是有的项目需要更多的定制，怎么办？zap 的 <a target="_blank" rel="noopener" href="https://pkg.go.dev/go.uber.org/zap#Config">Config</a> 结构和 zapcore 的 <a target="_blank" rel="noopener" href="https://pkg.go.dev/go.uber.org/zap/zapcore@v1.24.0#EncoderConfig">EncoderConfig</a> 结构可以帮助你，让你能够进行自定义配置。</p>
+<h3 id="4-1-配置结构说明">4.1 配置结构说明</h3>
+<p>Config 配置项源码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs Go"><span class="hljs-comment">// zap v1.24.0</span><br><span class="hljs-keyword">type</span> Config <span class="hljs-keyword">struct</span> &#123;<br>    <span class="hljs-comment">// 动态改变日志级别，在运行时你可以安全改变日志级别</span><br>    Level AtomicLevel <span class="hljs-string">`json:&quot;level&quot; yaml:&quot;level&quot;`</span><br>    <span class="hljs-comment">// 将日志记录器设置为开发模式，在 WarnLevel 及以上级别日志会包含堆栈跟踪信息</span><br>    Development <span class="hljs-type">bool</span> <span class="hljs-string">`json:&quot;development&quot; yaml:&quot;development&quot;`</span><br>    <span class="hljs-comment">// 在日志中停止调用函数所在文件名、行数</span><br>    DisableCaller <span class="hljs-type">bool</span> <span class="hljs-string">`json:&quot;disableCaller&quot; yaml:&quot;disableCaller&quot;`</span><br>    <span class="hljs-comment">// 完全禁止自动堆栈跟踪。默认情况下，在 development 中，warnlevel及以上日志级别会自动捕获堆栈跟踪信息</span><br>    <span class="hljs-comment">// 在 production 中，ErrorLevel 及以上也会自动捕获堆栈信息</span><br>    DisableStacktrace <span class="hljs-type">bool</span> <span class="hljs-string">`json:&quot;disableStacktrace&quot; yaml:&quot;disableStacktrace&quot;`</span><br>    <span class="hljs-comment">// 设置采样策略。没有 SamplingConfing 将禁止采样</span><br>    Sampling *SamplingConfig <span class="hljs-string">`json:&quot;sampling&quot; yaml:&quot;sampling&quot;`</span><br>    <span class="hljs-comment">// 设置日志编码。可以设置为 console 和 json。也可以通过 RegisterEncoder 设置第三方编码格式</span><br>    Encoding <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;encoding&quot; yaml:&quot;encoding&quot;`</span><br>    <span class="hljs-comment">// 为encoder编码器设置选项。详细设置信息在 zapcore.zapcore.EncoderConfig</span><br>    EncoderConfig zapcore.EncoderConfig <span class="hljs-string">`json:&quot;encoderConfig&quot; yaml:&quot;encoderConfig&quot;`</span><br>    <span class="hljs-comment">// 日志输出地址可以是一个 URLs 地址或文件路径，可以设置多个</span><br>    OutputPaths []<span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;outputPaths&quot; yaml:&quot;outputPaths&quot;`</span><br>    <span class="hljs-comment">// 错误日志输出地址。默认输出标准错误信息</span><br>    ErrorOutputPaths []<span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;errorOutputPaths&quot; yaml:&quot;errorOutputPaths&quot;`</span><br>    <span class="hljs-comment">// 可以添加自定义的字段信息到 root logger 中。也就是每条日志都会携带这些字段信息，公共字段</span><br>    InitialFields <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125; <span class="hljs-string">`json:&quot;initialFields&quot; yaml:&quot;initialFields&quot;`</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>EncoderConfig 结构源码，它里面也有很多配置选项，具体请看 <a target="_blank" rel="noopener" href="https://pkg.go.dev/go.uber.org/zap/zapcore@v1.24.0#EncoderConfig">这里</a>:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// zapcore@v1.24.0</span><br><span class="hljs-keyword">type</span> EncoderConfig <span class="hljs-keyword">struct</span> &#123;<br>    <span class="hljs-comment">// 为log entry设置key。如果 key 为空，那么在日志中的这部分信息也会省略</span><br>    MessageKey     <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;messageKey&quot; yaml:&quot;messageKey&quot;`</span><span class="hljs-comment">//日志信息的健名，默认为msg</span><br>    LevelKey       <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;levelKey&quot; yaml:&quot;levelKey&quot;`</span><span class="hljs-comment">//日志级别的健名，默认为level</span><br>    TimeKey        <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;timeKey&quot; yaml:&quot;timeKey&quot;`</span><span class="hljs-comment">//记录日志时间的健名，默认为time</span><br>    NameKey        <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;nameKey&quot; yaml:&quot;nameKey&quot;`</span><br>    CallerKey      <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;callerKey&quot; yaml:&quot;callerKey&quot;`</span><br>    FunctionKey    <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;functionKey&quot; yaml:&quot;functionKey&quot;`</span><br>    StacktraceKey  <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;stacktraceKey&quot; yaml:&quot;stacktraceKey&quot;`</span><br>    SkipLineEnding <span class="hljs-type">bool</span>   <span class="hljs-string">`json:&quot;skipLineEnding&quot; yaml:&quot;skipLineEnding&quot;`</span><br>    LineEnding     <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;lineEnding&quot; yaml:&quot;lineEnding&quot;`</span><br>    <span class="hljs-comment">// 日志编码的一些设置项</span><br>    EncodeLevel    LevelEncoder    <span class="hljs-string">`json:&quot;levelEncoder&quot; yaml:&quot;levelEncoder&quot;`</span><br>    EncodeTime     TimeEncoder     <span class="hljs-string">`json:&quot;timeEncoder&quot; yaml:&quot;timeEncoder&quot;`</span><br>    EncodeDuration DurationEncoder <span class="hljs-string">`json:&quot;durationEncoder&quot; yaml:&quot;durationEncoder&quot;`</span><br>    EncodeCaller   CallerEncoder   <span class="hljs-string">`json:&quot;callerEncoder&quot; yaml:&quot;callerEncoder&quot;`</span><br>    <span class="hljs-comment">// 与其它编码器不同， 这个编码器可选</span><br>    EncodeName NameEncoder <span class="hljs-string">`json:&quot;nameEncoder&quot; yaml:&quot;nameEncoder&quot;`</span><br>    <span class="hljs-comment">// 配置 interface&#123;&#125; 类型编码器。如果没设置，将用 json.Encoder 进行编码</span><br>    NewReflectedEncoder <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(io.Writer)</span></span> ReflectedEncoder <span class="hljs-string">`json:&quot;-&quot; yaml:&quot;-&quot;`</span><br>    <span class="hljs-comment">// 配置 console 中字段分隔符。默认使用 tab </span><br>    ConsoleSeparator <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;consoleSeparator&quot; yaml:&quot;consoleSeparator&quot;`</span><br>&#125;<br><br><span class="hljs-keyword">type</span> Entry <span class="hljs-keyword">struct</span> &#123;<br>    Level      Level<br>    Time       time.Time<br>    LoggerName <span class="hljs-type">string</span><br>    Message    <span class="hljs-type">string</span><br>    Caller     EntryCaller<br>    Stack      <span class="hljs-type">string</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="4-2-例子1：基本配置">4.2 例子1：基本配置</h3>
+<p>zap.Config 自定义配置，看官方的一个基本例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-comment">// https://pkg.go.dev/go.uber.org/zap@v1.24.0#hdr-Configuring_Zap</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 表示 zap.Config 的 json 原始编码</span><br>    <span class="hljs-comment">// outputPath: 设置日志输出路径，日志内容输出到标准输出和文件 logs.log</span><br>    <span class="hljs-comment">// errorOutputPaths：设置错误日志输出路径</span><br>    rawJSON := []<span class="hljs-type">byte</span>(<span class="hljs-string">`&#123;</span><br><span class="hljs-string">        &quot;level&quot;: &quot;debug&quot;,</span><br><span class="hljs-string">        &quot;encoding&quot;: &quot;json&quot;,</span><br><span class="hljs-string">        &quot;outputPaths&quot;: [&quot;stdout&quot;, &quot;./logs.log&quot;],</span><br><span class="hljs-string">        &quot;errorOutputPaths&quot;: [&quot;stderr&quot;],</span><br><span class="hljs-string">        &quot;initialFields&quot;: &#123;&quot;foo&quot;: &quot;bar&quot;&#125;,</span><br><span class="hljs-string">        &quot;encoderConfig&quot;: &#123;</span><br><span class="hljs-string">            &quot;messageKey&quot;: &quot;message-customer&quot;,</span><br><span class="hljs-string">            &quot;levelKey&quot;: &quot;level&quot;,</span><br><span class="hljs-string">            &quot;levelEncoder&quot;: &quot;lowercase&quot;</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;`</span>)<br><br>    <span class="hljs-comment">// 把 json 格式数据解析到 zap.Config struct</span><br>    <span class="hljs-keyword">var</span> cfg zap.Config<br>    <span class="hljs-keyword">if</span> err := json.Unmarshal(rawJSON, &amp;cfg); err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    <span class="hljs-comment">// cfg.Build() 为配置对象创建一个 Logger</span><br>    <span class="hljs-comment">// zap.Must() 封装了 Logger，Must()函数如果返回值不是 nil，就会报 panic。也就是检查Build是否错误</span><br>    logger := zap.Must(cfg.Build())<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    logger.Info(<span class="hljs-string">&quot;logger construction succeeded&quot;</span>)<br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">Must() 函数</span><br><span class="hljs-comment">//  var logger = zap.Must(zap.NewProduction())</span><br><span class="hljs-comment">func Must(logger *Logger, err error) *Logger &#123;</span><br><span class="hljs-comment">    if err != nil &#123;</span><br><span class="hljs-comment">        panic(err)</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    return logger</span><br><span class="hljs-comment">&#125;</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<p>consol 输出如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;&quot;level&quot;:&quot;info&quot;,&quot;message-customer&quot;:&quot;logger construction succeeded&quot;,&quot;foo&quot;:&quot;bar&quot;&#125;<br></code></pre></td></tr></table></figure>
+<p>并且在程序目录下生成了一个文件 logs.log，里面记录的日志内容也是上面consol输出内容。每运行一次就在日志文件末尾append一次内容。</p>
+<hr>
+<p><br><br><br></p>
+<h3 id="4-3-例子2：高级配置">4.3 例子2：高级配置</h3>
+<p>上面的配置只是基本的自定义配置，如果有一些复杂的需求，比如在多个文件之间分割日志。</p>
+<p>或者输出到不是 file 的文件中，比如输出到 kafka 中，那么就需要使用 zapcore 包。</p>
+<p>在下面的例子中，我们将把日志输出到 kafka 中，并且也输出到 console 里。并且我们对 kafka 不同主题进行编码设置，对输出到 console 编码进行设置，也希望处理高优先级的日志。</p>
+<p>官方例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;io&quot;</span><br>    <span class="hljs-string">&quot;os&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>    <span class="hljs-string">&quot;go.uber.org/zap/zapcore&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 首先，定义不同级别日志处理逻辑</span><br>    highPriority := zap.LevelEnablerFunc(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(lvl zapcore.Level)</span></span> <span class="hljs-type">bool</span> &#123;<br>        <span class="hljs-keyword">return</span> lvl &gt;= zapcore.ErrorLevel<br>    &#125;)<br>    lowPriority := zap.LevelEnablerFunc(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(lvl zapcore.Level)</span></span> <span class="hljs-type">bool</span> &#123;<br>        <span class="hljs-keyword">return</span> lvl &lt; zapcore.ErrorLevel<br>    &#125;)<br><br>    <span class="hljs-comment">// 假设有2个kafka 的 topic，一个 debugging，一个 errors</span><br><br>    <span class="hljs-comment">// zapcore.AddSync 添加一个文件句柄。</span><br>    topicDebugging := zapcore.AddSync(io.Discard)<br>    topicErrors := zapcore.AddSync(io.Discard)<br><br>    <span class="hljs-comment">// 如果他们对并发使用不安全，我们可以用 zapcore.Lock 添加一个 mutex 互斥锁。</span><br>    consoleDebugging := zapcore.Lock(os.Stdout)<br>    consoleErrors := zapcore.Lock(os.Stderr)<br><br>    <span class="hljs-comment">// 设置 kafka 和 console 输出配置</span><br>    kafkaEncoder := zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())<br>    consoleEncoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())<br><br>    <span class="hljs-comment">// 把上面的设置加入到 zapcore.NewCore() 函数里，然后再把他们加入到 zapcore.NewTee() 函数里</span><br>    core := zapcore.NewTee(<br>        zapcore.NewCore(kafkaEncoder, topicErrors, highPriority),<br>        zapcore.NewCore(consoleEncoder, consoleErrors, highPriority),<br>        zapcore.NewCore(kafkaEncoder, topicDebugging, lowPriority),<br>        zapcore.NewCore(consoleEncoder, consoleDebugging, lowPriority),<br>    )<br><br>    <span class="hljs-comment">// 最后调用 zap.New() 函数</span><br>    logger := zap.New(core)<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br>    logger.Info(<span class="hljs-string">&quot;constructed a logger&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">AI解析 </summary><div class="toggle-content"><p>这段代码主要实现了一个使用 Uber 的 zap 日志库的多目的地、多级别日志系统。它将不同级别的日志同时输出到控制台和 Kafka 主题，确保错误日志得到更妥善的处理。</p>
+<br>
+<p><strong>核心功能和实现步骤</strong></p>
+<ol>
+<li>
+<p><strong>日志级别分离</strong>：</p>
+<ul>
+<li>定义了两个优先级过滤器：
+<ul>
+<li><code>highPriority</code>：处理 Error 及以上级别的日志</li>
+<li><code>lowPriority</code>：处理低于 Error 级别的日志（Info、Debug 等）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>输出目的地配置</strong>：</p>
+<ul>
+<li>
+<p>Kafka 主题</p>
+<p>：配置了两个 Kafka 主题（示例中使用</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">io.Discard<br></code></pre></td></tr></table></figure>
+<p>作为占位符）：</p>
+<ul>
+<li><code>topicDebugging</code>：用于低优先级日志</li>
+<li><code>topicErrors</code>：用于高优先级日志</li>
+</ul>
+</li>
+<li>
+<p>控制台输出</p>
+<p>：</p>
+<ul>
+<li><code>consoleDebugging</code>：标准输出（stdout）</li>
+<li><code>consoleErrors</code>：标准错误输出（stderr）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>编码器设置</strong>：</p>
+<ul>
+<li><strong>JSON 编码器</strong>：用于 Kafka 输出，便于机器解析</li>
+<li><strong>控制台编码器</strong>：用于终端输出，采用人类可读的格式</li>
+</ul>
+</li>
+<li>
+<p><strong>核心配置组合</strong>：</p>
+<ul>
+<li>
+<p>使用</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">zapcore.NewTee<br></code></pre></td></tr></table></figure>
+<p>组合多个日志核心，实现：</p>
+<ul>
+<li>错误级别的日志同时输出到 Kafka 的 errors 主题和控制台错误输出</li>
+<li>非错误级别的日志同时输出到 Kafka 的 debugging 主题和控制台标准输出</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>日志使用</strong>：</p>
+<ul>
+<li>创建完成的日志实例支持所有标准 zap 方法（如 Info、Error 等）</li>
+<li>使用<code>defer logger.Sync()</code>确保程序退出前所有日志都被刷新</li>
+</ul>
+</li>
+</ol>
+<br>
+<p><strong>代码关键点解析</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 优先级过滤器：决定哪些级别日志被处理</span><br>highPriority := zap.LevelEnablerFunc(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(lvl zapcore.Level)</span></span> <span class="hljs-type">bool</span> &#123;<br>    <span class="hljs-keyword">return</span> lvl &gt;= zapcore.ErrorLevel<br>&#125;)<br><br><span class="hljs-comment">// 实际使用时需要替换为真实的Kafka写入器</span><br>topicDebugging := zapcore.AddSync(io.Discard)<br>topicErrors := zapcore.AddSync(io.Discard)<br><br><span class="hljs-comment">// 构建多输出的核心</span><br>core := zapcore.NewTee(<br>    zapcore.NewCore(kafkaEncoder, topicErrors, highPriority),<br>    zapcore.NewCore(consoleEncoder, consoleErrors, highPriority),<br>    zapcore.NewCore(kafkaEncoder, topicDebugging, lowPriority),<br>    zapcore.NewCore(consoleEncoder, consoleDebugging, lowPriority),<br>)<br></code></pre></td></tr></table></figure>
+<br>
+<p><strong>实际应用注意事项</strong></p>
+<ol>
+<li>代码中使用<code>io.Discard</code>作为 Kafka 输出的占位符，实际使用时需要替换为真正的 Kafka 写入器</li>
+<li>对于高并发场景，<code>zapcore.Lock</code>确保了控制台输出的线程安全</li>
+<li>不同环境（开发 / 生产）可以通过调整编码器配置优化输出格式</li>
+<li><code>defer logger.Sync()</code>是关键的，确保程序退出前所有缓冲的日志都被写入</li>
+</ol>
+<p>这种多目的地、多级别日志系统特别适合需要同时进行实时监控和事后分析的生产环境。</p>
+</div></details>
+<hr>
+<p><br><br><br></p>
+<h3 id="4-4-例子3：日志写入文件">4.4 例子3：日志写入文件</h3>
+<p>与上面例子2相似，但是比它简单</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;os&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>    <span class="hljs-string">&quot;go.uber.org/zap/zapcore&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    writetofile()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">writetofile</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 设置一些配置参数</span><br>    config := zap.NewProductionEncoderConfig()<br>    config.EncodeTime = zapcore.ISO8601TimeEncoder<br>    fileEncoder := zapcore.NewJSONEncoder(config)<br>    defaultLogLevel := zapcore.DebugLevel <span class="hljs-comment">// 设置 loglevel</span><br><br>    logFile, _ := os.OpenFile(<span class="hljs-string">&quot;./log-test-zap.json&quot;</span>, os.O_WRONLY|os.O_CREATE|os.O_APPEND, <span class="hljs-number">06666</span>)<br>    <span class="hljs-comment">// or os.Create()</span><br>    writer := zapcore.AddSync(logFile)<br><br>    logger := zap.New(<br>        zapcore.NewCore(fileEncoder, writer, defaultLogLevel),<br>        zap.AddCaller(),<br>        zap.AddStacktrace(zapcore.ErrorLevel),<br>    )<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    url := <span class="hljs-string">&quot;http://www.test.com&quot;</span><br>    logger.Info(<span class="hljs-string">&quot;write log to file&quot;</span>,<br>        zap.String(<span class="hljs-string">&quot;url&quot;</span>, url),<br>        zap.Int(<span class="hljs-string">&quot;attemp&quot;</span>, <span class="hljs-number">3</span>),<br>    )<br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="4-5-例子4：根据日志级别写入不同文件">4.5 例子4：根据日志级别写入不同文件</h3>
+<p>这个与上面例子2相似</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;os&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>    <span class="hljs-string">&quot;go.uber.org/zap/zapcore&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    writeToFileWithLogLevel()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">writeToFileWithLogLevel</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 设置配置</span><br>    config := zap.NewProductionEncoderConfig()<br>    config.EncodeTime = zapcore.ISO8601TimeEncoder<br>    fileEncoder := zapcore.NewJSONEncoder(config)<br><br>    logFile, _ := os.OpenFile(<span class="hljs-string">&quot;./log-debug-zap.json&quot;</span>, os.O_WRONLY|os.O_CREATE|os.O_APPEND, <span class="hljs-number">0666</span>) <span class="hljs-comment">//日志记录debug信息</span><br><br>    errFile, _ := os.OpenFile(<span class="hljs-string">&quot;./log-err-zap.json&quot;</span>, os.O_WRONLY|os.O_CREATE|os.O_APPEND, <span class="hljs-number">0666</span>) <span class="hljs-comment">//日志记录error信息</span><br><br>    teecore := zapcore.NewTee(<br>        zapcore.NewCore(fileEncoder, zapcore.AddSync(logFile), zap.DebugLevel),<br>        zapcore.NewCore(fileEncoder, zapcore.AddSync(errFile), zap.ErrorLevel),<br>    )<br><br>    logger := zap.New(teecore, zap.AddCaller())<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    url := <span class="hljs-string">&quot;http://www.diff-log-level.com&quot;</span><br>    logger.Info(<span class="hljs-string">&quot;write log to file&quot;</span>,<br>        zap.String(<span class="hljs-string">&quot;url&quot;</span>, url),<br>        zap.Int(<span class="hljs-string">&quot;time&quot;</span>, <span class="hljs-number">3</span>),<br>    )<br><br>    logger.With(<br>        zap.String(<span class="hljs-string">&quot;url&quot;</span>, url),<br>        zap.String(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;jimmmyr&quot;</span>),<br>    ).Error(<span class="hljs-string">&quot;test error &quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>主要是设置日志级别，和把 2 个设置的 NewCore 放入到方法 NewTee 中。</p>
+<hr>
+<p><br><br><br></p>
+<h3 id="4-6-日志切割文档">4.6 日志切割文档</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/natefinch/lumberjack">lumberjack</a> 这个库是按照日志大小切割日志文件。</p>
+<p>安装 v2 版本：（推荐）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">go get github.com/natefinch/lumberjack@v2<br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go">log.SetOutput(&amp;lumberjack.Logger&#123;<br>    Filename:   <span class="hljs-string">&quot;/var/log/myapp/foo.log&quot;</span>, <span class="hljs-comment">// 文件位置</span><br>    MaxSize:    <span class="hljs-number">500</span>,  <span class="hljs-comment">// megabytes，M 为单位，达到这个设置数后就进行日志切割</span><br>    MaxBackups: <span class="hljs-number">3</span>,    <span class="hljs-comment">// 保留旧文件最大份数</span><br>    MaxAge:     <span class="hljs-number">28</span>,   <span class="hljs-comment">//days ， 旧文件最大保存天数</span><br>    Compress:   <span class="hljs-literal">true</span>, <span class="hljs-comment">// disabled by default，是否压缩日志归档，默认不压缩</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+<p>参照它的文档和结合上面自定义配置的例子，写一个例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>    <span class="hljs-string">&quot;go.uber.org/zap/zapcore&quot;</span><br>    <span class="hljs-string">&quot;gopkg.in/natefinch/lumberjack.v2&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    lumberjacklogger := &amp;lumberjack.Logger&#123;<br>        Filename:   <span class="hljs-string">&quot;./log-rotate-test.json&quot;</span>,<br>        MaxSize:    <span class="hljs-number">1</span>, <span class="hljs-comment">// megabytes</span><br>        MaxBackups: <span class="hljs-number">3</span>,<br>        MaxAge:     <span class="hljs-number">28</span>,   <span class="hljs-comment">//days</span><br>        Compress:   <span class="hljs-literal">true</span>, <span class="hljs-comment">// disabled by default</span><br>    &#125;<br>    <span class="hljs-keyword">defer</span> lumberjacklogger.Close()<br><br>    config := zap.NewProductionEncoderConfig()<br><br>    config.EncodeTime = zapcore.ISO8601TimeEncoder <span class="hljs-comment">// 设置时间格式</span><br>    fileEncoder := zapcore.NewJSONEncoder(config)<br><br>    core := zapcore.NewCore(<br>        fileEncoder,                       <span class="hljs-comment">//编码设置</span><br>        zapcore.AddSync(lumberjacklogger), <span class="hljs-comment">//输出到文件</span><br>        zap.InfoLevel,                     <span class="hljs-comment">//日志等级</span><br>    )<br><br>    logger := zap.New(core)<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    <span class="hljs-comment">// 测试分割日志</span><br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8000</span>; i++ &#123;<br>        logger.With(<br>            zap.String(<span class="hljs-string">&quot;url&quot;</span>, fmt.Sprintf(<span class="hljs-string">&quot;www.test%d.com&quot;</span>, i)),<br>            zap.String(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;jimmmyr&quot;</span>),<br>            zap.Int(<span class="hljs-string">&quot;age&quot;</span>, <span class="hljs-number">23</span>),<br>            zap.String(<span class="hljs-string">&quot;agradege&quot;</span>, <span class="hljs-string">&quot;no111-000222&quot;</span>),<br>        ).Info(<span class="hljs-string">&quot;test info &quot;</span>)<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h2 id="五、日志级别和实践">五、日志级别和实践</h2>
+<h3 id="5-1-日志级别">5.1 日志级别</h3>
+<p>Zap 定义了 7 个日志级别，按严重程度从低到高排列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">DebugLevel → InfoLevel → WarnLevel → ErrorLevel → DPanicLevel → PanicLevel → FatalLevel<br></code></pre></td></tr></table></figure>
+<p>各级别适用场景：</p>
+<ul>
+<li><strong>Debug</strong>：开发调试细节，生产环境通常禁用</li>
+<li><strong>Info</strong>：常规运行状态信息（如启动、配置加载）</li>
+<li><strong>Warn</strong>：潜在问题（如配置过时、资源接近耗尽）</li>
+<li><strong>Error</strong>：可恢复错误（如网络临时中断）</li>
+<li><strong>DPanic</strong>：开发环境会触发 panic，生产环境仅记录</li>
+<li><strong>Panic</strong>：记录后触发 panic（调用<code>panic()</code>）</li>
+<li><strong>Fatal</strong>：记录后终止程序（调用<code>os.Exit(1)</code>）</li>
+</ul>
+<hr>
+<p><br><br><br></p>
+<h3 id="5-2-核心打印逻辑规则">5.2 核心打印逻辑规则</h3>
+<ol>
+<li>
+<p><strong>级别启用规则</strong><br>
+启用某个级别的日志时，<strong>高于它的所有级别日志也会被包含</strong>。<br>
+例如：</p>
+<ul>
+<li>设置为<code>InfoLevel</code> → 实际输出<code>Info/Warn/Error/DPanic/Panic/Fatal</code></li>
+<li>设置为<code>ErrorLevel</code> → 实际输出<code>Error/DPanic/Panic/Fatal</code></li>
+</ul>
+</li>
+<li>
+<p><strong>过滤器优先级</strong><br>
+当多个<code>LevelEnabler</code>存在时，日志会被每个匹配的输出目标接收。例如：</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">core := zapcore.NewTee(<br>    zapcore.NewCore(fileEncoder, errorFile, ErrorLevel), <span class="hljs-comment">// 接收Error及以上</span><br>    zapcore.NewCore(fileEncoder, allFile, InfoLevel),     <span class="hljs-comment">// 接收Info及以上</span><br>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>Error</code>日志会同时写入<code>errorFile</code>和<code>allFile</code></li>
+<li><code>Info</code>日志只会写入<code>allFile</code></li>
+</ul>
+</li>
+<li>
+<p><strong>输出目标隔离</strong><br>
+通过<code>zapcore.NewTee</code>可以将不同级别的日志定向到不同目的地：</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// Error及以上级别 → 错误文件 + 告警系统</span><br><span class="hljs-comment">// Info/Warn → 普通日志文件</span><br>core := zapcore.NewTee(<br>    zapcore.NewCore(kafkaEncoder, alertTopic, ErrorLevel),<br>    zapcore.NewCore(fileEncoder, errorFile, ErrorLevel),<br>    zapcore.NewCore(fileEncoder, infoFile, InfoLevel),<br>)<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<p><br><br><br></p>
+<h3 id="5-3-常见配置模式">5.3 常见配置模式</h3>
+<h4 id="5-3-1-按级别拆分文件">5.3.1 <strong>按级别拆分文件</strong></h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">core := zapcore.NewTee(<br>    zapcore.NewCore(fileEncoder, debugFile, DebugLevel),<br>    zapcore.NewCore(fileEncoder, infoFile, InfoLevel),<br>    zapcore.NewCore(fileEncoder, errorFile, ErrorLevel),<br>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>debug.log</code>：仅包含 Debug 日志</li>
+<li><code>info.log</code>：包含 Info/Warn/Error/…</li>
+<li><code>error.log</code>：包含 Error/DPanic/…</li>
+</ul>
+<hr>
+<p><br><br><br></p>
+<h4 id="5-3-2-生产环境典型配置">5.3.2 <strong>生产环境典型配置</strong></h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">core := zapcore.NewTee(<br>    <span class="hljs-comment">// 错误日志 → 单独文件 + 告警系统</span><br>    zapcore.NewCore(jsonEncoder, errorFile, ErrorLevel),<br>    zapcore.NewCore(kafkaEncoder, alertTopic, ErrorLevel),<br>    <br>    <span class="hljs-comment">// 普通日志 → 控制台（标准输出）</span><br>    zapcore.NewCore(consoleEncoder, os.Stdout, InfoLevel),<br>)<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h4 id="5-3-3-严格分离级别">5.3.3 <strong>严格分离级别</strong></h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go">core := zapcore.NewTee(<br>    zapcore.NewCore(fileEncoder, debugFile, zap.LevelEnablerFunc(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(lvl zapcore.Level)</span></span> <span class="hljs-type">bool</span> &#123;<br>        <span class="hljs-keyword">return</span> lvl == zapcore.DebugLevel<br>    &#125;)),<br>    zapcore.NewCore(fileEncoder, infoFile, zap.LevelEnablerFunc(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(lvl zapcore.Level)</span></span> <span class="hljs-type">bool</span> &#123;<br>        <span class="hljs-keyword">return</span> lvl == zapcore.InfoLevel<br>    &#125;)),<br>    <span class="hljs-comment">// ... 以此类推</span><br>)<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="5-4-最佳实践建议">5.4 最佳实践建议</h3>
+<ol>
+<li>
+<p><strong>合理设置默认级别</strong></p>
+<ul>
+<li>开发环境：<code>DebugLevel</code></li>
+<li>测试环境：<code>InfoLevel</code></li>
+<li>生产环境：<code>WarnLevel</code>或<code>ErrorLevel</code></li>
+</ul>
+</li>
+<li>
+<p><strong>关键错误增加上下文</strong></p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">logger.Error(<span class="hljs-string">&quot;数据库连接失败&quot;</span>, <br>    zap.String(<span class="hljs-string">&quot;host&quot;</span>, dbHost),<br>    zap.Int(<span class="hljs-string">&quot;port&quot;</span>, dbPort),<br>    zap.Error(err),<br>)<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>动态调整级别</strong><br>
+使用<code>zap.AtomicLevel</code>允许运行时调整日志级别：</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go">level := zap.NewAtomicLevelAt(zap.InfoLevel)<br>logger := zap.New(core, zap.WrapCore(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(core zapcore.Core)</span></span> zapcore.Core &#123;<br>    <span class="hljs-keyword">return</span> level.LevelEnabler(core)<br>&#125;))<br><br><span class="hljs-comment">// 动态调整</span><br>level.SetLevel(zap.DebugLevel)<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>避免性能损耗</strong>（很有用）<br>
+对于高开销操作，使用条件日志：</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">if</span> logger.Core().Enabled(zap.DebugLevel) &#123;<br>    logger.Debug(<span class="hljs-string">&quot;计算结果&quot;</span>, zap.Int(<span class="hljs-string">&quot;result&quot;</span>, expensiveCalculation()))<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<p><br><br><br></p>
+<h3 id="5-5-常见误区">5.5 常见误区</h3>
+<ol>
+<li><strong>误认为日志会重复输出</strong>
+<ul>
+<li>只有当多个输出目标匹配同一级别时才会重复</li>
+<li>通过合理设计<code>LevelEnabler</code>可避免重复</li>
+</ul>
+</li>
+<li><strong>过度使用高级别日志</strong>
+<ul>
+<li>仅在真正需要立即关注的情况下使用<code>Fatal</code>/<code>Panic</code></li>
+<li>频繁的<code>Panic</code>/<code>Fatal</code>会导致系统不稳定</li>
+</ul>
+</li>
+<li><strong>忽略 DPanic 的特殊作用</strong>
+<ul>
+<li>在生产环境中，<code>DPanic</code>表现得像<code>Error</code></li>
+<li>在测试 / 开发环境中，<code>DPanic</code>会触发崩溃，帮助发现潜在问题</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><br><br><br></p>
+<h2 id="六、生产-开发环境控制">六、生产/开发环境控制</h2>
+<h3 id="6-1-环境配置核心差异">6.1 环境配置核心差异</h3>
+<p>Zap 通过 <strong>显式配置选项</strong> 区分生产与开发环境，而非自动检测。核心差异体现在：</p>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>生产环境（默认）</strong></th>
+<th><strong>开发环境</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>创建方式</strong></td>
+<td><code>zap.NewProduction()</code></td>
+<td><code>zap.NewDevelopment()</code></td>
+</tr>
+<tr>
+<td><strong>DPanic 行为</strong></td>
+<td>仅记录日志，不触发 panic</td>
+<td>记录日志后触发 panic</td>
+</tr>
+<tr>
+<td><strong>日志格式</strong></td>
+<td>JSON 格式（便于机器解析）</td>
+<td>控制台格式（更易读）</td>
+</tr>
+<tr>
+<td><strong>堆栈跟踪</strong></td>
+<td>仅 Error 及以上级别包含堆栈</td>
+<td>自动为 Warn 及以上级别添加堆栈</td>
+</tr>
+<tr>
+<td><strong>默认日志级别</strong></td>
+<td>InfoLevel</td>
+<td>DebugLevel</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><br><br><br></p>
+<h3 id="6-2-环境配置实现方式">6.2 环境配置实现方式</h3>
+<ol>
+<li><strong>基础环境创建</strong></li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 生产环境 logger（默认配置）</span><br>prodLogger, _ := zap.NewProduction()<br><span class="hljs-keyword">defer</span> prodLogger.Sync()<br><br><span class="hljs-comment">// 开发环境 logger（启用开发模式）</span><br>devLogger, _ := zap.NewDevelopment()<br><span class="hljs-keyword">defer</span> devLogger.Sync()<br></code></pre></td></tr></table></figure>
+<br>
+<ol start="2">
+<li><strong>通过配置对象手动控制</strong></li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 通用配置方式（可通过参数动态调整）</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">newLogger</span><span class="hljs-params">(isDevelopment <span class="hljs-type">bool</span>)</span></span> (*zap.Logger, <span class="hljs-type">error</span>) &#123;<br>    <span class="hljs-keyword">var</span> config zap.Config<br>    <span class="hljs-keyword">if</span> isDevelopment &#123;<br>        config = zap.NewDevelopmentConfig()<br>        config.Level.SetLevel(zap.DebugLevel) <span class="hljs-comment">// 开发环境设为 Debug</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        config = zap.NewProductionConfig()<br>        config.Level.SetLevel(zap.InfoLevel)  <span class="hljs-comment">// 生产环境设为 Info</span><br>    &#125;<br>    <br>    <span class="hljs-comment">// 自定义输出路径（生产环境写入文件，开发环境输出控制台）</span><br>    <span class="hljs-keyword">if</span> !isDevelopment &#123;<br>        config.OutputPaths = []<span class="hljs-type">string</span>&#123;<span class="hljs-string">&quot;logs/app.log&quot;</span>&#125;<br>    &#125;<br>    <br>    logger, err := config.Build()<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    <span class="hljs-keyword">return</span> logger, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<br>
+<ol start="3">
+<li><strong>环境变量控制示例</strong></li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    env := os.Getenv(<span class="hljs-string">&quot;APP_ENV&quot;</span>)<br>    <span class="hljs-keyword">var</span> logger *zap.Logger<br>    <span class="hljs-keyword">var</span> err <span class="hljs-type">error</span><br>    <br>    <span class="hljs-keyword">if</span> env == <span class="hljs-string">&quot;development&quot;</span> &#123;<br>        logger, err = zap.NewDevelopment()<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        logger, err = zap.NewProduction()<br>    &#125;<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br>    <br>    <span class="hljs-comment">// 使用 logger...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="6-3-DPanic-在不同环境的行为">6.3 DPanic 在不同环境的行为</h3>
+<ul>
+<li><strong>生产环境</strong>：仅记录日志，不触发 panic，适合标记 “理论上不应发生但可容忍” 的错误。</li>
+<li><strong>开发环境</strong>：记录日志后触发 panic，强制暴露潜在问题，帮助开发阶段快速定位错误。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 示例：开发环境中 DPanic 会触发 panic，生产环境仅记录  </span><br>logger.DPanic(<span class="hljs-string">&quot;数据校验失败，这在正常流程中不应发生&quot;</span>)<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="6-4-环境相关的最佳实践">6.4 环境相关的最佳实践</h3>
+<ol>
+<li>
+<p><strong>日志级别动态调整</strong><br>
+使用 <code>zap.AtomicLevel</code> 允许运行时调整日志级别，无需重启服务：</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go">level := zap.NewAtomicLevelAt(zap.InfoLevel)<br>logger := zap.New(<br>    zapcore.NewCore(<br>        encoder, writer, level,<br>    ),<br>)<br><br><span class="hljs-comment">// 动态调整（如通过 HTTP 接口或配置中心）</span><br>level.SetLevel(zap.DebugLevel)<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>生产环境的性能优化</strong></p>
+<ul>
+<li>
+<p>禁用不必要的堆栈跟踪（仅保留 Error 及以上级别）：</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go">prodLogger, _ := zap.NewProduction(<br>    zap.AddStacktrace(zapcore.ErrorLevel), <span class="hljs-comment">// 仅 Error 级别添加堆栈</span><br>)<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用 JSON 格式压缩日志体积，便于 ELK 等系统解析。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>开发环境的调试增强</strong></p>
+<ul>
+<li>
+<p>启用控制台格式和完整堆栈跟踪：</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">devLogger, _ := zap.NewDevelopment(<br>    zap.AddStacktrace(zapcore.DebugLevel), <span class="hljs-comment">// 所有级别添加堆栈</span><br>    zap.AddCaller(),                      <span class="hljs-comment">// 显示调用文件和行号</span><br>)<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><br><br><br></p>
+<h3 id="6-5-注意事项">6.5 注意事项</h3>
+<ol>
+<li><strong>避免硬编码环境判断</strong>：通过配置文件或环境变量管理环境，而非代码内直接判断。</li>
+<li><strong>生产环境慎用 DPanic</strong>：除非明确需要在生产环境记录但不触发 panic 的场景。</li>
+<li><strong>日志同步保障</strong>：使用 <code>defer logger.Sync()</code> 确保程序退出前日志刷新，避免丢失。</li>
+</ol>
+<hr>
+<p><br><br><br></p>
+<h3 id="6-6-典型配置对比">6.6 典型配置对比</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 生产环境典型配置  </span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">initProdLogger</span><span class="hljs-params">()</span></span> *zap.Logger &#123;<br>    logger, _ := zap.NewProduction(<br>        zap.AddCaller(),                    <span class="hljs-comment">// 显示调用位置</span><br>        zap.AddStacktrace(zapcore.ErrorLevel), <span class="hljs-comment">// 仅错误级添加堆栈</span><br>        zap.WriteSyncer(&amp;lumberjack.Logger&#123;  <span class="hljs-comment">// 日志切割</span><br>            Filename:   <span class="hljs-string">&quot;logs/app.log&quot;</span>,<br>            MaxSize:    <span class="hljs-number">100</span>, <span class="hljs-comment">// MB</span><br>            MaxBackups: <span class="hljs-number">30</span>,<br>            MaxAge:     <span class="hljs-number">28</span>, <span class="hljs-comment">// 天</span><br>        &#125;),<br>    )<br>    <span class="hljs-keyword">return</span> logger<br>&#125;<br><br><span class="hljs-comment">// 开发环境典型配置  </span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">initDevLogger</span><span class="hljs-params">()</span></span> *zap.Logger &#123;<br>    logger, _ := zap.NewDevelopment(<br>        zap.AddCaller(),                    <span class="hljs-comment">// 显示调用位置</span><br>        zap.AddStacktrace(zapcore.DebugLevel), <span class="hljs-comment">// 所有级别添加堆栈</span><br>        zap.AddConsoleEncoder(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cfg *zapcore.EncoderConfig)</span></span> &#123;<br>            cfg.EncodeTime = zapcore.ISO8601TimeEncoder <span class="hljs-comment">// 易读时间格式</span><br>        &#125;),<br>    )<br>    <span class="hljs-keyword">return</span> logger<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>通过合理配置环境差异，Zap 可在开发阶段快速暴露问题，同时在生产环境保证性能与稳定性。</p>
+<hr>
+<p><br><br><br></p>
+<h2 id="七、其它方法使用">七、其它方法使用</h2>
+<h3 id="7-1-全局-Logger">7.1 全局 Logger</h3>
+<p>zap提供了 2 种全局 Logger，一个是 zap.Logger，调用 zap.L() 获取；<br>
+另外一个是 zap.SugaredLogger ，调用 zap.S() 获取。</p>
+<blockquote>
+<p>注意：直接调用 zap.L() 或 zap.S() 记录日志的话，它是不会记录任何日志信息。需要调用 ReplaceGlobals() 函数将它设置为全局 Logger。<br>
+ReplaceGlobals 替换全局 Logger 和 SugaredLogger，并返回一个函数来恢复原始值。<br>
+并发使用它是安全的。</p>
+</blockquote>
+<p>看看 <a target="_blank" rel="noopener" href="https://github.com/uber-go/zap/blob/v1.24.0/global.go">zap/global.go</a> 中的源码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// https://github.com/uber-go/zap/blob/v1.24.0/global.go</span><br><br><span class="hljs-keyword">var</span> (<br>    _globalMu sync.RWMutex<br>    _globalL  = NewNop()<br>    _globalS  = _globalL.Sugar()<br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">L</span><span class="hljs-params">()</span></span> *Logger &#123;<br>    _globalMu.RLock() <span class="hljs-comment">// 加了读锁，所以并发使用是安全的</span><br>    l := _globalL<br>    _globalMu.RUnlock()<br>    <span class="hljs-keyword">return</span> l<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">S</span><span class="hljs-params">()</span></span> *SugaredLogger &#123;<br>    _globalMu.RLock() <span class="hljs-comment">// 加了读锁，所以并发使用是安全的</span><br>    s := _globalS<br>    _globalMu.RUnlock()<br>    <span class="hljs-keyword">return</span> s<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ReplaceGlobals</span><span class="hljs-params">(logger *Logger)</span></span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    _globalMu.Lock()<br>    prev := _globalL<br>    _globalL = logger<br>    _globalS = logger.Sugar()<br>    _globalMu.Unlock()<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123; ReplaceGlobals(prev) &#125; <span class="hljs-comment">// 返回一个函数类型</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上面源码中的关键是 _globalL = NewNop() , NewNop 函数源码在 zap/logger.go 中，这个函数返回初始化了的一个 *Logger：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// https://github.com/uber-go/zap/blob/v1.24.0/logger.go#L85</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewNop</span><span class="hljs-params">()</span></span> *Logger &#123;<br>    <span class="hljs-keyword">return</span> &amp;Logger&#123;<br>        core:        zapcore.NewNopCore(),<br>        errorOutput: zapcore.AddSync(io.Discard),<br>        addStack:    zapcore.FatalLevel + <span class="hljs-number">1</span>,<br>        clock:       zapcore.DefaultClock,<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上面是源码简析，下面给出一个简单使用的例子。</p>
+<p>简单使用例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 直接调用是不会记录日志信息的，所以下面日志信息不会输出</span><br>    zap.L().Info(<span class="hljs-string">&quot;no log info&quot;</span>)<br>    zap.S().Info(<span class="hljs-string">&quot;no log info [sugared]&quot;</span>)<br><br>    logger := zap.NewExample()<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    zap.ReplaceGlobals(logger) <span class="hljs-comment">// 全局logger，zap.L() 和 zap.S() 需要调用 ReplaceGlobals 函数才会记录日志信息</span><br>    zap.L().Info(<span class="hljs-string">&quot;log info&quot;</span>)<br>    zap.S().Info(<span class="hljs-string">&quot;log info [sugared]&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">&#123;<span class="hljs-string">&quot;level&quot;</span>:<span class="hljs-string">&quot;info&quot;</span>,<span class="hljs-string">&quot;msg&quot;</span>:<span class="hljs-string">&quot;log info&quot;</span>&#125;<br>&#123;<span class="hljs-string">&quot;level&quot;</span>:<span class="hljs-string">&quot;info&quot;</span>,<span class="hljs-string">&quot;msg&quot;</span>:<span class="hljs-string">&quot;log info [sugared]&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="7-2-与标准日志库搭配">7.2 与标准日志库搭配</h3>
+<p>zap 提供了一个函数 <code>NewStdLog</code>，可以把标准日志库 log 转换为 zap 的日志，这为我们从标准日志库转换到 zap 日志库的使用提供了简洁的转换操作。</p>
+<p>例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger := zap.NewExample()<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    std := zap.NewStdLog(logger)<br>    std.Print(<span class="hljs-string">&quot;standard logger wrapper&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">&#123;<span class="hljs-string">&quot;level&quot;</span>:<span class="hljs-string">&quot;info&quot;</span>,<span class="hljs-string">&quot;msg&quot;</span>:<span class="hljs-string">&quot;standard logger wrapper&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果你还想设置日志级别，可以使用另外一个函数 <code>NewStdLogAt</code>，它的第二个参数就是日志级别:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">NewStdLogAt(l *Logger, level zapcore.Level) (*log.Logger, <span class="hljs-type">error</span>)<br></code></pre></td></tr></table></figure>
+<br>
+<p><strong>一段代码中使用log另外的使用zap</strong></p>
+<p>zap 还提供了另外一个函数 <code>RedirectStdLog</code>，它可以帮助我们在一段代码中使用标准日志库 log，其它地方还是使用 <code>zap.Logger</code>。如下例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;log&quot;</span><br><br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger := zap.NewExample()<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    undo := zap.RedirectStdLog(logger)<br>    log.Print(<span class="hljs-string">&quot;redirected standard library&quot;</span>)<br>    undo()<br><br>    log.Print(<span class="hljs-string">&quot;this zap logger&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">&#123;<span class="hljs-string">&quot;level&quot;</span>:<span class="hljs-string">&quot;info&quot;</span>,<span class="hljs-string">&quot;msg&quot;</span>:<span class="hljs-string">&quot;redirected standard library&quot;</span>&#125;<br><span class="hljs-number">2023</span>/<span class="hljs-number">05</span>/<span class="hljs-number">06</span> <span class="hljs-number">00</span>:<span class="hljs-number">47</span>:<span class="hljs-number">11</span> this zap logger<br></code></pre></td></tr></table></figure>
+<p>同样如果想增加日志级别，可以使用函数 <code>RedirectStdLogAt</code>:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">RedirectStdLogAt</span><span class="hljs-params">(l *Logger, level zapcore.Level)</span></span> (<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span>, <span class="hljs-type">error</span>)<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="7-3-输出调用堆栈">7.3 输出调用堆栈</h3>
+<p>主要是调用函数 <code>zap.AddStacktrace()</code>，见下面例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>    <span class="hljs-string">&quot;go.uber.org/zap/zapcore&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Hello</span><span class="hljs-params">()</span></span> &#123;<br>    Warn(<span class="hljs-string">&quot;hello&quot;</span>, zap.String(<span class="hljs-string">&quot;h&quot;</span>, <span class="hljs-string">&quot;world&quot;</span>), zap.Int(<span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-number">1</span>))<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Warn</span><span class="hljs-params">(msg <span class="hljs-type">string</span>, fields ...zap.Field)</span></span> &#123;<br>    zap.L().Warn(msg, fields...)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger, _ := zap.NewProduction(zap.AddStacktrace(zapcore.WarnLevel))<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    zap.ReplaceGlobals(logger)<br><br>    Hello()<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">&#123;<span class="hljs-string">&quot;level&quot;</span>:<span class="hljs-string">&quot;warn&quot;</span>,<span class="hljs-string">&quot;ts&quot;</span>:<span class="hljs-number">1683306442.3578277</span>,<span class="hljs-string">&quot;caller&quot;</span>:<span class="hljs-string">&quot;zapdemos/addstacktrace.go:13&quot;</span>,<span class="hljs-string">&quot;msg&quot;</span>:<span class="hljs-string">&quot;hello&quot;</span>,<span class="hljs-string">&quot;h&quot;</span>:<span class="hljs-string">&quot;world&quot;</span>,<span class="hljs-string">&quot;c&quot;</span>:<span class="hljs-number">1</span>,<br><span class="hljs-string">&quot;stacktrace&quot;</span>:<br><span class="hljs-string">&quot;main.Warn\n\tD:/work/mygo/go-exercises/zapdemos/addstacktrace.go:13\n</span><br><span class="hljs-string">main.Hello\n\tD:/work/mygo/go-exercises/zapdemos/addstacktrace.go:9\n</span><br><span class="hljs-string">main.main\n\tD:/work/mygo/go-exercises/zapdemos/addstacktrace.go:22\n</span><br><span class="hljs-string">runtime.main\n\tE:/programfile/go/src/runtime/proc.go:250&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="7-4-输出文件名和行号">7.4 输出文件名和行号</h3>
+<p>AddCaller 将 Logger 配置为使用 zap 调用者的文件名、行号和函数名称，把这些信息添加到日志记录中。它底层调用的是 <code>WithCaller</code>。</p>
+<p>addcaller.go：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger, _ := zap.NewProduction(zap.AddCaller())<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    logger.Info(<span class="hljs-string">&quot;AddCaller：line No and filename&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">&#123;<span class="hljs-string">&quot;level&quot;</span>:<span class="hljs-string">&quot;info&quot;</span>,<span class="hljs-string">&quot;ts&quot;</span>:<span class="hljs-number">1683307204.6184027</span>,<span class="hljs-string">&quot;caller&quot;</span>:<span class="hljs-string">&quot;zapdemos/addcaller.go:11&quot;</span>,<span class="hljs-string">&quot;msg&quot;</span>:<span class="hljs-string">&quot;AddCaller：line No and filename&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://logger.Info">logger.Info</a>() 方法在第11行被调用。</p>
+<p>zap 还提供了另外一个函数 <code>zap.AddCallerSkip(skip int) Option</code>，可以设置向上跳几层，然后记录文件名和行号。向上跳几层就是跳过调用者的数量。有时函数调用可能有嵌套，用这个函数可以定位到里面的函数。</p>
+<p>addcallerskip.go</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;go.uber.org/zap&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    logger, _ := zap.NewProduction(zap.AddCaller(), zap.AddCallerSkip(<span class="hljs-number">1</span>))<br>    <span class="hljs-keyword">defer</span> logger.Sync()<br><br>    zap.ReplaceGlobals(logger)<br><br>    Hello()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Hello</span><span class="hljs-params">()</span></span> &#123;<br>    Warn(<span class="hljs-string">&quot;hello&quot;</span>, zap.String(<span class="hljs-string">&quot;h&quot;</span>, <span class="hljs-string">&quot;world&quot;</span>), zap.Int(<span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-number">1</span>))<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Warn</span><span class="hljs-params">(msg <span class="hljs-type">string</span>, fields ...zap.Field)</span></span> &#123;<br>    zap.L().Warn(msg, fields...)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">&#123;<span class="hljs-string">&quot;level&quot;</span>:<span class="hljs-string">&quot;warn&quot;</span>,<span class="hljs-string">&quot;ts&quot;</span>:<span class="hljs-number">1683308118.1684704</span>,<span class="hljs-string">&quot;caller&quot;</span>:<span class="hljs-string">&quot;zapdemos/addcallerskip.go:17&quot;</span>,<span class="hljs-string">&quot;msg&quot;</span>:<span class="hljs-string">&quot;hello&quot;</span>,<span class="hljs-string">&quot;h&quot;</span>:<span class="hljs-string">&quot;world&quot;</span>,<span class="hljs-string">&quot;c&quot;</span>:<span class="hljs-number">1</span>&#125;<br></code></pre></td></tr></table></figure>
+<p>日志中的 17 表示 Hello() 函数里的 Warn() 的行号。</p>
+<p>如果 <code>zap.AddCallerSkip(2)</code> ，日志中显示行号为 13，表示 Hello() 的行号。</p>
+<hr>
+<p><br><br><br></p>
+<h2 id="九、zap使用总结">九、zap使用总结</h2>
+<ul>
+<li>zap 的使用，先创建 logger，再调用各个日志级别方法记录日志信息。比如 <a target="_blank" rel="noopener" href="http://logger.Info">logger.Info</a>()。</li>
+<li>zap 提供了三种快速创建 logger 的方法: <code>zap.Newproduction()</code>，<code>zap.NewDevelopment()</code>，<code>zap.NewExample()</code>。见名思义，Example 一般用在测试代码中，Development 用在开发环境中，Production 用在生成环境中。这三种方法都预先设置好了配置信息。它们的日志数据类型输出都是强类型。</li>
+<li>当然，zap 也提供了给用户自定义的方法 <code>zap.New()</code>。比如用户可以自定义一些配置信息等。</li>
+<li>在上面的例子中，几乎都有 <code>defer logger.Sync()</code> 这段代码，为什么？因为 zap 底层 API 允许缓冲日志以提高性能，在默认情况下，日志记录器是没有缓冲的。但是在进程退出之前调用 <code>Sync()</code> 方法是一个好习惯。</li>
+<li>如果你在 zap 中使用了 <strong>sugaredlogger</strong>，把 zap 创建 logger 的三种方法用 <code>logger.Sugar()</code> 包装下，那么 zap 就支持 printf 风格的格式化输出，也支持以 w 结尾的方法。如 Infow，Infof 等。这种就是通用类型日志输出，不是强类型输出，不需要强制指定输出的数据类型。它们的性能区别，通用类型会比强类型下降 50% 左右。</li>
+</ul>
+<p>比如 Infow 的输出形式，Infow 不需要 zap.String 这种指定字段的数据类型。如下代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">sugar := logger.Sugar()<br>sugar.Infow(<span class="hljs-string">&quot;failed to fetch URL&quot;</span>,<br>    <span class="hljs-string">&quot;url&quot;</span>, url,<br>    <span class="hljs-string">&quot;attempt&quot;</span>, <span class="hljs-number">3</span>,<br>    <span class="hljs-string">&quot;backoff&quot;</span>, time.Second,<br>)<br></code></pre></td></tr></table></figure>
+<p>强类型输出，比如 Info 方法输出字段和值就需要指定数据类型：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">logger.Info(<span class="hljs-string">&quot;failed to fetch url&quot;</span>,<br>    <span class="hljs-comment">// 强类型字段</span><br>    zap.String(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-string">&quot;http://example.com&quot;</span>),<br>    zap.Int(<span class="hljs-string">&quot;attempt&quot;</span>, <span class="hljs-number">3</span>),<br>    zap.Duration(<span class="hljs-string">&quot;backoff&quot;</span>, time.Second),<br>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>强类型</strong>输出和<strong>通用类型</strong>输出区别</p>
+<p>通用类型输出，经过 interface{} 转换会有性能损失，标准库的 fmt.Printf 为了通用性就用了 interface{} 这种”万能型“的数据类型，另外它还使用了反射，性能进一步降低。</p>
+<p>zap 强类型输出，zap 为了提供日志输出性能，zap 的强类型输出没有使用 interface{} 和反射。zap 默认输出就是强类型。</p>
+<p>上面介绍，zap 中 3 种创建 logger 方式(<code>zap.Newproduction()</code>，<code>zap.NewDevelopment()</code>，<code>zap.NewExample()</code>)就是强类型日志字段，当然，也可以转化为通用类型，用 <code>logger.Sugar()</code> 方法创建 SugaredLogger。</p>
+</li>
+<li>
+<p><code>zap.Namespace()</code> 创建一个命名空间，后面的字段都在这名字空间中。Namespace 就像一个文件夹，后面文件都放在这个文件夹里。</p>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">logger.Info(<span class="hljs-string">&quot;some message&quot;</span>,<br>    zap.Namespace(<span class="hljs-string">&quot;shop&quot;</span>),<br>    zap.String(<span class="hljs-string">&quot;shopid&quot;</span>, <span class="hljs-string">&quot;s1234323&quot;</span>),<br>)<br><span class="hljs-comment">// 输出: &#123;&quot;level&quot;:&quot;info&quot;,&quot;msg&quot;:&quot;some message&quot;,&quot;shop&quot;:&#123;&quot;shopid&quot;:&quot;s1234323&quot;&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.doubao.com/thread/w606f7e304a7a23f1">https://www.doubao.com/thread/w606f7e304a7a23f1</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://gxblogs.com">ggw &amp; xpl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://gxblogs.com/posts/7395/">https://gxblogs.com/posts/7395/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gxblogs.com" target="_blank">GXBLOGS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a></div><div class="post_share"><div class="social-share" data-image="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-06-08_19-23-54.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/49847/"><img class="prev-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-05-28_18-08-50.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">docker基础学习</div></div></a></div><div class="next-post pull-right"><a href="/posts/47375/"><img class="next-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-06-03_14-06-04.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">go包目录</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/19502/" title="connection pool"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2025-01-08_10-26-59.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-12</div><div class="title">connection pool</div></div></a></div><div><a href="/posts/45078/" title="go代码模块记录"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-20_10-54-38.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-22</div><div class="title">go代码模块记录</div></div></a></div><div><a href="/posts/47375/" title="go包目录"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-06-03_14-06-04.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-10</div><div class="title">go包目录</div></div></a></div><div><a href="/posts/14787/" title="Go‘s 数据结构"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-52-01.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">Go‘s 数据结构</div></div></a></div><div><a href="/posts/47995/" title="go编程规范"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-04-02_10-51-17.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-06</div><div class="title">go编程规范</div></div></a></div><div><a href="/posts/47697/" title="设计模式（golang）"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2025-01-03_16-16-49.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-12</div><div class="title">设计模式（golang）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%8B%E7%BB%8D"><span class="toc-text">一、介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E5%99%A8logger%E4%BD%BF%E7%94%A8"><span class="toc-text">二、日志记录器logger使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%B8%A4%E7%A7%8D%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E5%99%A8"><span class="toc-text">2.1 两种日志记录器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%80%8E%E4%B9%88%E6%89%93%E5%8D%B0%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">2.2 怎么打印结构体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81logger%E5%88%9B%E5%BB%BA"><span class="toc-text">三、logger创建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-NewExample-%E4%BD%BF%E7%94%A8"><span class="toc-text">3.1 NewExample()使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-NewDevelopment-%E4%BD%BF%E7%94%A8"><span class="toc-text">3.2 NewDevelopment()使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-NewProduction-%E4%BD%BF%E7%94%A8"><span class="toc-text">3.3 NewProduction()使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="toc-text">3.4 使用配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE"><span class="toc-text">四、自定义配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E9%85%8D%E7%BD%AE%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E"><span class="toc-text">4.1 配置结构说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%BE%8B%E5%AD%901%EF%BC%9A%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-text">4.2 例子1：基本配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%BE%8B%E5%AD%902%EF%BC%9A%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE"><span class="toc-text">4.3 例子2：高级配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E4%BE%8B%E5%AD%903%EF%BC%9A%E6%97%A5%E5%BF%97%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6"><span class="toc-text">4.4 例子3：日志写入文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E4%BE%8B%E5%AD%904%EF%BC%9A%E6%A0%B9%E6%8D%AE%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB%E5%86%99%E5%85%A5%E4%B8%8D%E5%90%8C%E6%96%87%E4%BB%B6"><span class="toc-text">4.5 例子4：根据日志级别写入不同文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2%E6%96%87%E6%A1%A3"><span class="toc-text">4.6 日志切割文档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB%E5%92%8C%E5%AE%9E%E8%B7%B5"><span class="toc-text">五、日志级别和实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB"><span class="toc-text">5.1 日志级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%A0%B8%E5%BF%83%E6%89%93%E5%8D%B0%E9%80%BB%E8%BE%91%E8%A7%84%E5%88%99"><span class="toc-text">5.2 核心打印逻辑规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%BC%8F"><span class="toc-text">5.3 常见配置模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-1-%E6%8C%89%E7%BA%A7%E5%88%AB%E6%8B%86%E5%88%86%E6%96%87%E4%BB%B6"><span class="toc-text">5.3.1 按级别拆分文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-2-%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%85%B8%E5%9E%8B%E9%85%8D%E7%BD%AE"><span class="toc-text">5.3.2 生产环境典型配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-3-%E4%B8%A5%E6%A0%BC%E5%88%86%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-text">5.3.3 严格分离级别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%BB%BA%E8%AE%AE"><span class="toc-text">5.4 最佳实践建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="toc-text">5.5 常见误区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%94%9F%E4%BA%A7-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%8E%A7%E5%88%B6"><span class="toc-text">六、生产&#x2F;开发环境控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%A0%B8%E5%BF%83%E5%B7%AE%E5%BC%82"><span class="toc-text">6.1 环境配置核心差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">6.2 环境配置实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-DPanic-%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E8%A1%8C%E4%B8%BA"><span class="toc-text">6.3 DPanic 在不同环境的行为</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E7%8E%AF%E5%A2%83%E7%9B%B8%E5%85%B3%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-text">6.4 环境相关的最佳实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">6.5 注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-%E5%85%B8%E5%9E%8B%E9%85%8D%E7%BD%AE%E5%AF%B9%E6%AF%94"><span class="toc-text">6.6 典型配置对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%85%B6%E5%AE%83%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8"><span class="toc-text">七、其它方法使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%85%A8%E5%B1%80-Logger"><span class="toc-text">7.1 全局 Logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E4%B8%8E%E6%A0%87%E5%87%86%E6%97%A5%E5%BF%97%E5%BA%93%E6%90%AD%E9%85%8D"><span class="toc-text">7.2 与标准日志库搭配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E8%BE%93%E5%87%BA%E8%B0%83%E7%94%A8%E5%A0%86%E6%A0%88"><span class="toc-text">7.3 输出调用堆栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E5%90%8D%E5%92%8C%E8%A1%8C%E5%8F%B7"><span class="toc-text">7.4 输出文件名和行号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81zap%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93"><span class="toc-text">九、zap使用总结</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'QvVqZWBQWj9Aq2xrw4Z8z8Pz-gzGzoHsz',
+      appKey: 'COANudzj20V6IrCfAsD1Ufya',
+      avatar: 'robohash',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('/pluginsSrc/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="/js/ggwsettings.js"></script><script>(function(d, w, c) {
+    w.ChatraID = 'dKkRxvMac7f9AeKhu';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
