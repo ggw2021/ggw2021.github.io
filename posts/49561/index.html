@@ -1,0 +1,519 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>golang并发模型 | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="生产者消费者模型 源码 123456789101112131415161718192021222324252627282930313233package mainimport (    &quot;fmt&quot;    &quot;time&quot;)const (    consumerCount &#x3D; 10)func producer(ch chan&lt;- string, somet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang并发模型">
+<meta property="og:url" content="https://gxblogs.com/posts/49561/index.html">
+<meta property="og:site_name" content="GXBLOGS">
+<meta property="og:description" content="生产者消费者模型 源码 123456789101112131415161718192021222324252627282930313233package mainimport (    &quot;fmt&quot;    &quot;time&quot;)const (    consumerCount &#x3D; 10)func producer(ch chan&lt;- string, somet">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-05_20-40-20.png">
+<meta property="article:published_time" content="2025-08-28T17:51:09.716Z">
+<meta property="article:modified_time" content="2025-08-28T17:51:09.717Z">
+<meta property="article:author" content="ggw &amp; xpl">
+<meta property="article:tag" content="Golang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-05_20-40-20.png"><link rel="shortcut icon" href="/static/imgs/paipai.ico"><link rel="canonical" href="https://gxblogs.com/posts/49561/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: ggw & xpl","link":"链接: ","source":"来源: GXBLOGS","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'golang并发模型',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-08-29 01:51:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="/css/else/echarts.min.js"></script><script src="/css/else/wow.min.js"></script><script type="text/javascript" src="/css/else/echarts-gl.min.js"></script><script src="/css/else/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-05_20-40-20.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">golang并发模型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-28T17:51:09.716Z" title="发表于 2025-08-29 01:51:09">2025-08-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-28T17:51:09.717Z" title="更新于 2025-08-29 01:51:09">2025-08-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/49561/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/49561/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><br><br><br></p>
+<h2 id="生产者消费者模型">生产者消费者模型</h2>
+<h3 id="源码">源码</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-keyword">const</span> (<br>    consumerCount = <span class="hljs-number">10</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">producer</span><span class="hljs-params">(ch <span class="hljs-keyword">chan</span>&lt;- <span class="hljs-type">string</span>, something <span class="hljs-type">string</span>)</span></span> &#123;<br>    ch &lt;- something<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">consumers</span><span class="hljs-params">(ch &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>)</span></span> &#123;<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; consumerCount; i++ &#123;<br>        <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(i <span class="hljs-type">int</span>)</span></span> &#123;<br>            <span class="hljs-keyword">for</span> something := <span class="hljs-keyword">range</span> ch &#123;<br>                fmt.Println(i, something)<br>            &#125;<br>        &#125;(i)<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>, <span class="hljs-number">10</span>)<br>    consumers(ch) <span class="hljs-comment">// 消费者</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        producer(ch, <span class="hljs-string">&quot;Hello, World!&quot;</span>)<br>        time.Sleep(time.Second * <span class="hljs-number">1</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="实践-woker-pool">实践 - woker pool</h3>
+<p>我的封装：提前创建好集合几个worker (goroutine)，然后等待channel中的数据</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/gw-gong/gwkit-go/tree/master/concurrency/work_pool">https://github.com/gw-gong/gwkit-go/tree/master/concurrency/work_pool</a></p>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">参数怎么设置？ </summary><div class="toggle-content"><p>工作池的三个核心参数（<code>channelSize</code>、<code>workerPoolSize</code>、<code>timeoutSubmit</code>）的设置需要结合<strong>任务特性</strong>（CPU 密集 / IO 密集）、<strong>系统资源</strong>（CPU 核心数、内存）和<strong>业务需求</strong>（延迟容忍度、峰值压力）综合判断。以下是通用设置原则和典型场景建议：</p>
+<ol>
+<li><code>workerPoolSize</code>（worker 数量，并发处理任务的 goroutine 数）</li>
+</ol>
+<p><strong>作用</strong>：控制同时执行任务的并发数，避免无限制创建 goroutine 导致的资源耗尽。<br>
+<strong>设置原则</strong>：</p>
+<ul>
+<li>核心依据是<strong>任务类型</strong>（CPU 密集型 vs IO 密集型）和<strong>CPU 核心数</strong>。</li>
+<li><strong>CPU 密集型任务</strong>（如数据计算、加密解密）：<br>
+任务主要消耗 CPU 资源，过多的并发会导致频繁的上下文切换，反而降低效率。<br>
+建议值：<code>workerPoolSize = CPU核心数 ± 1</code>（例如 8 核 CPU 设置为 8 或 9）。<br>
+原理：充分利用 CPU 核心，避免切换开销。</li>
+<li><strong>IO 密集型任务</strong>（如数据库查询、网络请求、文件 IO）：<br>
+任务大部分时间在等待（IO 阻塞），CPU 利用率低，可通过增加并发数提高吞吐量。<br>
+建议值：<code>workerPoolSize = CPU核心数 × 5 ~ 10</code>（例如 8 核 CPU 设置为 40~80）。<br>
+原理：利用等待时间并行处理更多任务，提升整体效率。</li>
+<li><strong>极端场景</strong>：<br>
+如果任务有严格的 QPS 限制（如调用第三方 API 有频率限制），<code>workerPoolSize</code>需小于等于限制值（例如 API 限频 100QPS，worker 数不超过 100）。</li>
+</ul>
+<br>
+<ol start="2">
+<li><code>channelSize</code>（任务队列缓冲区大小）</li>
+</ol>
+<p><strong>作用</strong>：缓冲等待处理的任务，避免任务提交时因 worker 繁忙而立即阻塞，吸收短时间的任务提交峰值。<br>
+<strong>设置原则</strong>：</p>
+<ul>
+<li>核心依据是<strong>任务提交频率波动</strong>和<strong>worker 处理速度</strong>。</li>
+<li>建议值：<code>channelSize = workerPoolSize × 2 ~ 5</code>（例如 worker 数为 20 时，队列大小设为 40~100）。<br>
+理由：
+<ul>
+<li>过小（如小于 worker 数）：队列容易满，导致提交频繁超时，失去缓冲意义。</li>
+<li>过大（如远大于 worker 数 ×10）：会占用过多内存（每个任务都有内存开销），且任务积压过多时，处理延迟会显著增加。</li>
+</ul>
+</li>
+<li>特殊场景：
+<ul>
+<li>若任务提交峰值极高（如秒杀场景短时间内涌入大量任务），可适当调大（如<code>workerPoolSize × 10</code>），避免瞬间提交失败。</li>
+<li>若任务内存占用大（如大文件处理），需减小<code>channelSize</code>，避免 OOM。</li>
+</ul>
+</li>
+</ul>
+<br>
+<ol start="3">
+<li><code>timeoutSubmit</code>（任务提交超时时间）</li>
+</ol>
+<p><strong>作用</strong>：控制任务提交到队列的最大等待时间，避免提交方因队列满而无限阻塞。<br>
+<strong>设置原则</strong>：</p>
+<ul>
+<li>核心依据是<strong>业务对延迟的容忍度</strong>和<strong>队列处理速度</strong>。</li>
+<li>建议值：<code>500ms ~ 10s</code>（根据业务场景调整）。<br>
+理由：
+<ul>
+<li>短超时（如 500ms~2s）：适合对实时性要求高的场景（如 Web 请求处理），避免用户等待过久。</li>
+<li>长超时（如 5s~10s）：适合后台任务（如日志处理、数据同步），允许稍等队列空闲后再提交，减少任务丢失。</li>
+</ul>
+</li>
+<li>关联调整：
+<ul>
+<li>若<code>channelSize</code>较大（缓冲能力强），<code>timeoutSubmit</code>可适当缩短（队列满的概率低，无需等太久）。</li>
+<li>若<code>workerPoolSize</code>较小（处理慢），<code>timeoutSubmit</code>可适当延长（给队列更多时间消化任务）。</li>
+</ul>
+</li>
+</ul>
+<br>
+<p><strong>总结：典型场景配置示例</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>任务类型</th>
+<th>workerPoolSize（8 核 CPU）</th>
+<th>channelSize</th>
+<th>timeoutSubmit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web 服务实时处理</td>
+<td>IO 密集（DB 查询）</td>
+<td>40~60</td>
+<td>80~120（2×worker）</td>
+<td>1~2s</td>
+</tr>
+<tr>
+<td>后台数据计算</td>
+<td>CPU 密集</td>
+<td>8~10</td>
+<td>20~40（4×worker）</td>
+<td>5~10s</td>
+</tr>
+<tr>
+<td>高峰值任务（如秒杀）</td>
+<td>IO 密集（订单处理）</td>
+<td>80~100</td>
+<td>800~1000（10×worker）</td>
+<td>3~5s</td>
+</tr>
+<tr>
+<td>轻量定时任务</td>
+<td>混合类型</td>
+<td>10~20</td>
+<td>30~60（3×worker）</td>
+<td>2~3s</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p><strong>调优建议</strong></p>
+<ol>
+<li><strong>监控调整</strong>：通过<code>QueueLength()</code>监控队列积压情况，若频繁满队列（导致提交超时），可增加<code>channelSize</code>或<code>workerPoolSize</code>。</li>
+<li><strong>压力测试</strong>：在上线前用压测工具模拟峰值流量，观察任务处理延迟和提交成功率，逐步调整参数。</li>
+<li><strong>动态适配</strong>：对于超大规模系统，可实现动态调整<code>workerPoolSize</code>（如根据 CPU 利用率扩缩容），但复杂度较高，中小型系统固定参数即可。</li>
+</ol>
+<p>核心原则：<strong>“够用就好”</strong>，避免过度配置（如盲目调大 worker 数或队列大小）导致资源浪费。</p>
+</div></details>
+<p>简单使用：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/gw-gong/gwkit-go/concurrency/work_pool&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> someWork <span class="hljs-keyword">struct</span> &#123;<br>    workId   <span class="hljs-type">int</span><br>    workName <span class="hljs-type">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(w *someWork)</span></span> Do() &#123;<br>    fmt.Println(w.workId, w.workName)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    workPool, err := work_pool.NewWorkerPool(<span class="hljs-number">32</span>, <span class="hljs-number">16</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; ; i++ &#123;<br>        <span class="hljs-keyword">if</span> err := workPool.Submit(&amp;someWork&#123;workId: i, workName: fmt.Sprintf(<span class="hljs-string">&quot;work%d&quot;</span>, i)&#125;); err != <span class="hljs-literal">nil</span> &#123;<br>            fmt.Println(err)<br>            <span class="hljs-keyword">return</span><br>        &#125;<br>        time.Sleep(time.Millisecond * <span class="hljs-number">500</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h3 id="实践-ants-work-pool">实践 - ants work pool</h3>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/panjf2000/ants">https://github.com/panjf2000/ants</a></p>
+<p>文档：<a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/panjf2000/ants/v2">https://pkg.go.dev/github.com/panjf2000/ants/v2</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">go get github.com/panjf2000/ants/v2<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-12_10-26-37.png" alt=""></p>
+<ul>
+<li>
+<p>multiPool是为了进行锁分片，其他的实际上和单池没有区别。</p>
+</li>
+<li>
+<p>下面这两个函数需要配套使用，不然不会删除</p>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">ants.WithDisablePurge(<span class="hljs-literal">false</span>),<br>ants.WithExpiryDuration(time.Second*<span class="hljs-number">10</span>),<br></code></pre></td></tr></table></figure>
+<ul>
+<li>测试使用</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;math/rand&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/gw-gong/gwkit-go/concurrency/ants_tools&quot;</span><br>    <span class="hljs-string">&quot;github.com/gw-gong/gwkit-go/log&quot;</span><br>    common_utils <span class="hljs-string">&quot;github.com/gw-gong/gwkit-go/utils/common&quot;</span><br>    <span class="hljs-string">&quot;github.com/panjf2000/ants/v2&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    syncFn, err := log.InitGlobalLogger(log.NewDefaultLoggerConfig())<br>    <span class="hljs-keyword">defer</span> syncFn()<br>    common_utils.ExitOnErr(context.Background(), err)<br><br>    multiPool, err := ants.NewMultiPool(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, ants.RoundRobin,<br>        ants.WithDisablePurge(<span class="hljs-literal">false</span>),<br>        ants.WithExpiryDuration(time.Second*<span class="hljs-number">5</span>), <span class="hljs-comment">// 为了测试，设置一个较短的过期时间</span><br>        ants.WithPanicHandler(common_utils.DefaultPanicHandler),<br>        ants.WithLogger(&amp;ants_tools.SugarLogger&#123;Ctx: context.Background()&#125;),<br>        ants.WithMaxBlockingTasks(<span class="hljs-number">100</span>),<br>    )<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        common_utils.ExitOnErr(context.Background(), err)<br>    &#125;<br>    <span class="hljs-keyword">defer</span> multiPool.ReleaseTimeout(time.Second * <span class="hljs-number">10</span>)<br><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        <span class="hljs-keyword">for</span> &#123;<br>            log.Info(<span class="hljs-string">&quot;runtime info&quot;</span>,<br>                log.Int(<span class="hljs-string">&quot;multiPool.Running()&quot;</span>, multiPool.Running()),<br>                log.Int(<span class="hljs-string">&quot;multiPool.Free()&quot;</span>, multiPool.Free()),<br>                log.Int(<span class="hljs-string">&quot;multiPool.Waiting()&quot;</span>, multiPool.Waiting()),<br>                log.Int(<span class="hljs-string">&quot;multiPool.Cap()&quot;</span>, multiPool.Cap()),<br>            )<br>            time.Sleep(time.Second * <span class="hljs-number">1</span>)<br>        &#125;<br>    &#125;()<br><br>    ticker := time.NewTicker(time.Second * <span class="hljs-number">20</span>)<br>    <span class="hljs-keyword">for</span> stop := <span class="hljs-literal">false</span>; !stop; &#123;<br>        multiPool.Submit(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>            <span class="hljs-keyword">if</span> rand.Intn(<span class="hljs-number">100</span>) &lt; <span class="hljs-number">10</span> &#123;<br>                <span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;test panic&quot;</span>)<br>            &#125;<br>            fmt.Println(<span class="hljs-string">&quot;Hello, World!&quot;</span>)<br>            time.Sleep(time.Second * <span class="hljs-number">3</span>)<br>        &#125;)<br>        <span class="hljs-keyword">select</span> &#123;<br>        <span class="hljs-keyword">case</span> &lt;-ticker.C:<br>            log.Info(<span class="hljs-string">&quot;stop submit&quot;</span>)<br>            stop = <span class="hljs-literal">true</span><br>        <span class="hljs-keyword">default</span>:<br>            time.Sleep(time.Second * <span class="hljs-number">1</span>)<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">select</span> &#123;&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h2 id="发布订阅模型">发布订阅模型</h2>
+<p><strong>一、基本概念</strong></p>
+<p>发布订阅（Publish-Subscribe，简称 Pub/Sub）是一种<strong>消息传递模式</strong>，核心思想是通过 “中间层” 解耦消息的生产者（发布者）和消费者（订阅者），实现两者的 “无直接依赖通信”。</p>
+<ul>
+<li>发布者（Publisher）：发送消息的一方，无需知道谁会接收消息，仅需将消息发送到指定 “主题”。</li>
+<li>订阅者（Subscriber）：接收消息的一方，无需知道谁发送消息，仅需订阅感兴趣的 “主题”，即可接收该主题下的消息。</li>
+<li>核心特点：发布者和订阅者完全解耦，彼此不知道对方的存在，通过 “主题” 关联。</li>
+</ul>
+<br>
+<p><strong>二、核心组件</strong></p>
+<ol>
+<li><strong>发布者（Publisher）</strong><br>
+消息的生产者，负责向 “主题” 发送消息，不关心消息的接收者。</li>
+<li><strong>订阅者（Subscriber）</strong><br>
+消息的消费者，通过订阅 “主题” 获取消息，只关注自己订阅的主题，不关心消息的发布者。</li>
+<li><strong>主题（Topic）</strong><br>
+消息的分类标签（类似 “频道”），是发布者和订阅者的关联媒介。发布者向特定主题发送消息，订阅者通过订阅主题接收消息。</li>
+<li><strong>消息代理（Broker）</strong><br>
+中间件角色，负责管理主题、接收发布者的消息、存储消息（可选）、并将消息转发给所有订阅该主题的订阅者。<br>
+（简单实现中可省略 broker，直接通过主题关联，但复杂场景必须依赖 broker 保证可靠性）</li>
+</ol>
+<br>
+<p><strong>三、工作流程</strong></p>
+<ol>
+<li>订阅者向 broker 订阅感兴趣的主题（如 “用户注册事件”“订单支付通知”）。</li>
+<li>发布者向 broker 发布消息，并指定消息所属的主题。</li>
+<li>broker 接收消息后，检查该主题的所有订阅者，将消息转发给每个订阅者。</li>
+<li>订阅者接收并处理消息。</li>
+</ol>
+<br>
+<p><strong>四、与其他模式的对比</strong></p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>核心差异</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>观察者模式</td>
+<td>无中间 broker，观察者直接依赖被观察者（内存内交互，紧耦合）</td>
+<td>单进程内的事件通知（如 UI 组件）</td>
+</tr>
+<tr>
+<td>点对点（P2P）</td>
+<td>消息通过 “队列” 传递，一条消息仅被一个消费者处理（负载均衡场景）</td>
+<td>任务分发、订单处理</td>
+</tr>
+<tr>
+<td>Pub/Sub</td>
+<td>消息通过 “主题” 传递，一条消息被所有订阅者接收（广播场景），有 broker 解耦</td>
+<td>多接收方的事件通知、日志分发</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p><strong>五、应用场景</strong></p>
+<ol>
+<li><strong>实时通知</strong>：如聊天消息（群聊中所有人接收）、APP 推送（订阅 “系统通知” 主题的用户都收到）。</li>
+<li><strong>日志 / 监控</strong>：多个服务订阅 “系统日志” 主题，分别处理日志分析、告警等。</li>
+<li><strong>事件驱动架构</strong>：微服务间通过事件通信（如 “订单创建” 事件触发库存扣减、物流创建等）。</li>
+<li><strong>实时数据同步</strong>：如股票行情、实时数据仪表盘（所有订阅者实时获取更新）。</li>
+</ol>
+<br>
+<p><strong>六、优缺点</strong></p>
+<p><strong>优点</strong></p>
+<ol>
+<li><strong>解耦性强</strong>：发布者和订阅者完全隔离（时间解耦：无需同时在线；空间解耦：无需知道对方地址；数量解耦：增减双方不影响彼此）。</li>
+<li><strong>可扩展性好</strong>：新增发布者或订阅者无需修改现有系统，只需关联主题即可。</li>
+<li><strong>灵活性高</strong>：支持一对多通信（广播），满足多接收方场景。</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li><strong>消息可靠性风险</strong>：若 broker 无持久化，订阅者离线可能丢失消息（需通过持久化、重试机制弥补）。</li>
+<li><strong>延迟可能增加</strong>：消息需经过 broker 转发，相比直接调用可能增加延迟。</li>
+<li><strong>复杂度提升</strong>：引入 broker 后需维护中间件，增加系统部署和运维成本。</li>
+</ol>
+<br>
+<p><strong>七、Golang 简单实现示例（基于 channel）</strong></p>
+<p>利用 Go 的 goroutine 和 channel 可快速实现一个简易 Pub/Sub 模型（无持久化，适合单进程内使用）：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;sync&quot;</span><br>)<br><br><span class="hljs-comment">// 主题（管理订阅者的 channel）</span><br><span class="hljs-keyword">type</span> Topic <span class="hljs-keyword">struct</span> &#123;<br>    mu        sync.RWMutex       <span class="hljs-comment">// 保护订阅者列表</span><br>    subscribers <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span> <span class="hljs-comment">// 订阅者 ID -&gt; 接收消息的 channel</span><br>&#125;<br><br><span class="hljs-comment">// 消息代理（管理多个主题）</span><br><span class="hljs-keyword">type</span> Broker <span class="hljs-keyword">struct</span> &#123;<br>    mu     sync.RWMutex<br>    topics <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*Topic <span class="hljs-comment">// 主题名称 -&gt; 主题实例</span><br>&#125;<br><br><span class="hljs-comment">// 创建新代理</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewBroker</span><span class="hljs-params">()</span></span> *Broker &#123;<br>    <span class="hljs-keyword">return</span> &amp;Broker&#123;<br>        topics: <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*Topic),<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 获取或创建主题</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(b *Broker)</span></span> getTopic(name <span class="hljs-type">string</span>) *Topic &#123;<br>    b.mu.RLock()<br>    topic, ok := b.topics[name]<br>    b.mu.RUnlock()<br><br>    <span class="hljs-keyword">if</span> !ok &#123;<br>        b.mu.Lock()<br>        <span class="hljs-keyword">defer</span> b.mu.Unlock()<br>        <span class="hljs-comment">// 二次检查（避免并发创建）</span><br>        <span class="hljs-keyword">if</span> topic, ok = b.topics[name]; !ok &#123;<br>            topic = &amp;Topic&#123;<br>                subscribers: <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>),<br>            &#125;<br>            b.topics[name] = topic<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> topic<br>&#125;<br><br><span class="hljs-comment">// 订阅主题：返回接收消息的 channel</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(b *Broker)</span></span> Subscribe(topicName, subscriberID <span class="hljs-type">string</span>) <span class="hljs-keyword">chan</span> <span class="hljs-type">string</span> &#123;<br>    topic := b.getTopic(topicName)<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>, <span class="hljs-number">10</span>) <span class="hljs-comment">// 带缓冲避免阻塞</span><br><br>    topic.mu.Lock()<br>    <span class="hljs-keyword">defer</span> topic.mu.Unlock()<br>    topic.subscribers[subscriberID] = ch<br>    <span class="hljs-keyword">return</span> ch<br>&#125;<br><br><span class="hljs-comment">// 取消订阅</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(b *Broker)</span></span> Unsubscribe(topicName, subscriberID <span class="hljs-type">string</span>) &#123;<br>    b.mu.RLock()<br>    topic, ok := b.topics[topicName]<br>    b.mu.RUnlock()<br>    <span class="hljs-keyword">if</span> !ok &#123;<br>        <span class="hljs-keyword">return</span><br>    &#125;<br><br>    topic.mu.Lock()<br>    <span class="hljs-keyword">defer</span> topic.mu.Unlock()<br>    <span class="hljs-built_in">delete</span>(topic.subscribers, subscriberID)<br>&#125;<br><br><span class="hljs-comment">// 发布消息到主题</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(b *Broker)</span></span> Publish(topicName, message <span class="hljs-type">string</span>) &#123;<br>    b.mu.RLock()<br>    topic, ok := b.topics[topicName]<br>    b.mu.RUnlock()<br>    <span class="hljs-keyword">if</span> !ok &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-comment">// 无订阅者时直接忽略</span><br>    &#125;<br><br>    <span class="hljs-comment">// 向所有订阅者发送消息（只读锁，避免阻塞发布）</span><br>    topic.mu.RLock()<br>    <span class="hljs-keyword">defer</span> topic.mu.RUnlock()<br>    <span class="hljs-keyword">for</span> _, ch := <span class="hljs-keyword">range</span> topic.subscribers &#123;<br>        <span class="hljs-comment">// 非阻塞发送（避免订阅者处理慢导致发布者阻塞）</span><br>        <span class="hljs-keyword">select</span> &#123;<br>        <span class="hljs-keyword">case</span> ch &lt;- message:<br>        <span class="hljs-keyword">default</span>:<br>            fmt.Printf(<span class="hljs-string">&quot;消息 [%s] 发送给订阅者失败（channel 满）\n&quot;</span>, message)<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    broker := NewBroker()<br><br>    <span class="hljs-comment">// 订阅者 1 订阅 &quot;news&quot; 主题</span><br>    sub1Ch := broker.Subscribe(<span class="hljs-string">&quot;news&quot;</span>, <span class="hljs-string">&quot;sub1&quot;</span>)<br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        <span class="hljs-keyword">for</span> msg := <span class="hljs-keyword">range</span> sub1Ch &#123;<br>            fmt.Println(<span class="hljs-string">&quot;sub1 收到消息：&quot;</span>, msg)<br>        &#125;<br>    &#125;()<br><br>    <span class="hljs-comment">// 订阅者 2 订阅 &quot;news&quot; 主题</span><br>    sub2Ch := broker.Subscribe(<span class="hljs-string">&quot;news&quot;</span>, <span class="hljs-string">&quot;sub2&quot;</span>)<br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        <span class="hljs-keyword">for</span> msg := <span class="hljs-keyword">range</span> sub2Ch &#123;<br>            fmt.Println(<span class="hljs-string">&quot;sub2 收到消息：&quot;</span>, msg)<br>        &#125;<br>    &#125;()<br><br>    <span class="hljs-comment">// 发布消息</span><br>    broker.Publish(<span class="hljs-string">&quot;news&quot;</span>, <span class="hljs-string">&quot;Go 1.21 发布了！&quot;</span>)<br>    broker.Publish(<span class="hljs-string">&quot;news&quot;</span>, <span class="hljs-string">&quot;Pub/Sub 模型真好用～&quot;</span>)<br><br>    <span class="hljs-comment">// 取消订阅（演示）</span><br>    broker.Unsubscribe(<span class="hljs-string">&quot;news&quot;</span>, <span class="hljs-string">&quot;sub1&quot;</span>)<br>    broker.Publish(<span class="hljs-string">&quot;news&quot;</span>, <span class="hljs-string">&quot;sub1 已取消订阅，看不到这条消息&quot;</span>)<br><br>    <span class="hljs-comment">// 等待消息处理完成</span><br>    fmt.Scanln() <span class="hljs-comment">// 阻塞主线程</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<br>
+<p><strong>八、扩展思考</strong></p>
+<ul>
+<li>生产环境中，需使用成熟中间件（如 Redis Pub/Sub、RabbitMQ、Kafka），支持消息持久化、重试、分区等高级特性。</li>
+<li>需考虑订阅者离线后的消息补偿（如 Kafka 的 offset 机制）。</li>
+<li>可通过 “主题层级”（如 <code>news.sports</code>、<code>news.tech</code>）实现更灵活的订阅策略。</li>
+</ul>
+<hr>
+<p><br><br><br></p>
+<h2 id="最快响应优先模型">最快响应优先模型</h2>
+<p>也可以称为 “Select 多路复用模型”</p>
+<p>在 Golang 中，这种 “多 goroutine 并发执行同类操作，取第一个返回结果” 的模式非常常见，通常被称为 “最快响应优先” 模式。这种模式特别适合处理对响应时间敏感、且操作具有幂等性（重复执行无副作用）的场景，比如多源数据获取、服务健康检查等。</p>
+<br>
+<p><strong>核心原理</strong></p>
+<p>通过启动多个 goroutine 同时执行相同任务，利用 channel 收集结果，主程序只需等待第一个返回的结果（无论成功或失败），即可终止等待并使用该结果。这样能最大程度减少 “木桶效应”—— 不必等待最慢的那个任务完成，从而提升整体响应速度。</p>
+<br>
+<p><strong>实现示例</strong></p>
+<p>以下是一个简单示例：模拟从 3 个不同数据源获取同一用户信息，取第一个返回的结果。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;math/rand&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-comment">// 模拟获取用户信息的函数，随机延迟后返回结果</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">fetchUserInfo</span><span class="hljs-params">(source <span class="hljs-type">string</span>, userID <span class="hljs-type">int</span>)</span></span> (<span class="hljs-type">string</span>, <span class="hljs-type">error</span>) &#123;<br>    <span class="hljs-comment">// 随机延迟0-500ms，模拟不同数据源的响应速度差异</span><br>    delay := time.Duration(rand.Intn(<span class="hljs-number">500</span>)) * time.Millisecond<br>    time.Sleep(delay)<br>    <br>    <span class="hljs-comment">// 模拟偶尔失败的情况</span><br>    <span class="hljs-keyword">if</span> rand.Float32() &lt; <span class="hljs-number">0.2</span> &#123; <span class="hljs-comment">// 20%概率失败</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>, fmt.Errorf(<span class="hljs-string">&quot;source %s failed&quot;</span>, source)<br>    &#125;<br>    <br>    <span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;user %d info from %s&quot;</span>, userID, source), <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// 并发获取用户信息，返回第一个成功的结果（优化版）</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getFastestUserInfo</span><span class="hljs-params">(userID <span class="hljs-type">int</span>)</span></span> (<span class="hljs-type">string</span>, <span class="hljs-type">error</span>) &#123;<br>    <span class="hljs-comment">// 用于接收结果的channel</span><br>    resultCh := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>)<br>    errCh := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">error</span>)<br>    <br>    <span class="hljs-comment">// 启动3个goroutine，分别从不同数据源获取信息</span><br>    sources := []<span class="hljs-type">string</span>&#123;<span class="hljs-string">&quot;sourceA&quot;</span>, <span class="hljs-string">&quot;sourceB&quot;</span>, <span class="hljs-string">&quot;sourceC&quot;</span>&#125;<br>    <span class="hljs-keyword">for</span> _, src := <span class="hljs-keyword">range</span> sources &#123;<br>        <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(source <span class="hljs-type">string</span>)</span></span> &#123;<br>            info, err := fetchUserInfo(source, userID)<br>            <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>                errCh &lt;- err<br>                <span class="hljs-keyword">return</span><br>            &#125;<br>            resultCh &lt;- info<br>        &#125;(src)<br>    &#125;<br>    <br>    <span class="hljs-comment">// 记录错误数量</span><br>    errCount := <span class="hljs-number">0</span><br>    totalSources := <span class="hljs-built_in">len</span>(sources)<br>    <br>    <span class="hljs-comment">// 使用for循环等待第一个成功结果或所有失败</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        <span class="hljs-keyword">select</span> &#123;<br>        <span class="hljs-keyword">case</span> info := &lt;-resultCh:<br>            <span class="hljs-keyword">return</span> info, <span class="hljs-literal">nil</span> <span class="hljs-comment">// 第一个成功的结果，直接返回</span><br>        <span class="hljs-keyword">case</span> err := &lt;-errCh:<br>            errCount++<br>            <span class="hljs-comment">// 如果所有数据源都失败了，返回汇总错误</span><br>            <span class="hljs-keyword">if</span> errCount == totalSources &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>, fmt.Errorf(<span class="hljs-string">&quot;all %d sources failed, last error: %v&quot;</span>, totalSources, err)<br>            &#125;<br>            <span class="hljs-comment">// 否则继续等待其他可能的成功结果</span><br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    rand.Seed(time.Now().UnixNano()) <span class="hljs-comment">// 初始化随机数种子</span><br>    <br>    info, err := getFastestUserInfo(<span class="hljs-number">123</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;Error:&quot;</span>, err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    fmt.Println(<span class="hljs-string">&quot;Got result:&quot;</span>, info)<br>&#125;<br></code></pre></td></tr></table></figure>
+<br>
+<p><strong>关键技术点</strong></p>
+<ol>
+<li><strong>channel 通信</strong>：用 channel 收集各个 goroutine 的结果（或错误），主程序通过 channel 获取第一个响应。</li>
+<li><strong>select 语句</strong>：通过<code>select</code>监听多个 channel，优先处理第一个就绪的 channel（即第一个返回结果的 goroutine）。（ps: 只要有未阻塞的case, 就一定不会执行default）</li>
+<li><strong>goroutine 管理</strong>：虽然示例中没有显式终止未完成的 goroutine，但由于它们完成后会自动退出，且结果会被 channel 缓冲（不会阻塞），因此不会导致 goroutine 泄漏。</li>
+<li><strong>错误处理</strong>：需要考虑部分 goroutine 失败的情况，示例中通过多层 select 确保 “只要有一个成功就返回”，全失败才返回错误。</li>
+</ol>
+<br>
+<p><strong>注意事项</strong></p>
+<ul>
+<li><strong>幂等性要求</strong>：操作必须是幂等的（重复执行不会产生副作用），比如读取操作。写入操作慎用，可能导致数据不一致。</li>
+<li><strong>资源控制</strong>：避免启动过多 goroutine 导致资源耗尽，可根据实际需求限制并发数。</li>
+<li><strong>超时机制</strong>：建议添加全局超时，防止所有 goroutine 都卡住（例如在<code>select</code>中增加<code>case &lt;-time.After(timeout)</code>）。</li>
+<li><strong>结果有效性</strong>：如果对结果准确性有要求，需确保所有 goroutine 返回的结果是一致的（或可接受的）。</li>
+</ul>
+<br>
+<p>这种模式在微服务架构中尤为实用，比如多实例部署的服务调用、多 CDN 节点资源拉取等场景，能有效降低整体响应时间。</p>
+<hr>
+<p><br><br><br></p>
+<h2 id="控制异步任务场景下的最大goroutine">控制异步任务场景下的最大goroutine</h2>
+<p>在大流量函数中，异步启动 goroutine 执行任务时<strong>非常有必要控制 goroutine 的数量</strong>。原因和控制方法如下：</p>
+<br>
+<p><strong>为什么需要控制 goroutine 数量？</strong></p>
+<p>尽管 goroutine 是轻量级的（初始栈大小仅 2KB，可动态扩展），但在大流量场景下无限制创建会带来严重问题：</p>
+<ol>
+<li><strong>资源耗尽风险</strong>：每个 goroutine 会占用内存（栈空间、调度元数据等），大流量下瞬间创建数万甚至数十万 goroutine 可能导致内存暴增，触发 OOM（内存溢出）。</li>
+<li><strong>调度开销激增</strong>：Go 调度器需要在大量 goroutine 间切换，当数量超过 CPU 核心数过多时，上下文切换成本会显著增加，反而降低执行效率。</li>
+<li><strong>下游资源过载</strong>：如果 goroutine 的任务涉及访问数据库、调用 API 等，无限制的并发会压垮下游服务（如数据库连接池耗尽、接口限流被触发）。</li>
+</ol>
+<br>
+<p><strong>如何控制 goroutine 数量？</strong></p>
+<p>最常用的方案是<strong>使用带缓冲的 channel 作为信号量</strong>，限制并发执行的 goroutine 数量。示例如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;log&quot;</span><br>    <span class="hljs-string">&quot;sync&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">const</span> maxGoroutines = <span class="hljs-number">100</span> <span class="hljs-comment">// 限制最大并发goroutine数量</span><br>    sem := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">struct</span>&#123;&#125;, maxGoroutines) <span class="hljs-comment">// 信号量channel</span><br>    <span class="hljs-keyword">var</span> wg sync.WaitGroup<br><br>    <span class="hljs-comment">// 模拟大流量场景：1000个任务</span><br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000</span>; i++ &#123;<br>        sem &lt;- <span class="hljs-keyword">struct</span>&#123;&#125;&#123;&#125; <span class="hljs-comment">// 获取信号量，若满则阻塞</span><br>        wg.Add(<span class="hljs-number">1</span>)<br><br>        <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(taskID <span class="hljs-type">int</span>)</span></span> &#123;<br>            <span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>                &lt;-sem    <span class="hljs-comment">// 释放信号量</span><br>                wg.Done()<br>            &#125;()<br><br>            <span class="hljs-comment">// 执行异步任务（如日志上报、数据异步写入等）</span><br>            log.Printf(<span class="hljs-string">&quot;处理任务 %d&quot;</span>, taskID)<br>        &#125;(i)<br>    &#125;<br><br>    wg.Wait() <span class="hljs-comment">// 等待所有任务完成</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<br>
+<p><strong>关键注意点</strong></p>
+<ol>
+<li><strong>合理设置并发数</strong>：<code>maxGoroutines</code>的值需根据任务类型调整。若任务是 CPU 密集型，建议接近 CPU 核心数；若为 IO 密集型（如网络请求），可适当增大（但需匹配下游资源承载能力）。</li>
+<li><strong>结合业务监控</strong>：通过 metrics 记录 goroutine 数量、等待队列长度等，动态调整并发限制（如结合配置中心实现热更新）。</li>
+<li><strong>避免长时间阻塞</strong>：若 goroutine 内部可能长时间阻塞（如无限期等待锁），需配合超时控制，防止信号量被长期占用导致新任务无法执行。</li>
+</ol>
+<p>综上，大流量场景下必须控制 goroutine 数量，这是保障系统稳定性的关键措施。</p>
+<hr>
+<p><br><br><br></p>
+<h2 id="任务编排">任务编排</h2>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;sync&quot;</span><br>    <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-comment">// 模拟一个任务：接收任务名和耗时，执行后打印完成信息</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">doTask</span><span class="hljs-params">(taskName <span class="hljs-type">string</span>, duration time.Duration, wg *sync.WaitGroup)</span></span> &#123;<br>    <span class="hljs-comment">// 任务完成时调用Done()，减少WaitGroup计数</span><br>    <span class="hljs-keyword">defer</span> wg.Done()<br><br>    fmt.Printf(<span class="hljs-string">&quot;任务 %s 开始执行\n&quot;</span>, taskName)<br>    time.Sleep(duration) <span class="hljs-comment">// 模拟任务耗时</span><br>    fmt.Printf(<span class="hljs-string">&quot;任务 %s 执行完成\n&quot;</span>, taskName)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> wg sync.WaitGroup<br><br>    <span class="hljs-comment">// 定义3个任务的参数：名称和耗时</span><br>    tasks := []<span class="hljs-keyword">struct</span> &#123;<br>        name     <span class="hljs-type">string</span><br>        duration time.Duration<br>    &#125;&#123;<br>        &#123;<span class="hljs-string">&quot;下载文件A&quot;</span>, <span class="hljs-number">1</span> * time.Second&#125;,<br>        &#123;<span class="hljs-string">&quot;下载文件B&quot;</span>, <span class="hljs-number">2</span> * time.Second&#125;,<br>        &#123;<span class="hljs-string">&quot;下载文件C&quot;</span>, <span class="hljs-number">1500</span> * time.Millisecond&#125;,<br>    &#125;<br><br>    <span class="hljs-comment">// 添加任务数量到WaitGroup（需要等待3个任务）</span><br>    wg.Add(<span class="hljs-built_in">len</span>(tasks))<br><br>    <span class="hljs-comment">// 启动所有任务（并发执行）</span><br>    <span class="hljs-keyword">for</span> _, task := <span class="hljs-keyword">range</span> tasks &#123;<br>        <span class="hljs-keyword">go</span> doTask(task.name, task.duration, &amp;wg)<br>    &#125;<br><br>    <span class="hljs-comment">// 等待所有任务完成（阻塞在此，直到所有Done()被调用）</span><br>    wg.Wait()<br><br>    <span class="hljs-comment">// 所有任务完成后执行</span><br>    fmt.Println(<span class="hljs-string">&quot;所有任务已全部完成，开始汇总结果&quot;</span>)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<hr>
+<p><br><br><br></p>
+<h2 id="Pipeline（流水线）模型"><strong>Pipeline（流水线）模型</strong></h2>
+<p>将复杂任务拆分为多个阶段，每个阶段由一个或多个 goroutine 处理，阶段之间通过 channel 传递数据，形成 “流水线” 式的并发处理流程。</p>
+<p>特点：每个阶段专注于处理特定逻辑，通过 channel 串联，提高整体处理效率，适合数据流式处理。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;sync&quot;</span><br>)<br><br><span class="hljs-comment">// 1. 生成阶段：生成数字并发送到输出channel</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">generate</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span> &#123;<br>    out := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        <span class="hljs-keyword">defer</span> <span class="hljs-built_in">close</span>(out) <span class="hljs-comment">// 生成完所有数据后关闭channel，避免下游阻塞</span><br>        <span class="hljs-keyword">for</span> _, n := <span class="hljs-keyword">range</span> nums &#123;<br>            out &lt;- n<br>        &#125;<br>    &#125;()<br>    <span class="hljs-keyword">return</span> out<br>&#125;<br><br><span class="hljs-comment">// 2. 过滤阶段：接收数字，只保留奇数并发送到输出channel</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">filter</span><span class="hljs-params">(in &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)</span></span> &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span> &#123;<br>    out := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        <span class="hljs-keyword">defer</span> <span class="hljs-built_in">close</span>(out)<br>        <span class="hljs-keyword">for</span> n := <span class="hljs-keyword">range</span> in &#123; <span class="hljs-comment">// 从输入channel读取数据（自动等待上游）</span><br>            <span class="hljs-keyword">if</span> n%<span class="hljs-number">2</span> != <span class="hljs-number">0</span> &#123; <span class="hljs-comment">// 过滤偶数</span><br>                out &lt;- n<br>            &#125;<br>        &#125;<br>    &#125;()<br>    <span class="hljs-keyword">return</span> out<br>&#125;<br><br><span class="hljs-comment">// 3. 转换阶段：接收奇数，乘以2后发送到输出channel</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">transform</span><span class="hljs-params">(in &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)</span></span> &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span> &#123;<br>    out := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        <span class="hljs-keyword">defer</span> <span class="hljs-built_in">close</span>(out)<br>        <span class="hljs-keyword">for</span> n := <span class="hljs-keyword">range</span> in &#123;<br>            out &lt;- n * <span class="hljs-number">2</span> <span class="hljs-comment">// 转换逻辑：奇数×2</span><br>        &#125;<br>    &#125;()<br>    <span class="hljs-keyword">return</span> out<br>&#125;<br><br><span class="hljs-comment">// 4. 输出阶段：接收最终结果并打印，完成后通知WaitGroup</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">printResults</span><span class="hljs-params">(in &lt;-<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>, wg *sync.WaitGroup)</span></span> &#123;<br>    <span class="hljs-keyword">defer</span> wg.Done() <span class="hljs-comment">// 所有打印完成后通知WaitGroup</span><br>    <span class="hljs-keyword">for</span> res := <span class="hljs-keyword">range</span> in &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;最终结果: %d\n&quot;</span>, res)<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 初始数据</span><br>    nums := []<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>&#125;<br><br>    <span class="hljs-comment">// 构建流水线：生成 → 过滤 → 转换 → 输出</span><br>    genCh := generate(nums)<br>    filterCh := filter(genCh)<br>    transformCh := transform(filterCh)<br><br>    <span class="hljs-comment">// 等待输出阶段完成</span><br>    <span class="hljs-keyword">var</span> wg sync.WaitGroup<br>    wg.Add(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">go</span> printResults(transformCh, &amp;wg)<br><br>    <span class="hljs-comment">// 等待所有结果打印完成</span><br>    wg.Wait()<br>    fmt.Println(<span class="hljs-string">&quot;流水线处理完成&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://chai2010.cn/advanced-go-programming-book/ch1-basic/ch1-06-goroutine.html">https://chai2010.cn/advanced-go-programming-book/ch1-basic/ch1-06-goroutine.html</a></p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://gxblogs.com">ggw &amp; xpl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://gxblogs.com/posts/49561/">https://gxblogs.com/posts/49561/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gxblogs.com" target="_blank">GXBLOGS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a></div><div class="post_share"><div class="social-share" data-image="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-05_20-40-20.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/11490/"><img class="prev-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-12_19-08-43.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">熔断（hystrix-go）</div></div></a></div><div class="next-post pull-right"><a href="/posts/20356/"><img class="next-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-06-18_13-27-57.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">快捷键</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/19502/" title="connection pool"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2025-01-08_10-26-59.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-12</div><div class="title">connection pool</div></div></a></div><div><a href="/posts/45078/" title="go代码模块记录"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-20_10-54-38.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-22</div><div class="title">go代码模块记录</div></div></a></div><div><a href="/posts/14787/" title="Go‘s 数据结构"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-52-01.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">Go‘s 数据结构</div></div></a></div><div><a href="/posts/47995/" title="go编程规范"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-04-02_10-51-17.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-06</div><div class="title">go编程规范</div></div></a></div><div><a href="/posts/10689/" title="live reloading go with air"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-04-07_15-14-45.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-13</div><div class="title">live reloading go with air</div></div></a></div><div><a href="/posts/51798/" title="pprof"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-28_22-00-26.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-29</div><div class="title">pprof</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B"><span class="toc-text">生产者消费者模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%90%E7%A0%81"><span class="toc-text">源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5-woker-pool"><span class="toc-text">实践 - woker pool</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5-ants-work-pool"><span class="toc-text">实践 - ants work pool</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%9E%8B"><span class="toc-text">发布订阅模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%BF%AB%E5%93%8D%E5%BA%94%E4%BC%98%E5%85%88%E6%A8%A1%E5%9E%8B"><span class="toc-text">最快响应优先模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84%E6%9C%80%E5%A4%A7goroutine"><span class="toc-text">控制异步任务场景下的最大goroutine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E7%BC%96%E6%8E%92"><span class="toc-text">任务编排</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pipeline%EF%BC%88%E6%B5%81%E6%B0%B4%E7%BA%BF%EF%BC%89%E6%A8%A1%E5%9E%8B"><span class="toc-text">Pipeline（流水线）模型</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'QvVqZWBQWj9Aq2xrw4Z8z8Pz-gzGzoHsz',
+      appKey: 'COANudzj20V6IrCfAsD1Ufya',
+      avatar: 'robohash',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('/pluginsSrc/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="/js/ggwsettings.js"></script><script>(function(d, w, c) {
+    w.ChatraID = 'dKkRxvMac7f9AeKhu';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
