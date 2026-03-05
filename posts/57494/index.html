@@ -1,17 +1,17 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>golang注意事项 | GXBLOGS</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="channel  如果channel关闭后，再操作会怎么样？  查看解析 当一个 channel 被关闭后，再从中取值会有特定的行为。下面是关闭 channel 后的行为总结：  1、关闭后的读取行为   从已关闭的 channel 读取数据：  如果 channel 中还有未取出的数据，可以继续读取这些数据。 一旦 channel 中的数据被取完，再次读取时，将返回该类型的零值，并且读取操作不会">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>golang注意事项 | GX-Blog</title><meta name="author" content="ggw &amp; xpl"><meta name="copyright" content="ggw &amp; xpl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="channel  如果channel关闭后，再操作会怎么样？  查看解析 当一个 channel 被关闭后，再从中取值会有特定的行为。下面是关闭 channel 后的行为总结：  1、关闭后的读取行为   从已关闭的 channel 读取数据：  如果 channel 中还有未取出的数据，可以继续读取这些数据。 一旦 channel 中的数据被取完，再次读取时，将返回该类型的零值，并且读取操作不会">
 <meta property="og:type" content="article">
 <meta property="og:title" content="golang注意事项">
-<meta property="og:url" content="https://gxblogs.com/posts/57494/index.html">
-<meta property="og:site_name" content="GXBLOGS">
+<meta property="og:url" content="https://blog.gxtree.com/posts/57494/index.html">
+<meta property="og:site_name" content="GX-Blog">
 <meta property="og:description" content="channel  如果channel关闭后，再操作会怎么样？  查看解析 当一个 channel 被关闭后，再从中取值会有特定的行为。下面是关闭 channel 后的行为总结：  1、关闭后的读取行为   从已关闭的 channel 读取数据：  如果 channel 中还有未取出的数据，可以继续读取这些数据。 一旦 channel 中的数据被取完，再次读取时，将返回该类型的零值，并且读取操作不会">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png">
 <meta property="article:published_time" content="2024-09-22T13:50:44.982Z">
-<meta property="article:modified_time" content="2025-08-28T17:51:09.729Z">
+<meta property="article:modified_time" content="2026-03-05T16:50:20.820Z">
 <meta property="article:author" content="ggw &amp; xpl">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png"><link rel="shortcut icon" href="/static/imgs/paipai.ico"><link rel="canonical" href="https://gxblogs.com/posts/57494/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+<meta name="twitter:image" content="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png"><link rel="shortcut icon" href="/static/imgs/paipai.ico"><link rel="canonical" href="https://blog.gxtree.com/posts/57494/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
   root: '/',
   algolia: undefined,
   localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
@@ -35,7 +35,7 @@
     day: '天前',
     month: '个月前'
   },
-  copyright: {"limitCount":200,"languages":{"author":"作者: ggw & xpl","link":"链接: ","source":"来源: GXBLOGS","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  copyright: {"limitCount":200,"languages":{"author":"作者: ggw & xpl","link":"链接: ","source":"来源: GX-Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
   lightbox: 'fancybox',
   Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
   source: {
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2025-08-29 01:51:09'
+  postUpdate: '2026-03-06 00:50:20'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,7 +142,7 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="/css/else/echarts.min.js"></script><script src="/css/else/wow.min.js"></script><script type="text/javascript" src="/css/else/echarts-gl.min.js"></script><script src="/css/else/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GXBLOGS</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">golang注意事项</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-22T13:50:44.982Z" title="发表于 2024-09-22 21:50:44">2024-09-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-28T17:51:09.729Z" title="更新于 2025-08-29 01:51:09">2025-08-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">18.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>64分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/57494/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/57494/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="channel">channel</h2>
+    })(window)</script><link rel="stylesheet" href="/css/ggwsettings.css"><link rel="stylesheet" href="/css/nav_menu.css"><link rel="stylesheet" href="/css/highlight/Kimbiedark.css"><script src="/css/else/echarts.min.js"></script><script src="/css/else/wow.min.js"></script><script type="text/javascript" src="/css/else/echarts-gl.min.js"></script><script src="/css/else/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/static/imgs/loading.gif" data-original="/static/imgs/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">84</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GX-Blog</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-comments"></i><span> 留言板</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">golang注意事项</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-22T13:50:44.982Z" title="发表于 2024-09-22 21:50:44">2024-09-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-05T16:50:20.820Z" title="更新于 2026-03-06 00:50:20">2026-03-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">25.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>93分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/posts/57494/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/posts/57494/" itemprop="commentCount"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="channel">channel</h2>
 <ol>
 <li><strong>如果channel关闭后，再操作会怎么样？</strong></li>
 </ol>
@@ -445,7 +445,7 @@
 <p><strong>一、不会导致死锁的情况：存在非阻塞的 Goroutine</strong></p>
 <p>只要有一个 Goroutine 处于 “非阻塞” 状态（能正常执行代码），即使其他 Goroutine 因 Channel 操作阻塞，进程也不会死锁。</p>
 <p>示例：局部 Goroutine 阻塞，但主线程正常运行</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;time&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	chan1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>) <span class="hljs-comment">// 无缓冲 Channel</span><br><br>	<span class="hljs-comment">// 子 Goroutine：向无缓冲 Channel 发送数据（因无接收方而阻塞）</span><br>	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		chan1 &lt;- <span class="hljs-number">1</span> <span class="hljs-comment">// 阻塞（永远等不到接收方）</span><br>	&#125;()<br><br>	<span class="hljs-comment">// 主线程：无限循环睡眠（非阻塞，能正常执行）</span><br>	<span class="hljs-keyword">for</span> &#123;<br>		time.Sleep(<span class="hljs-number">1</span> * time.Second) <span class="hljs-comment">// 主线程持续运行，没有阻塞</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;time&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    chan1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>) <span class="hljs-comment">// 无缓冲 Channel</span><br><br>    <span class="hljs-comment">// 子 Goroutine：向无缓冲 Channel 发送数据（因无接收方而阻塞）</span><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        chan1 &lt;- <span class="hljs-number">1</span> <span class="hljs-comment">// 阻塞（永远等不到接收方）</span><br>    &#125;()<br><br>    <span class="hljs-comment">// 主线程：无限循环睡眠（非阻塞，能正常执行）</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        time.Sleep(<span class="hljs-number">1</span> * time.Second) <span class="hljs-comment">// 主线程持续运行，没有阻塞</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li><strong>结果</strong>：程序不会退出，也不会报死锁。<br>
 原因：子 Goroutine 阻塞，但主线程仍在正常执行（非阻塞），不满足 “所有 Goroutine 都阻塞” 的条件。</li>
@@ -457,7 +457,7 @@
 <li><strong>单 Goroutine 阻塞（必然死锁）</strong></li>
 </ol>
 <p>只有一个 Goroutine（通常是主线程），且它因 Channel 操作阻塞，此时 “所有 Goroutine” 就是它自己，必然死锁。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	chan1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>) <span class="hljs-comment">// 无缓冲 Channel</span><br>	chan1 &lt;- <span class="hljs-number">1</span> <span class="hljs-comment">// 主线程阻塞（无接收方），且无其他 Goroutine</span><br>	<span class="hljs-comment">// 所有 Goroutine（仅主线程）都阻塞 → 死锁</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    chan1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>) <span class="hljs-comment">// 无缓冲 Channel</span><br>    chan1 &lt;- <span class="hljs-number">1</span> <span class="hljs-comment">// 主线程阻塞（无接收方），且无其他 Goroutine</span><br>    <span class="hljs-comment">// 所有 Goroutine（仅主线程）都阻塞 → 死锁</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li><strong>结果</strong>：进程退出，报错 <code>fatal error: all goroutines are asleep - deadlock!</code></li>
 </ul>
@@ -465,7 +465,7 @@
 <li><strong>多 Goroutine 全部阻塞</strong></li>
 </ol>
 <p>多个 Goroutine 都因 Channel 操作阻塞，且没有任何一个能解除阻塞（如形成循环等待），导致 “所有 Goroutine 都卡住”。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	ch1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br>	ch2 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br><br>	<span class="hljs-comment">// Goroutine 1：等 ch2 的数据，再发数据到 ch1</span><br>	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		&lt;-ch2 <span class="hljs-comment">// 阻塞（等 ch2 发送）</span><br>		ch1 &lt;- <span class="hljs-number">1</span><br>	&#125;()<br><br>	<span class="hljs-comment">// Goroutine 2：等 ch1 的数据，再发数据到 ch2</span><br>	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		&lt;-ch1 <span class="hljs-comment">// 阻塞（等 ch1 发送）</span><br>		ch2 &lt;- <span class="hljs-number">2</span><br>	&#125;()<br><br>	<span class="hljs-comment">// 主线程：无操作，直接结束（但两个子 Goroutine 已全部阻塞）</span><br>	<span class="hljs-comment">// 所有 Goroutine 都阻塞 → 死锁</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br>    ch2 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br><br>    <span class="hljs-comment">// Goroutine 1：等 ch2 的数据，再发数据到 ch1</span><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        &lt;-ch2 <span class="hljs-comment">// 阻塞（等 ch2 发送）</span><br>        ch1 &lt;- <span class="hljs-number">1</span><br>    &#125;()<br><br>    <span class="hljs-comment">// Goroutine 2：等 ch1 的数据，再发数据到 ch2</span><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        &lt;-ch1 <span class="hljs-comment">// 阻塞（等 ch1 发送）</span><br>        ch2 &lt;- <span class="hljs-number">2</span><br>    &#125;()<br><br>    <span class="hljs-comment">// 主线程：无操作，直接结束（但两个子 Goroutine 已全部阻塞）</span><br>    <span class="hljs-comment">// 所有 Goroutine 都阻塞 → 死锁</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li><strong>结果</strong>：进程退出，报错 <code>fatal error: all goroutines are asleep - deadlock!</code></li>
 </ul>
@@ -953,12 +953,49 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">done := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">struct</span>&#123;&#125;)<br><br><span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 执行一些工作...</span><br>    done &lt;- <span class="hljs-keyword">struct</span>&#123;&#125;&#123;&#125; <span class="hljs-comment">// 发送完成信号</span><br>&#125;()<br><br>&lt;-done <span class="hljs-comment">// 等待完成信号</span><br></code></pre></td></tr></table></figure>
 </div></details> 
 <br>
-<ol start="2">
+<ol start="3">
 <li><strong>结构体赋值 -&gt; 数据不一致</strong></li>
 </ol>
 <details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看输出 </summary><div class="toggle-content"><p>例如配置中心修改后，将局部变量结构体（新配置）赋值给旧的结构体配置来达到更新效果，这里因为结构体赋值是一个字段一个字段赋值，所以有可能导致上下字段更新不一致</p>
 <p>解决：使用指针，不需要赋值，但是可能会带来panic问题。</p>
 </div></details>
+<br>
+<ol start="4">
+<li><strong>结构体不允许递归定义，怎么解决</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看输出 </summary><div class="toggle-content"><p>Go 语言<strong>不允许</strong>这样定义结构体。</p>
+<p>这个结构体定义存在<strong>递归类型</strong>的问题：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Message <span class="hljs-keyword">struct</span> &#123;<br>    Time       <span class="hljs-type">string</span>  <span class="hljs-string">`json:&quot;time&quot;`</span><br>    Sender     <span class="hljs-type">string</span>  <span class="hljs-string">`json:&quot;sender&quot;`</span><br>    QuotingMsg Message <span class="hljs-string">`json:&quot;quoting_msg&quot;`</span>  <span class="hljs-comment">// ❌ 错误：不能直接包含自身类型</span><br>    Content    <span class="hljs-type">string</span>  <span class="hljs-string">`json:&quot;content&quot;`</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<br>
+<p><strong>问题原因</strong></p>
+<p>当结构体直接包含自身类型时，Go 编译器无法确定该结构体的大小：</p>
+<ul>
+<li><code>Message</code> 包含一个 <code>Message</code></li>
+<li>这个内部的 <code>Message</code> 又包含另一个 <code>Message</code></li>
+<li>以此类推，形成无限递归…</li>
+</ul>
+<br>
+<p><strong>正确的做法</strong></p>
+<p>应该使用<strong>指针类型</strong> <code>*Message</code>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Message <span class="hljs-keyword">struct</span> &#123;<br>    Time       <span class="hljs-type">string</span>   <span class="hljs-string">`json:&quot;time&quot;`</span><br>    Sender     <span class="hljs-type">string</span>   <span class="hljs-string">`json:&quot;sender&quot;`</span><br>    QuotingMsg *Message <span class="hljs-string">`json:&quot;quoting_msg,omitempty&quot;`</span>  <span class="hljs-comment">// ✅ 使用指针</span><br>    Content    <span class="hljs-type">string</span>   <span class="hljs-string">`json:&quot;content&quot;`</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>使用指针的好处：</p>
+<ol>
+<li><strong>指针大小固定</strong>：在 64 位系统上始终是 8 字节</li>
+<li><strong>允许 nil 值</strong>：当没有引用消息时，<code>QuotingMsg</code> 可以是 <code>nil</code></li>
+<li><strong>支持递归结构</strong>：可以表示引用链，如 A 引用 B，B 引用 C</li>
+</ol>
+<br>
+<p><strong>总结</strong></p>
+<p><strong>问题</strong>：Go 不允许结构体直接包含自身类型，因为会导致无限递归的内存布局。</p>
+<p><strong>修复</strong>：将 <code>QuotingMsg Message</code> 改为 <code>QuotingMsg *Message</code></p>
+<p>主要变化：</p>
+<ul>
+<li>✅ 使用指针类型 <code>*Message</code> 代替值类型 <code>Message</code></li>
+<li>✅ 添加了 <code>omitempty</code> JSON 标签，当字段为 <code>nil</code> 时不序列化</li>
+<li>✅ 代码可以正常编译，没有 lint 错误</li>
+</ul>
+<p>现在这个结构体可以正确表示消息的引用关系了，比如回复消息时引用原消息。</p>
+</div></details> 
 <hr>
 <p><br><br><br></p>
 <h2 id="map">map</h2>
@@ -989,10 +1026,70 @@
 <li>结构体指针还允许更加灵活地控制数据的共享和同步。</li>
 </ul>
 <br>
-<hr>
 <p><strong>总结</strong></p>
 <p><code>map</code> 在 Go 中容易出现并发问题，主要是因为其内部实现特性（如共享元数据、动态扩容和哈希桶冲突）。解决这些问题通常需要加锁或使用专为并发设计的数据结构如 <code>sync.Map</code>。在适当的情况下，也可以考虑使用结构体指针来避免并发问题，特别是当结构体的字段之间没有依赖关系时。这些做法有助于提高程序的稳定性和性能，尤其是在高并发的环境下。</p>
 </div></details>
+<ol start="2">
+<li><strong>map中key的使用</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看内容 </summary><div class="toggle-content"><table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">是否可作为 map key</th>
+<th style="text-align:center">核心原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">数组（值）</td>
+<td style="text-align:center">是（元素支持 <code>==</code>）</td>
+<td style="text-align:center">值类型，支持逐元素 <code>==</code> 比较</td>
+</tr>
+<tr>
+<td style="text-align:center">slice</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">不支持 <code>==</code> 比较</td>
+</tr>
+<tr>
+<td style="text-align:center">map</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">不支持 <code>==</code> 比较</td>
+</tr>
+<tr>
+<td style="text-align:center">func</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">不支持 <code>==</code> 比较</td>
+</tr>
+<tr>
+<td style="text-align:center">pointer</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">支持地址的 <code>==</code> 比较</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Go 数组 <code>==</code> 判断的底层逻辑</strong></p>
+<p>首先要明确：<strong>Go 语言中数组的 <code>==</code> 判断确实会遍历数组的每一个元素</strong>，但有严格的前提条件，且只适用于数组（array），不适用于切片（slice）。</p>
+<ol>
+<li>数组 <code>==</code> 判断的前提条件</li>
+</ol>
+<p>只有满足以下所有条件，数组才能用 <code>==</code> 比较，否则编译直接报错：</p>
+<ul>
+<li>两个数组的<strong>元素类型</strong>完全相同（包括类型别名也不行，必须是同一类型）；</li>
+<li>两个数组的<strong>长度</strong>完全相同；</li>
+<li>数组的元素类型必须是「可比较类型」（如 bool、int、string、数组等，slice、map、func 这类不可比较类型不行）。</li>
+</ul>
+<ol start="2">
+<li><code>==</code> 判断的具体行为</li>
+</ol>
+<p>当满足上述条件时，<code>==</code> 运算符会：</p>
+<ol>
+<li>先检查两个数组的长度（编译期已确定，运行时直接比对）；</li>
+<li>**<u>遍历</u>**数组的每一个索引位置，逐一比较对应位置的元素是否相等；</li>
+<li>只要有任意一个位置的元素不相等，整个数组的比较结果就是 <code>false</code>；只有所有元素都相等，结果才是 <code>true</code>。</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 情况1：同类型、同长度、元素全相等的数组</span><br>    arr1 := [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;<br>    arr2 := [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;<br>    fmt.Println(arr1 == arr2) <span class="hljs-comment">// 输出 true（遍历所有元素，全部相等）</span><br><br>    <span class="hljs-comment">// 情况2：同类型、同长度、有元素不相等</span><br>    arr3 := [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>&#125;<br>    fmt.Println(arr1 == arr3) <span class="hljs-comment">// 输出 false（遍历到第三个元素时发现不相等）</span><br><br>    <span class="hljs-comment">// 情况3：长度不同，编译报错（invalid operation: arr1 == arr4 (mismatched types [3]int and [4]int)）</span><br>    <span class="hljs-comment">// arr4 := [4]int&#123;1, 2, 3, 4&#125;</span><br>    <span class="hljs-comment">// fmt.Println(arr1 == arr4)</span><br><br>    <span class="hljs-comment">// 情况4：元素类型不可比较（如包含slice），编译报错（invalid operation: arr5 == arr6 (array element type []int is not comparable)）</span><br>    <span class="hljs-comment">// arr5 := [2][]int&#123;&#123;1&#125;, &#123;2&#125;&#125;</span><br>    <span class="hljs-comment">// arr6 := [2][]int&#123;&#123;1&#125;, &#123;2&#125;&#125;</span><br>    <span class="hljs-comment">// fmt.Println(arr5 == arr6)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</div></details> 
 <hr>
 <p><br><br><br></p>
 <h2 id="类型转换">类型转换</h2>
@@ -1291,6 +1388,72 @@
 </ol>
 <details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p><a target="_blank" rel="noopener" href="https://pkg.go.dev/runtime/debug@master#SetCrashOutput">https://pkg.go.dev/runtime/debug@master#SetCrashOutput</a></p>
 </div></details>
+<br>
+<ol start="4">
+<li>结构体空指针传给方法接口，接口不为nil，导致后续问题（所以不推荐这么干，例如函数参数为接口方法，将结构体传进去）</li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>省流：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> DemoInterface <span class="hljs-keyword">interface</span> &#123;<br>    DemoMethod()<br>&#125;<br><br><span class="hljs-keyword">type</span> DemoStruct1 <span class="hljs-keyword">struct</span> &#123;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *DemoStruct1)</span></span> DemoMethod() &#123;<br>    fmt.Println(<span class="hljs-string">&quot;DemoMethod...&quot;</span>)<br>&#125;<br><br><span class="hljs-keyword">type</span> DemoStruct2 <span class="hljs-keyword">struct</span> &#123;<br>    DemoStruct1<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">test</span><span class="hljs-params">(demo DemoInterface)</span></span> &#123;<br>    <span class="hljs-keyword">if</span> demo == <span class="hljs-literal">nil</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;demo is nil&quot;</span>)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    demo.DemoMethod()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    fmt.Println(<span class="hljs-string">&quot;nil接口作为参数传入：&quot;</span>)<br>    test(<span class="hljs-literal">nil</span>)<br>    fmt.Println()<br><br>    fmt.Println(<span class="hljs-string">&quot;nil结构体指针作为参数传入：&quot;</span>)<br>    <span class="hljs-keyword">var</span> demoStruct *DemoStruct2 = <span class="hljs-literal">nil</span><br>    test(demoStruct)<br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">输出结果：</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">nil接口作为参数传入：</span><br><span class="hljs-comment">demo is nil</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">nil结构体指针作为参数传入：</span><br><span class="hljs-comment">panic: runtime error: invalid memory address or nil pointer dereference</span><br><span class="hljs-comment">[signal SIGSEGV: segmentation violation code=0x2 addr=0x0 pc=0x100740830]</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">goroutine 1 [running]:</span><br><span class="hljs-comment">main.(*DemoStruct2).DemoMethod(0x1400010c018?)</span><br><span class="hljs-comment">        &lt;autogenerated&gt;:1 +0x20</span><br><span class="hljs-comment">main.test(&#123;0x1007905a8?, 0x0?&#125;)</span><br><span class="hljs-comment">        /Users/g**********g/demo-test/main.go:27 +0x30</span><br><span class="hljs-comment">main.main()</span><br><span class="hljs-comment">        /Users/g**********g/demo-test/main.go:37 +0xc8</span><br><span class="hljs-comment">exit status 2</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;reflect&quot;</span><br>    <span class="hljs-string">&quot;unsafe&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> MyInterface <span class="hljs-keyword">interface</span> &#123;<br>    DoSomething()<br>&#125;<br><br><span class="hljs-keyword">type</span> MyStruct <span class="hljs-keyword">struct</span> &#123;<br>    value <span class="hljs-type">int</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *MyStruct)</span></span> DoSomething() &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;MyStruct.DoSomething called with value: %d\n&quot;</span>, m.value)<br>&#125;<br><br><span class="hljs-comment">// 模拟Go接口的内部结构</span><br><span class="hljs-keyword">type</span> iface <span class="hljs-keyword">struct</span> &#123;<br>    tab  <span class="hljs-type">uintptr</span> <span class="hljs-comment">// 指向类型信息</span><br>    data <span class="hljs-type">uintptr</span> <span class="hljs-comment">// 指向数据</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    fmt.Println(<span class="hljs-string">&quot;=== Go接口的内部机制解析 ===\n&quot;</span>)<br><br>    <span class="hljs-comment">// 情况1: 真正的nil接口</span><br>    fmt.Println(<span class="hljs-string">&quot;1. 真正的nil接口:&quot;</span>)<br>    <span class="hljs-keyword">var</span> iface1 MyInterface = <span class="hljs-literal">nil</span><br>    fmt.Printf(<span class="hljs-string">&quot;   iface1 == nil: %v\n&quot;</span>, iface1 == <span class="hljs-literal">nil</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;   reflect.ValueOf(iface1).IsNil(): 无法调用（会panic）\n&quot;</span>)<br>    <br>    <span class="hljs-comment">// 使用unsafe查看接口内部结构</span><br>    internal1 := (*iface)(unsafe.Pointer(&amp;iface1))<br>    fmt.Printf(<span class="hljs-string">&quot;   内部结构: &#123;tab: %v, data: %v&#125;\n&quot;</span>, internal1.tab, internal1.data)<br>    fmt.Println()<br><br>    <span class="hljs-comment">// 情况2: nil指针转换为接口</span><br>    fmt.Println(<span class="hljs-string">&quot;2. nil指针转换为接口:&quot;</span>)<br>    <span class="hljs-keyword">var</span> nilPtr *MyStruct = <span class="hljs-literal">nil</span><br>    <span class="hljs-keyword">var</span> iface2 MyInterface = nilPtr  <span class="hljs-comment">// 关键：这里发生了什么？</span><br>    <br>    fmt.Printf(<span class="hljs-string">&quot;   nilPtr == nil: %v\n&quot;</span>, nilPtr == <span class="hljs-literal">nil</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;   iface2 == nil: %v\n&quot;</span>, iface2 == <span class="hljs-literal">nil</span>)  <span class="hljs-comment">// 重点：这里是false！</span><br>    <br>    <span class="hljs-comment">// 使用reflect查看更多信息</span><br>    v := reflect.ValueOf(iface2)<br>    fmt.Printf(<span class="hljs-string">&quot;   reflect.ValueOf(iface2).IsNil(): %v\n&quot;</span>, v.IsNil())<br>    fmt.Printf(<span class="hljs-string">&quot;   reflect.ValueOf(iface2).Kind(): %v\n&quot;</span>, v.Kind())<br>    fmt.Printf(<span class="hljs-string">&quot;   reflect.TypeOf(iface2): %v\n&quot;</span>, reflect.TypeOf(iface2))<br>    <br>    <span class="hljs-comment">// 查看内部结构</span><br>    internal2 := (*iface)(unsafe.Pointer(&amp;iface2))<br>    fmt.Printf(<span class="hljs-string">&quot;   内部结构: &#123;tab: %v, data: %v&#125;\n&quot;</span>, internal2.tab, internal2.data)<br>    fmt.Println()<br><br>    <span class="hljs-comment">// 情况3: 正常的指针转换为接口</span><br>    fmt.Println(<span class="hljs-string">&quot;3. 正常指针转换为接口:&quot;</span>)<br>    normalPtr := &amp;MyStruct&#123;value: <span class="hljs-number">42</span>&#125;<br>    <span class="hljs-keyword">var</span> iface3 MyInterface = normalPtr<br>    <br>    fmt.Printf(<span class="hljs-string">&quot;   normalPtr == nil: %v\n&quot;</span>, normalPtr == <span class="hljs-literal">nil</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;   iface3 == nil: %v\n&quot;</span>, iface3 == <span class="hljs-literal">nil</span>)<br>    <br>    v3 := reflect.ValueOf(iface3)<br>    fmt.Printf(<span class="hljs-string">&quot;   reflect.ValueOf(iface3).IsNil(): %v\n&quot;</span>, v3.IsNil())<br>    <br>    internal3 := (*iface)(unsafe.Pointer(&amp;iface3))<br>    fmt.Printf(<span class="hljs-string">&quot;   内部结构: &#123;tab: %v, data: %v&#125;\n&quot;</span>, internal3.tab, internal3.data)<br>    fmt.Println()<br><br>    <span class="hljs-comment">// 关键解释</span><br>    fmt.Println(<span class="hljs-string">&quot;=== 关键解释 ===&quot;</span>)<br>    fmt.Println(<span class="hljs-string">&quot;Go接口内部包含两个字段：&quot;</span>)<br>    fmt.Println(<span class="hljs-string">&quot;- tab (type): 指向类型信息的指针&quot;</span>) <br>    fmt.Println(<span class="hljs-string">&quot;- data: 指向实际数据的指针&quot;</span>)<br>    fmt.Println()<br>    fmt.Println(<span class="hljs-string">&quot;接口为nil的条件：tab == nil &amp;&amp; data == nil&quot;</span>)<br>    fmt.Println()<br>    fmt.Println(<span class="hljs-string">&quot;当我们执行: var iface MyInterface = (*MyStruct)(nil)&quot;</span>)<br>    fmt.Println(<span class="hljs-string">&quot;- tab指向*MyStruct的类型信息（非nil）&quot;</span>)<br>    fmt.Println(<span class="hljs-string">&quot;- data是nil指针&quot;</span>)<br>    fmt.Println(<span class="hljs-string">&quot;- 所以接口 != nil，但底层data是nil&quot;</span>)<br>    fmt.Println()<br><br>    <span class="hljs-comment">// 演示为什么会panic</span><br>    fmt.Println(<span class="hljs-string">&quot;=== 演示为什么调用方法会panic ===&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;尝试调用iface2.DoSomething()...\n&quot;</span>)<br>    <br>    <span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        <span class="hljs-keyword">if</span> r := <span class="hljs-built_in">recover</span>(); r != <span class="hljs-literal">nil</span> &#123;<br>            fmt.Printf(<span class="hljs-string">&quot;💥 PANIC: %v\n&quot;</span>, r)<br>            fmt.Println(<span class="hljs-string">&quot;原因: 虽然接口不是nil，但底层数据是nil指针&quot;</span>)<br>        &#125;<br>    &#125;()<br>    <br>    iface2.DoSomething() <span class="hljs-comment">// 这里会panic</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这是Go语言中一个经典的&quot;陷阱&quot;！让我用代码来详细解释Go接口的内部机制。</p>
+<p>[5 tools called]</p>
+<p>🎯 <strong>Go接口nil的机制解析</strong></p>
+<p>这是Go语言中一个非常重要的概念！让我详细解释为什么会发生这种情况。</p>
+<p>💡 <strong>Go接口的内部结构</strong></p>
+<p>Go的接口实际上是一个包含<strong>两个指针</strong>的数据结构：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> <span class="hljs-keyword">interface</span>&#123;&#125; <span class="hljs-keyword">struct</span> &#123;<br>    tab  *itab     <span class="hljs-comment">// 指向类型信息的指针</span><br>    data unsafe.Pointer  <span class="hljs-comment">// 指向实际数据的指针</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>🔍 <strong>关键对比</strong></p>
+<p>从演示输出可以看到：</p>
+<p><strong>1. 真正的nil接口:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">内部结构: &#123;tab: 0, data: 0&#125;<br>iface == nil: true<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>tab = 0</code> (nil)</li>
+<li><code>data = 0</code> (nil)</li>
+<li><strong>接口 == nil</strong></li>
+</ul>
+<p><strong>2. nil指针转换为接口:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">内部结构: &#123;tab: 4332569976, data: 0&#125;<br>iface == nil: false<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>tab = 4332569976</code> (<strong>非nil</strong>，指向<code>*MyStruct</code>类型信息)</li>
+<li><code>data = 0</code> (nil)</li>
+<li><strong>接口 != nil</strong> 🚨</li>
+</ul>
+<p><strong>3. 正常指针转换为接口:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">内部结构: &#123;tab: 4332569976, data: 1374390185208&#125;<br>iface == nil: false<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>tab = 4332569976</code> (非nil)</li>
+<li><code>data = 1374390185208</code> (非nil，指向实际对象)</li>
+<li><strong>接口 != nil</strong></li>
+</ul>
+<p>📋 <strong>核心规则</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">接口为<span class="hljs-literal">nil</span>的唯一条件: tab == <span class="hljs-literal">nil</span> &amp;&amp; data == <span class="hljs-literal">nil</span><br></code></pre></td></tr></table></figure>
+<p>当我们执行：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> nilPtr *MsgIDRange = <span class="hljs-literal">nil</span><br><span class="hljs-keyword">var</span> filter RangeFilter = nilPtr  <span class="hljs-comment">// 转换发生在这里！</span><br></code></pre></td></tr></table></figure>
+<p>转换过程：</p>
+<ol>
+<li>Go看到要将<code>*MsgIDRange</code>类型赋值给<code>RangeFilter</code>接口</li>
+<li>创建接口值：<code>{tab: *MsgIDRange类型信息, data: nil}</code></li>
+<li>因为<code>tab != nil</code>，所以<code>filter != nil</code></li>
+<li>但<code>data = nil</code>，调用方法时会panic</li>
+</ol>
+<p>⚠️ <strong>为什么会panic</strong></p>
+<p>虽然接口本身不是nil，但当调用方法时：</p>
+<ol>
+<li>Go运行时从接口中提取<code>data</code>指针</li>
+<li>尝试在nil指针上调用方法</li>
+<li>访问nil指针的内存 → <strong>panic</strong></li>
+</ol>
+<p>🛡️ <strong>检测方法</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 方法1: 类型断言检查</span><br><span class="hljs-keyword">if</span> v, ok := filter.(*MsgIDRange); ok &amp;&amp; v == <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-comment">// 这是typed nil pointer</span><br>&#125;<br><br><span class="hljs-comment">// 方法2: reflect检查</span><br><span class="hljs-keyword">if</span> reflect.ValueOf(filter).IsNil() &#123;<br>    <span class="hljs-comment">// 底层数据是nil</span><br>&#125;<br><br><span class="hljs-comment">// 方法3: 我们的解决方案 - 显式方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mir *MsgIDRange)</span></span> GetRangeMode() RangeMode &#123;<br>    <span class="hljs-keyword">if</span> mir == <span class="hljs-literal">nil</span> &#123;  <span class="hljs-comment">// 直接检查receiver</span><br>        <span class="hljs-keyword">return</span> RangeModeUnabled<br>    &#125;<br>    <span class="hljs-keyword">return</span> mir.RangeMode<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>🎉 <strong>总结</strong></p>
+<p>这就是为什么你的原始代码会panic的根本原因：</p>
+<ul>
+<li><strong>接口不是nil</strong>（有类型信息）</li>
+<li><strong>但底层数据是nil指针</strong></li>
+<li><strong>调用方法时访问nil指针导致panic</strong></li>
+</ul>
+<p>我们的修复通过<strong>显式定义方法</strong>并在方法内部检查receiver是否为nil，完美解决了这个Go语言的经典陷阱！🚀</p>
+</div></details> 
 <hr>
 <p><br><br><br></p>
 <h2 id="单元测试">单元测试</h2>
@@ -1323,6 +1486,29 @@
 <p><strong>总结</strong></p>
 <p>在 Go 项目中使用 mock 接口是为了<strong>解耦依赖、提升测试效率</strong>。通过抽象接口并编写 mock 实现，开发者可以更专注于业务逻辑的单元测试，降低测试成本，同时遵循 Go 社区的最佳实践。</p>
 </div></details>
+<ol start="2">
+<li>缓存问题</li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">解决办法 </summary><div class="toggle-content"><p>触发缓存的条件：</p>
+<p>当满足以下所有条件时，<code>go test</code> 会缓存测试结果（包括成功 / 失败、覆盖率等）：</p>
+<ul>
+<li>测试的<strong>包代码</strong>（<code>.go</code> 文件）、<strong>测试代码</strong>（<code>_test.go</code> 文件）未发生修改；</li>
+<li>测试依赖的<strong>所有包</strong>（包括直接 / 间接依赖）的代码未发生修改；</li>
+<li>测试执行时的<strong>构建环境</strong>未变化（如 Go 版本、GOOS/GOARCH、编译标签 <code>-tags</code> 等）；</li>
+<li>测试未使用以下会绕过缓存的参数 / 特性：
+<ul>
+<li><code>-count=N</code>（N≠1，显式指定执行次数）；</li>
+<li><code>-race</code>（竞态检测）；</li>
+<li><code>-coverprofile</code>（输出覆盖率文件）；</li>
+<li>测试代码中读取了外部资源（如文件、网络、环境变量，且未通过 <code>TestMain</code> 隔离）；</li>
+<li>测试使用了 <code>os.Exit</code>、<code>log.Fatal</code> 等会终止进程的操作（这类测试结果通常不缓存）。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">❯ go test -v .                       <br>=== RUN   TestNewErrorClassifier<br>--- PASS: TestNewErrorClassifier (0.00s)<br>=== RUN   TestNewClientWithDefaultConfig<br>--- PASS: TestNewClientWithDefaultConfig (0.00s)<br>=== RUN   TestNewClientWithCustomConfig<br>--- PASS: TestNewClientWithCustomConfig (0.00s)<br>=== RUN   TestClassifyError<br>    client_test.go:84: Error types: [dns_failure other]<br>--- PASS: TestClassifyError (1.21s)<br>PASS<br>ok      git.garena.com/seatalk/seatalk_dr_platform/internal/lib/smart   (cached)<br></code></pre></td></tr></table></figure>
+<p>关闭缓存 -&gt; 添加参数<code>-count=1</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">❯ go test -v -count=1 .<br>=== RUN   TestNewErrorClassifier<br>--- PASS: TestNewErrorClassifier (0.00s)<br>=== RUN   TestNewClientWithDefaultConfig<br>--- PASS: TestNewClientWithDefaultConfig (0.00s)<br>=== RUN   TestNewClientWithCustomConfig<br>--- PASS: TestNewClientWithCustomConfig (0.00s)<br>=== RUN   TestClassifyError<br>    client_test.go:81: ClassifyError failed: classify error failed: workflow execution failed: <br>--- FAIL: TestClassifyError (0.45s)<br>FAIL<br>FAIL    git.garena.com/seatalk/seatalk_dr_platform/internal/lib/smart   0.694s<br>FAIL<br></code></pre></td></tr></table></figure>
+</div></details> 
 <hr>
 <p><br><br></p>
 <br>
@@ -1338,6 +1524,270 @@
 <p><strong>数据塞回的必要性</strong>：为了确保后续处理函数能够正常读取请求 <code>body</code> 的内容，当在中间件等地方做了数据预处理并读取了 <code>body</code> 数据后，需要将数据塞回去（即恢复 <code>body</code> 数据以便后续读取）。一种常见的做法是将读取到的数据保存起来，然后创建一个新的 <code>io.Reader</code> 供后续使用。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">middlewareWithRestore</span><span class="hljs-params">(next http.Handler)</span></span> http.Handler &#123;<br>    <span class="hljs-keyword">return</span> http.HandlerFunc(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>        body, err := io.ReadAll(r.Body)<br>        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>            http.Error(w, <span class="hljs-string">&quot;Failed to read request body in middleware&quot;</span>, http.StatusBadRequest)<br>            <span class="hljs-keyword">return</span><br>        &#125;<br>        <span class="hljs-comment">// 保存读取到的 body 数据</span><br>        newBody := bytes.NewBuffer(body)<br>        <span class="hljs-comment">// 替换原始的 r.Body</span><br>        r.Body = ioutil.NopCloser(newBody)<br>        next.ServeHTTP(w, r)<br>    &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>总之，在处理 Go 的 <code>http request</code> 标准包中的请求 <code>body</code> 时，务必牢记其读缓冲的特性，尤其是在进行中间件数据预处理等操作时，及时进行数据的恢复，以保证整个请求处理流程的正确性和完整性。</p>
+</div></details>
+<br>
+<ol start="2">
+<li><strong>golang http标准库默认行为，会规范化header的key，eg: <code>X-Event-User-JWT</code> → <code>X-Event-User-Jwt</code></strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>我来为你整理一下刚才的测试代码和分析内容：</p>
+<p><strong>测试代码</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;net/http&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    h := <span class="hljs-built_in">make</span>(http.Header)<br>    h.Add(<span class="hljs-string">&quot;X-Event-User-JWT&quot;</span>, <span class="hljs-string">&quot;test-value&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;Original key: X-Event-User-JWT\n&quot;</span>)<br>    fmt.Printf(<span class="hljs-string">&quot;Canonicalized key: &quot;</span>)<br>    <span class="hljs-keyword">for</span> k := <span class="hljs-keyword">range</span> h &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;%s\n&quot;</span>, k)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>运行结果：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Original key: X-Event-User-JWT<br>Canonicalized key: X-Event-User-Jwt<br></code></pre></td></tr></table></figure>
+<p><strong>核心分析</strong></p>
+<p><strong>1、转换规则</strong></p>
+<p>Go 语言的 HTTP header key 规范化规则：</p>
+<ul>
+<li><strong>首字母大写</strong>：每个单词的第一个字母</li>
+<li><strong>连字符后大写</strong>：<code>-</code> 后面的第一个字母</li>
+<li><strong>其余小写</strong>：其他所有字母</li>
+</ul>
+<p><strong>2、转换过程详解</strong></p>
+<p><code>X-Event-User-JWT</code> → <code>X-Event-User-Jwt</code></p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>原始字符</th>
+<th>转换后</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>首字母，保持大写</td>
+</tr>
+<tr>
+<td>2</td>
+<td>-</td>
+<td>-</td>
+<td>连字符，不变</td>
+</tr>
+<tr>
+<td>3</td>
+<td>E</td>
+<td>E</td>
+<td>连字符后首字母，大写</td>
+</tr>
+<tr>
+<td>4-7</td>
+<td>vent</td>
+<td>vent</td>
+<td>其余字母，小写</td>
+</tr>
+<tr>
+<td>8</td>
+<td>-</td>
+<td>-</td>
+<td>连字符，不变</td>
+</tr>
+<tr>
+<td>9</td>
+<td>U</td>
+<td>U</td>
+<td>连字符后首字母，大写</td>
+</tr>
+<tr>
+<td>10-12</td>
+<td>ser</td>
+<td>ser</td>
+<td>其余字母，小写</td>
+</tr>
+<tr>
+<td>13</td>
+<td>-</td>
+<td>-</td>
+<td>连字符，不变</td>
+</tr>
+<tr>
+<td>14</td>
+<td>J</td>
+<td>J</td>
+<td>连字符后首字母，大写</td>
+</tr>
+<tr>
+<td>15-16</td>
+<td>WT</td>
+<td>Wt</td>
+<td>其余字母，小写</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3、关键代码位置</strong></p>
+<ul>
+<li><strong>入口</strong>：<code>net/http/header.go:30-32</code> - <code>Header.Add()</code> 方法</li>
+<li><strong>实现</strong>：<code>net/textproto/reader.go:742-789</code> - <code>canonicalMIMEHeaderKey()</code> 函数</li>
+<li><strong>规则</strong>：第767-780行的转换逻辑</li>
+</ul>
+<p><strong>4、设计目的</strong></p>
+<ul>
+<li><strong>标准化</strong>：统一 HTTP header 名称格式</li>
+<li><strong>兼容性</strong>：HTTP header 大小写不敏感，但需要统一表示</li>
+<li><strong>RFC 合规</strong>：符合 HTTP 协议标准</li>
+</ul>
+<p><strong>5、影响范围</strong></p>
+<p>所有通过 <code>http.Header</code> 的 <code>Add()</code>、<code>Set()</code>、<code>Get()</code> 等方法操作的 header key 都会经过规范化处理。</p>
+<p>这个机制确保了 HTTP header 名称的一致性，是 Go 语言 HTTP 库的标准行为。</p>
+</div></details> 
+<br>
+<ol start="3">
+<li><strong>Go语言中文文件名乱码问题笔</strong></li>
+</ol>
+<p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-11-19_13-13-50.png" alt=""></p>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p><strong>🔍 问题重新分析</strong></p>
+<p><strong>真实的问题原因</strong></p>
+<p>经过实际测试验证，问题<strong>不是</strong>来自 <code>%q</code> 的字符转义，而是HTTP协议层面的兼容性问题。</p>
+<p><code>%q</code> 格式化动词的真实行为</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">filename := <span class="hljs-string">&quot;测试文档.pdf&quot;</span><br>fmt.Printf(<span class="hljs-string">&quot;%q&quot;</span>, filename)  <span class="hljs-comment">// 输出: &quot;测试文档.pdf&quot;</span><br></code></pre></td></tr></table></figure>
+<p><strong><code>%q</code> 实际做的事情：</strong></p>
+<ol>
+<li>✅ 在字符串两端添加双引号</li>
+<li>✅ 转义字符串内的双引号和反斜杠</li>
+<li>✅ <strong>保留可打印的Unicode字符（包括中文）</strong></li>
+<li>❌ <strong>不会</strong>将中文转义成 <code>\uXXXX</code> 格式</li>
+</ol>
+<p><strong>📊 %q 转义规则对照表（修正版）</strong></p>
+<table>
+<thead>
+<tr>
+<th>字符类型</th>
+<th>原字符</th>
+<th><code>%q</code> 输出</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文</td>
+<td><code>测试</code></td>
+<td><code>&quot;测试&quot;</code></td>
+<td><strong>保持原样</strong></td>
+</tr>
+<tr>
+<td>换行符</td>
+<td><code>\n</code></td>
+<td><code>&quot;\n&quot;</code></td>
+<td>转义显示</td>
+</tr>
+<tr>
+<td>制表符</td>
+<td><code>\t</code></td>
+<td><code>&quot;\t&quot;</code></td>
+<td>转义显示</td>
+</tr>
+<tr>
+<td>双引号</td>
+<td><code>&quot;</code></td>
+<td><code>&quot;\&quot;&quot;</code></td>
+<td>反斜杠转义</td>
+</tr>
+<tr>
+<td>英文</td>
+<td><code>abc</code></td>
+<td><code>&quot;abc&quot;</code></td>
+<td>保持原样</td>
+</tr>
+</tbody>
+</table>
+<p><strong>🌐 HTTP协议层面的真实问题</strong></p>
+<p>问题根源：HTTP头兼容性</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs http"># 原代码生成的头<br><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>attachment; filename=&quot;测试文档.pdf&quot;<br><br># 问题：某些HTTP客户端/浏览器可能无法正确处理非ASCII字符<br></code></pre></td></tr></table></figure>
+<p>不同环境的表现差异</p>
+<ul>
+<li><strong>现代浏览器</strong>：大多数能正确显示中文</li>
+<li><strong>老版本浏览器</strong>：可能显示乱码或问号</li>
+<li><strong>HTTP客户端工具</strong>（如curl、wget）：行为不一致</li>
+<li><strong>代理服务器</strong>：可能在传输过程中破坏编码</li>
+</ul>
+<p><strong>✅ RFC 5987 标准解决方案</strong></p>
+<p>标准格式</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>attachment; filename=&quot;测试文档.pdf&quot;; filename*=UTF-8&#x27;&#x27;%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3.pdf<br></code></pre></td></tr></table></figure>
+<p><strong>为什么需要两个参数？</strong></p>
+<ul>
+<li><code>filename=&quot;测试文档.pdf&quot;</code> - 给支持UTF-8的现代客户端</li>
+<li><code>filename*=UTF-8''%E6%B5%8B...</code> - 给需要显式编码的客户端</li>
+</ul>
+<p><strong>🔧 我们的解决方案价值</strong></p>
+<p>修改前的潜在问题</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 可能在某些环境下兼容性不佳</span><br>fmt.Sprintf(<span class="hljs-string">&quot;attachment; filename=%q&quot;</span>, filename)<br></code></pre></td></tr></table></figure>
+<p>修改后的优势</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 确保跨平台、跨浏览器兼容</span><br>formatContentDisposition(filename)<br></code></pre></td></tr></table></figure>
+<p><strong>🎯 核心知识点（修正版）</strong></p>
+<ol>
+<li><strong><code>%q</code> 本身没问题</strong>：它能正确处理Unicode字符</li>
+<li><strong>问题在HTTP层</strong>：需要考虑不同客户端的兼容性</li>
+<li><strong>最佳实践</strong>：使用RFC 5987标准，提供双重编码</li>
+<li><strong>防御性编程</strong>：即使现在看起来工作正常，也要考虑边缘情况</li>
+</ol>
+<p><strong>HTTP文件下载最佳实践</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">formatContentDisposition</span><span class="hljs-params">(filename <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span> &#123;<br>    <span class="hljs-keyword">if</span> containsNonASCII(filename) &#123;<br>        <span class="hljs-comment">// 双重保险：既支持现代浏览器，也支持老客户端</span><br>        encoded := url.QueryEscape(filename)<br>        <span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;attachment; filename=\&quot;%s\&quot;; filename*=UTF-8&#x27;&#x27;%s&quot;</span>, <br>                          filename, encoded)<br>    &#125;<br>    <span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;attachment; filename=\&quot;%s\&quot;&quot;</span>, filename)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>✨ 结论</strong></p>
+<p>这次修复的真正价值不在于解决 <code>%q</code> 的转义问题（它本身就是正确的），而在于：</p>
+<ul>
+<li>🛡️ <strong>提高系统健壮性</strong>：确保在各种环境下都能正确显示文件名</li>
+<li>🌍 <strong>国际化兼容性</strong>：符合HTTP标准的Unicode文件名处理</li>
+<li>🔮 <strong>未来兼容性</strong>：即使遇到严格的HTTP客户端也能正常工作</li>
+</ul>
+<p><strong>感谢实际测试纠正了理论误区！</strong> 这是一个很好的工程实践案例。</p>
+<br>
+<p>以上为AI回复，但是似乎没有作用，各个工具的编码方式不统一，如果是编码来获取文件的话，可以规避。</p>
+<p>HTTP 协议规定<strong>请求 / 响应头（包括<code>Content-Disposition</code>）默认使用 ISO-8859-1 编码</strong>，而 ISO-8859-1 无法表示中文等多字节字符，这是 “中文文件名乱码” 的根源。</p>
+<ul>
+<li><strong>做了兼容处理的工具</strong>（如 curl、现代浏览器）：会检测到 “ISO-8859-1 外壳下的 UTF-8 字节”（比如<code>åå¯</code>），自动执行 “ISO-8859-1 字节→UTF-8 解码” 的还原操作，所以能显示正确中文；</li>
+<li><strong>没做兼容处理的工具</strong>（如旧版 Postman、严格遵循规范的老旧客户端）：会直接按 ISO-8859-1 解析字符，把 UTF-8 的多字节拆成单个 ISO-8859-1 字符显示，结果就是乱码。</li>
+</ul>
+<p>简单说：<strong>HTTP 头的编码限制是 “先天问题”，工具的兼容处理是 “后天补救”</strong>—— 补救了就正常，没补救就乱码。而<code>filename*=UTF-8''xxx</code>的规范写法，本质是绕开 ISO-8859-1 的限制，让工具无需补救也能正确解析。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;io&quot;</span><br>    <span class="hljs-string">&quot;net/http&quot;</span><br>    <span class="hljs-string">&quot;os&quot;</span><br>    <span class="hljs-string">&quot;regexp&quot;</span><br>    <span class="hljs-string">&quot;strings&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    targetURL := <span class="hljs-string">&quot;https://openxxxxxio/messaging/v2/file/rSAS8xiQOrLSN-Xxxxxxxb9jTQEdp3LAkYA1IYnXn&quot;</span><br>    authToken := <span class="hljs-string">&quot;Bearer f528fff51xxxxfb&quot;</span><br><br>    req, err := http.NewRequest(<span class="hljs-string">&quot;GET&quot;</span>, targetURL, <span class="hljs-literal">nil</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;创建请求失败：%v\n&quot;</span>, err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    req.Header.Set(<span class="hljs-string">&quot;Authorization&quot;</span>, authToken)<br><br>    client := &amp;http.Client&#123;&#125;<br>    resp, err := client.Do(req)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;发送请求失败：%v\n&quot;</span>, err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">defer</span> resp.Body.Close()<br><br>    <span class="hljs-keyword">if</span> resp.StatusCode != http.StatusOK &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;请求失败，状态码：%d\n&quot;</span>, resp.StatusCode)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br><br>    <span class="hljs-comment">// 解析Content-Disposition获取文件名</span><br>    filename := getFilenameFromHeader(resp.Header.Get(<span class="hljs-string">&quot;Content-Disposition&quot;</span>))<br>    <span class="hljs-keyword">if</span> filename == <span class="hljs-string">&quot;&quot;</span> &#123;<br>        filename = <span class="hljs-string">&quot;default.txt&quot;</span> <span class="hljs-comment">// 兜底文件名</span><br>    &#125;<br><br>    file, err := os.Create(filename)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;创建文件失败：%v\n&quot;</span>, err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">defer</span> file.Close()<br><br>    _, err = io.Copy(file, resp.Body)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;保存文件失败：%v\n&quot;</span>, err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br><br>    fmt.Printf(<span class="hljs-string">&quot;文件下载成功！\n文件名：%s\n保存路径：%s\n&quot;</span>, filename, <span class="hljs-string">&quot;./&quot;</span>+filename)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getFilenameFromHeader</span><span class="hljs-params">(cd <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span> &#123;<br>    <span class="hljs-keyword">if</span> cd == <span class="hljs-string">&quot;&quot;</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span><br>    &#125;<br><br>    <span class="hljs-comment">// 容错处理：解析filename字段，并将ISO-8859-1乱码转UTF-8</span><br>    reOld := regexp.MustCompile(<span class="hljs-string">`filename=&quot;?([^&quot;;]+)&quot;?`</span>)<br>    matchesOld := reOld.FindStringSubmatch(cd)<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(matchesOld) &gt; <span class="hljs-number">1</span> &amp;&amp; matchesOld[<span class="hljs-number">1</span>] != <span class="hljs-string">&quot;&quot;</span> &#123;<br>        <span class="hljs-comment">// 将ISO-8859-1编码的乱码字节转UTF-8（还原中文）</span><br>        isoBytes := []<span class="hljs-type">byte</span>(matchesOld[<span class="hljs-number">1</span>])<br>        utf8Str := <span class="hljs-type">string</span>(isoBytes) <span class="hljs-comment">// Go默认按UTF-8解析，自动还原</span><br>        <span class="hljs-comment">// 清理可能的无效字符</span><br>        utf8Str = strings.TrimSpace(utf8Str)<br>        <span class="hljs-keyword">if</span> utf8Str != <span class="hljs-string">&quot;&quot;</span> &#123;<br>            <span class="hljs-keyword">return</span> utf8Str<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</div></details> 
+<ol start="3">
+<li>gin: <code>c.Json()</code>触发panic</li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看输出 </summary><div class="toggle-content"><p><strong>1. 错误本质</strong></p>
+<ul>
+<li>错误：<code>write tcp ... write: broken pipe</code></li>
+<li>场景：服务端处理完业务，<strong>准备写响应（JSON）时</strong>，发现<strong>客户端已经把 TCP 连接关了</strong></li>
+<li>表现：底层写失败 → 触发 panic → 被你的 recover 中间件捕获打印</li>
+</ul>
+<p><strong>2. 为什么会触发（必同时满足）</strong></p>
+<ol>
+<li><strong>服务端处理慢</strong>（DB 慢、第三方慢、高负载、接口耗时变长）</li>
+<li>客户端 / 网关提前断开：
+<ul>
+<li>前端 / 调用方超时</li>
+<li>用户关页面、取消请求</li>
+<li>Nginx/SLB 空闲超时、网络断开</li>
+</ul>
+</li>
+<li>Gin 在渲染响应（<code>c.JSON()</code>）时<strong>直接 panic</strong>，不会自动吞掉</li>
+</ol>
+<p><strong>3. 为什么你现在才第一次见</strong></p>
+<ul>
+<li>之前接口<strong>足够快</strong>，客户端来不及断开</li>
+<li>现在：<strong>业务量 / 数据量变大、接口变慢、并发变高</strong></li>
+<li>不是新 Bug，是<strong>到达一定规模必然出现</strong>的网络常见问题</li>
+</ul>
+<p><strong>4. 这个错误的真实危害</strong></p>
+<ul>
+<li><strong>不是服务崩溃、不是数据错误、不是业务 Bug</strong></li>
+<li>危害只有两点：
+<ol>
+<li>日志刷屏、污染告警 / 监控</li>
+<li>不必要的 panic 开销（高并发下会有性能损耗）</li>
+</ol>
+</li>
+</ul>
+<p><strong>5. 标准修复方案（Go/Gin 通用）</strong></p>
+<p>在<strong>全局 panic 恢复中间件</strong>里加一段：</p>
+<ul>
+<li>判断是否是 <code>broken pipe</code></li>
+<li>如果是：只打 warn 日志，<strong>不再抛栈、不再上报</strong></li>
+<li>其他 panic 照旧正常处理</li>
+</ul>
+<p>极简判断（生产常用）：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">if</span> r != <span class="hljs-literal">nil</span> &#123;<br>    errStr, ok := r.(<span class="hljs-type">string</span>)<br>    <span class="hljs-keyword">if</span> ok &amp;&amp; strings.Contains(errStr, <span class="hljs-string">&quot;broken pipe&quot;</span>) &#123;<br>        <span class="hljs-comment">// 客户端断开，忽略</span><br>        c.Abort()<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-comment">// 其他panic：正常上报、打堆栈</span><br>&#125;<br></code></pre></td></tr></table></figure>
 </div></details>
 <hr>
 <p><br><br><br></p>
@@ -1453,13 +1903,21 @@
 <hr>
 <p><br><br><br></p>
 <h2 id="log">log</h2>
-<p>慎用log.with这样的操作</p>
+<ol>
+<li><strong>慎用log.with这样的操作</strong></li>
+</ol>
 <details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p>这个函数看起来人畜无害，但是一步小心就会造成内存负载增加问题。</p>
 <p>为什么呢？先说结论，由于log.with会重新构建ctx，频繁操作就会导致内存增加。</p>
 <p>但是为什么会频繁调用这个函数，这很奇怪对吧。我举个例子你就明白了，你再比较下游函数里面使用了一个log.with，你不会觉得有问题的，因为重复打印的东西，这样可以聚合一下。那么问题来了，如果上游循环调用了这个函数，那么就会出现这个问题，而且很隐蔽！！</p>
 <p>所以要慎用啊，如果有需要打印的数据，可以提早将其加到ctx中。</p>
 <p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-11_16-29-44.png" alt=""></p>
 </div></details>
+<ol start="2">
+<li><strong>errors.WithStack()要配合%+v使用才能打印调用栈</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/pkg/errors&quot;</span><br>    <span class="hljs-string">&quot;github.com/gw-gong/gwkit-go/log&quot;</span><br>)<br><br><span class="hljs-comment">// 模拟底层函数产生错误</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">readFile</span><span class="hljs-params">(path <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> &#123;<br>    <span class="hljs-comment">// 1. 生成原始错误，并附加调用栈</span><br>    <span class="hljs-keyword">return</span> errors.WithStack(fmt.Errorf(<span class="hljs-string">&quot;文件不存在: %s&quot;</span>, path))<br>&#125;<br><br><span class="hljs-comment">// 模拟上层函数调用</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">processData</span><span class="hljs-params">()</span></span> <span class="hljs-type">error</span> &#123;<br>    err := readFile(<span class="hljs-string">&quot;/tmp/nonexist.txt&quot;</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-comment">// 2. 错误透传（无需重复加栈，栈信息已包含）</span><br>        <span class="hljs-keyword">return</span> err<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    err := processData()<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-comment">// 3. 打印包含调用栈的错误信息（关键：用 %+v 格式化）</span><br>        fmt.Printf(<span class="hljs-string">&quot;\nfmt:错误详情（含调用栈）:\n%+v\n&quot;</span>, err)<br>        <span class="hljs-comment">// 打印错误详情（不含调用栈）</span><br>        fmt.Printf(<span class="hljs-string">&quot;\nfmt:错误详情（不含调用栈）:\n%v\n&quot;</span>, err)<br><br>        log.Errorf(<span class="hljs-string">&quot;gwkit-log:错误详情（含调用栈）:\n%+v\n&quot;</span>, err)<br>        log.Errorf(<span class="hljs-string">&quot;gwkit-log:错误详情（不含调用栈）:\n%v\n&quot;</span>, err)<br>        log.Error(<span class="hljs-string">&quot;gwkit-log:错误详情（含调用栈）&quot;</span>, log.Err(err))<br>        log.Error(<span class="hljs-string">&quot;gwkit-log:错误详情（不含调用栈）&quot;</span>, log.Str(<span class="hljs-string">&quot;error&quot;</span>, err.Error()))<br><br><br>        <span class="hljs-comment">// 可选：只提取原始错误（无栈）</span><br>        fmt.Println(<span class="hljs-string">&quot;\n原始错误信息:&quot;</span>, errors.Cause(err))<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"><br>fmt:错误详情（含调用栈）:<br>文件不存在: /tmp/nonexist.txt<br>main.readFile<br>        /Users/guowei.gong/Documents/workspace/projects/learning/demo/main.go:13<br>main.processData<br>        /Users/guowei.gong/Documents/workspace/projects/learning/demo/main.go:18<br>main.main<br>        /Users/guowei.gong/Documents/workspace/projects/learning/demo/main.go:27<br>runtime.main<br>        /opt/homebrew/Cellar/go/1.24.0/libexec/src/runtime/proc.go:283<br>runtime.goexit<br>        /opt/homebrew/Cellar/go/1.24.0/libexec/src/runtime/asm_arm64.s:1223<br><br>fmt:错误详情（不含调用栈）:<br>文件不存在: /tmp/nonexist.txt<br>2026-01-07T15:29:57.946+0800    ERROR   demo/main.go:34 gwkit-log:错误详情（含调用栈）:<br>文件不存在: /tmp/nonexist.txt<br>main.readFile<br>        /Users/guowei.gong/Documents/workspace/projects/learning/demo/main.go:13<br>main.processData<br>        /Users/guowei.gong/Documents/workspace/projects/learning/demo/main.go:18<br>main.main<br>        /Users/guowei.gong/Documents/workspace/projects/learning/demo/main.go:27<br>runtime.main<br>        /opt/homebrew/Cellar/go/1.24.0/libexec/src/runtime/proc.go:283<br>runtime.goexit<br>        /opt/homebrew/Cellar/go/1.24.0/libexec/src/runtime/asm_arm64.s:1223<br><br>2026-01-07T15:29:57.946+0800    ERROR   demo/main.go:35 gwkit-log:错误详情（不含调用栈）:<br>文件不存在: /tmp/nonexist.txt<br><br>2026-01-07T15:29:57.946+0800    ERROR   demo/main.go:36 gwkit-log:错误详情（含调用栈）  &#123;&quot;error&quot;: &quot;文件不存在: /tmp/nonexist.txt&quot;, &quot;errorVerbose&quot;: &quot;文件不存在: /tmp/nonexist.txt\nmain.readFile\n\t/Users/guowei.gong/Documents/workspace/projects/learning/demo/main.go:13\nmain.processData\n\t/Users/guowei.gong/Documents/workspace/projects/learning/demo/main.go:18\nmain.main\n\t/Users/guowei.gong/Documents/workspace/projects/learning/demo/main.go:27\nruntime.main\n\t/opt/homebrew/Cellar/go/1.24.0/libexec/src/runtime/proc.go:283\nruntime.goexit\n\t/opt/homebrew/Cellar/go/1.24.0/libexec/src/runtime/asm_arm64.s:1223&quot;&#125;<br>2026-01-07T15:29:57.946+0800    ERROR   demo/main.go:37 gwkit-log:错误详情（不含调用栈）        &#123;&quot;error&quot;: &quot;文件不存在: /tmp/nonexist.txt&quot;&#125;<br><br>原始错误信息: 文件不存在: /tmp/nonexist.txt<br></code></pre></td></tr></table></figure>
+</div></details> 
 <hr>
 <p><br><br><br></p>
 <h2 id="others">others</h2>
@@ -1468,7 +1926,70 @@
 </ol>
 <details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解析 </summary><div class="toggle-content"><p><img src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-26_14-06-11.png" alt=""></p>
 </div></details>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://gxblogs.com">ggw &amp; xpl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://gxblogs.com/posts/57494/">https://gxblogs.com/posts/57494/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gxblogs.com" target="_blank">GXBLOGS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a></div><div class="post_share"><div class="social-share" data-image="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/1808/"><img class="prev-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-30_16-11-15.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">golang并发编程</div></div></a></div><div class="next-post pull-right"><a href="/posts/27860/"><img class="next-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/202409091733981.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">golang密码学</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/19502/" title="connection pool"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2025-01-08_10-26-59.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-12</div><div class="title">connection pool</div></div></a></div><div><a href="/posts/45078/" title="go代码模块记录"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-20_10-54-38.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-22</div><div class="title">go代码模块记录</div></div></a></div><div><a href="/posts/14787/" title="Go‘s 数据结构"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-52-01.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">Go‘s 数据结构</div></div></a></div><div><a href="/posts/47995/" title="go编程规范"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-04-02_10-51-17.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-06</div><div class="title">go编程规范</div></div></a></div><div><a href="/posts/10689/" title="live reloading go with air"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-04-07_15-14-45.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-13</div><div class="title">live reloading go with air</div></div></a></div><div><a href="/posts/51798/" title="pprof"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-28_22-00-26.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-29</div><div class="title">pprof</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#channel"><span class="toc-text">channel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goroutine"><span class="toc-text">goroutine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%92%8Cstring"><span class="toc-text">字符和string</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#defer"><span class="toc-text">defer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Json"><span class="toc-text">Json</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map"><span class="toc-text">map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-text">内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#panic"><span class="toc-text">panic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-text">单元测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88"><span class="toc-text">指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5"><span class="toc-text">代码静态检查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#log"><span class="toc-text">log</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#others"><span class="toc-text">others</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+<ol start="2">
+<li><strong>fmt.Errorf(“%w,%w”, xxx)是不行的（v1.20.0才支持）</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看解决方案 </summary><div class="toggle-content"><blockquote>
+<p>v1.19最后一个版本描述：<a target="_blank" rel="noopener" href="https://pkg.go.dev/fmt@go1.19.13#Errorf">https://pkg.go.dev/fmt@go1.19.13#Errorf</a></p>
+<p>v1.20第一个版本的描述：<a target="_blank" rel="noopener" href="https://pkg.go.dev/fmt@go1.20.0#Errorf">https://pkg.go.dev/fmt@go1.20.0#Errorf</a></p>
+</blockquote>
+<p><strong>场景</strong></p>
+<p>你需要在 Go 中<strong>包装多个错误</strong>，并能通过 <code>errors.Is()</code> 精准识别其中的每一个原始错误；需兼顾不同 Go 版本（≥1.20 用官方原生方案，&lt;1.20 用自定义方案）。</p>
+<p><strong>解决方案</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方案</th>
+<th style="text-align:center">适用版本</th>
+<th style="text-align:center">核心逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">errors.Join</td>
+<td style="text-align:center">Go ≥1.20</td>
+<td style="text-align:center">官方原生函数，一行合并多个错误，天然支持 <code>errors.Is()</code> 识别所有原始错误</td>
+</tr>
+<tr>
+<td style="text-align:center">自定义 MultiErr</td>
+<td style="text-align:center">Go &lt;1.20</td>
+<td style="text-align:center">自定义错误结构体，实现 <code>Error()</code> 和 <code>Is()</code> 方法，模拟多错误合并与识别</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>示例 1：errors.Join 实现（Go 1.20+）</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;errors&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-comment">// 定义待识别的原始错误</span><br><span class="hljs-keyword">var</span> (<br>    ErrFileNotFound = errors.New(<span class="hljs-string">&quot;文件不存在&quot;</span>)<br>    ErrPermDenied   = errors.New(<span class="hljs-string">&quot;权限不足&quot;</span>)<br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 模拟产生两个带上下文的错误</span><br>    err1 := fmt.Errorf(<span class="hljs-string">&quot;读取配置失败：%w&quot;</span>, ErrFileNotFound)<br>    err2 := fmt.Errorf(<span class="hljs-string">&quot;写入日志失败：%w&quot;</span>, ErrPermDenied)<br><br>    <span class="hljs-comment">// 核心：用 errors.Join 合并多个错误</span><br>    joinedErr := errors.Join(err1, err2)<br><br>    <span class="hljs-comment">// 打印合并后的错误信息</span><br>    fmt.Println(<span class="hljs-string">&quot;合并后的错误：&quot;</span>, joinedErr)<br><br>    <span class="hljs-comment">// 用 errors.Is() 识别每个原始错误</span><br>    <span class="hljs-keyword">if</span> errors.Is(joinedErr, ErrFileNotFound) &#123;<br>        fmt.Println(<span class="hljs-string">&quot;✅ 识别到「文件不存在」错误&quot;</span>)<br>    &#125;<br>    <span class="hljs-keyword">if</span> errors.Is(joinedErr, ErrPermDenied) &#123;<br>        fmt.Println(<span class="hljs-string">&quot;✅ 识别到「权限不足」错误&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-comment">// 多层包装后仍可识别</span><br>    wrappedErr := fmt.Errorf(<span class="hljs-string">&quot;执行任务失败：%w&quot;</span>, joinedErr)<br>    fmt.Println(<span class="hljs-string">&quot;\n多层包装后：&quot;</span>, wrappedErr)<br>    <span class="hljs-keyword">if</span> errors.Is(wrappedErr, ErrPermDenied) &#123;<br>        fmt.Println(<span class="hljs-string">&quot;✅ 穿透包装仍识别到「权限不足」错误&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>输出结果</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">合并后的错误： 读取配置失败：文件不存在<br>写入日志失败：权限不足<br>✅ 识别到「文件不存在」错误<br>✅ 识别到「权限不足」错误<br><br>多层包装后： 执行任务失败：读取配置失败：文件不存在; 写入日志失败：权限不足<br>✅ 穿透包装仍识别到「权限不足」错误<br></code></pre></td></tr></table></figure>
+<hr>
+<p><strong>示例 2：自定义 MultiErr 实现（兼容 Go &lt;1.20）</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;errors&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><br><span class="hljs-comment">// 定义待识别的原始错误</span><br><span class="hljs-keyword">var</span> (<br>    ErrFileNotFound = errors.New(<span class="hljs-string">&quot;文件不存在&quot;</span>)<br>    ErrPermDenied   = errors.New(<span class="hljs-string">&quot;权限不足&quot;</span>)<br>)<br><br><span class="hljs-comment">// MultiError 自定义多错误结构体</span><br><span class="hljs-keyword">type</span> MultiError <span class="hljs-keyword">struct</span> &#123;<br>    Msg    <span class="hljs-type">string</span>   <span class="hljs-comment">// 错误描述</span><br>    Errors []<span class="hljs-type">error</span>  <span class="hljs-comment">// 存储多个错误</span><br>&#125;<br><br><span class="hljs-comment">// Error 实现 error 接口，返回错误文本</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *MultiError)</span></span> Error() <span class="hljs-type">string</span> &#123;<br>    <span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;%s: %v&quot;</span>, e.Msg, e.Errors)<br>&#125;<br><br><span class="hljs-comment">// Is 实现 errors.Is 匹配逻辑，遍历所有错误判断是否匹配</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *MultiError)</span></span> Is(target <span class="hljs-type">error</span>) <span class="hljs-type">bool</span> &#123;<br>    <span class="hljs-keyword">for</span> _, err := <span class="hljs-keyword">range</span> e.Errors &#123;<br>        <span class="hljs-keyword">if</span> errors.Is(err, target) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 模拟产生两个带上下文的错误</span><br>    err1 := fmt.Errorf(<span class="hljs-string">&quot;读取配置失败：%w&quot;</span>, ErrFileNotFound)<br>    err2 := fmt.Errorf(<span class="hljs-string">&quot;写入日志失败：%w&quot;</span>, ErrPermDenied)<br><br>    <span class="hljs-comment">// 核心：用自定义 MultiError 合并多个错误</span><br>    multiErr := &amp;MultiError&#123;<br>        Msg:    <span class="hljs-string">&quot;执行任务失败&quot;</span>,<br>        Errors: []<span class="hljs-type">error</span>&#123;err1, err2&#125;,<br>    &#125;<br><br>    <span class="hljs-comment">// 打印错误信息</span><br>    fmt.Println(<span class="hljs-string">&quot;合并后的错误：&quot;</span>, multiErr)<br><br>    <span class="hljs-comment">// 用 errors.Is() 识别每个原始错误</span><br>    <span class="hljs-keyword">if</span> errors.Is(multiErr, ErrFileNotFound) &#123;<br>        fmt.Println(<span class="hljs-string">&quot;✅ 识别到「文件不存在」错误&quot;</span>)<br>    &#125;<br>    <span class="hljs-keyword">if</span> errors.Is(multiErr, ErrPermDenied) &#123;<br>        fmt.Println(<span class="hljs-string">&quot;✅ 识别到「权限不足」错误&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-comment">// 多层包装后仍可识别</span><br>    wrappedErr := fmt.Errorf(<span class="hljs-string">&quot;服务启动失败：%w&quot;</span>, multiErr)<br>    fmt.Println(<span class="hljs-string">&quot;\n多层包装后：&quot;</span>, wrappedErr)<br>    <span class="hljs-keyword">if</span> errors.Is(wrappedErr, ErrFileNotFound) &#123;<br>        fmt.Println(<span class="hljs-string">&quot;✅ 穿透包装仍识别到「文件不存在」错误&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>输出结果</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">合并后的错误： 执行任务失败: [读取配置失败：文件不存在 写入日志失败：权限不足]<br>✅ 识别到「文件不存在」错误<br>✅ 识别到「权限不足」错误<br><br>多层包装后： 服务启动失败：执行任务失败: [读取配置失败：文件不存在 写入日志失败：权限不足]<br>✅ 穿透包装仍识别到「文件不存在」错误<br></code></pre></td></tr></table></figure>
+<p><strong>关键点回顾</strong></p>
+<ol>
+<li><code>errors.Join</code>（Go1.20+）是官方最优解，无需自定义代码，直接合并 + 识别多错误；</li>
+<li>自定义 <code>MultiError</code> 需实现 <code>Error()</code> 和 <code>Is()</code> 方法，兼容低版本 Go；</li>
+<li>两种方案都支持 <code>errors.Is()</code> 识别原始错误，且可配合 <code>fmt.Errorf(&quot;%w&quot;)</code> 做多层包装。</li>
+</ol>
+</div></details> 
+<ol start="3">
+<li><strong>值调用指针接收者方法 和 指针调用值接收方法 会怎样？</strong></li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">查看 </summary><div class="toggle-content"><p>有语法糖，帮忙自动转换，所以可以成功调用</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;<br>    Name <span class="hljs-type">string</span><br>    Age <span class="hljs-type">int</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Person)</span></span> PointerString() <span class="hljs-type">string</span> &#123;<br>    <span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;Name: %s, Age: %d&quot;</span>, p.Name, p.Age)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p Person)</span></span> ValueString() <span class="hljs-type">string</span> &#123;<br>    <span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;Name: %s, Age: %d&quot;</span>, p.Name, p.Age)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    personPtr := &amp;Person&#123;Name: <span class="hljs-string">&quot;John&quot;</span>, Age: <span class="hljs-number">30</span>&#125;<br>    personVal := Person&#123;Name: <span class="hljs-string">&quot;John&quot;</span>, Age: <span class="hljs-number">30</span>&#125;<br>    fmt.Println(personPtr.ValueString())<br>    fmt.Println(personVal.PointerString())<br><br>    <span class="hljs-comment">// 值调用指针接收者方法时，该值必须是可寻址的。</span><br>    <span class="hljs-comment">// 可寻址意味着这个值在内存中有一个固定的地址，可以用 &amp; 操作符来获取它的指针。</span><br>    <span class="hljs-comment">// 下面没有用变量接受，是一个临时值，没有在内存中有固定的地址，所以会报错。</span><br>    <span class="hljs-comment">// fmt.Println(Person&#123;Name: &quot;John&quot;, Age: 30&#125;.PointerString()) // 编译报错</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</div></details> 
+<ol start="2">
+<li>设置的go版本被<code>go mod tidy</code>自动升级了</li>
+</ol>
+<details class="toggle" style="border: 1px solid  #edf4ee"><summary class="toggle-button" style="background-color:  #edf4ee;color:  #17181a">解决办法 </summary><div class="toggle-content"><p>加参数先严格锁定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">go mod tidy -go=1.23.2<br></code></pre></td></tr></table></figure>
+<p>最后你可以看到是哪个库要求的最小版本大于1.32.2</p>
+<p>然后手动<code>go get</code>这个库的低版本，再执行<code> go mod tidy -go=1.23.2</code>，反复如此即可。</p>
+</div></details> 
+<p>现在这个阶段感觉更看中产品的设计，比如之前的公司skynet，我个人觉得他做的很烂，但是其实只是还没做好就拿出来了，但是这个文档生成代码的模式还是很不错的，如果有足够的时间打磨肯定能够成为不错的提高效率的工具，比如给文档编写也加上AI能力，版本控制，模块化细节处理这样的能力。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://blog.gxtree.com">ggw &amp; xpl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.gxtree.com/posts/57494/">https://blog.gxtree.com/posts/57494/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.gxtree.com" target="_blank">GX-Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Golang/">Golang</a></div><div class="post_share"><div class="social-share" data-image="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-18_17-13-03.png" data-sites="wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-03-06.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" target="_blank"><img class="post-qr-code-img" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/blogs/Snipaste_2023-01-05_13-04-50.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/1808/"><img class="prev-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-09-30_16-11-15.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">golang并发编程</div></div></a></div><div class="next-post pull-right"><a href="/posts/27860/"><img class="next-cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/202409091733981.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">golang密码学</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/19502/" title="connection pool"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2025-01-08_10-26-59.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-12</div><div class="title">connection pool</div></div></a></div><div><a href="/posts/45078/" title="go代码模块记录"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-03-20_10-54-38.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-22</div><div class="title">go代码模块记录</div></div></a></div><div><a href="/posts/10689/" title="live reloading go with air"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-04-07_15-14-45.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-13</div><div class="title">live reloading go with air</div></div></a></div><div><a href="/posts/51798/" title="pprof"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/general/Snipaste_2025-08-28_22-00-26.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-29</div><div class="title">pprof</div></div></a></div><div><a href="/posts/47447/" title="Prometheus"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-16_19-43-49.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-18</div><div class="title">Prometheus</div></div></a></div><div><a href="/posts/6156/" title="SQLBoiler"><img class="cover" src="/static/imgs/loading.gif" data-original="https://ggwimgs-1313043536.cos.ap-guangzhou.myqcloud.com/go/Snipaste_2024-08-05_14-27-26.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">SQLBoiler</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#channel"><span class="toc-text">channel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goroutine"><span class="toc-text">goroutine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%92%8Cstring"><span class="toc-text">字符和string</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#defer"><span class="toc-text">defer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Json"><span class="toc-text">Json</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map"><span class="toc-text">map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-text">内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#panic"><span class="toc-text">panic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-text">单元测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88"><span class="toc-text">指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5"><span class="toc-text">代码静态检查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#log"><span class="toc-text">log</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#others"><span class="toc-text">others</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: rgb(112, 112, 112)"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2026 By ggw & xpl</div><div class="footer_custom_text">都是科技与狠活啊</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/pluginsSrc/instant.page/instantpage.js" type="module"></script><script src="/pluginsSrc/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
   function initValine () {
     const valine = new Valine(Object.assign({
       el: '#vcomment',
